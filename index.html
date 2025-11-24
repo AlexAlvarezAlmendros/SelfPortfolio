@@ -175,18 +175,38 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8 font-mono text-sm">
-                        <a href="#home" class="hover:text-cyber-primary transition-colors duration-300">_INICIO</a>
-                        <a href="#about" class="hover:text-cyber-primary transition-colors duration-300">_SOBRE_MI</a>
-                        <a href="#experience" class="hover:text-cyber-primary transition-colors duration-300">_EXP</a>
-                        <a href="#skills" class="hover:text-cyber-primary transition-colors duration-300">_STACK</a>
-                        <a href="#contact" class="px-4 py-2 border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 rounded-sm">
+                        <a href="#home" class="hover:text-cyber-primary transition-colors duration-300" data-i18n="nav.home">_INICIO</a>
+                        <a href="#about" class="hover:text-cyber-primary transition-colors duration-300" data-i18n="nav.about">_SOBRE_MI</a>
+                        <a href="#experience" class="hover:text-cyber-primary transition-colors duration-300" data-i18n="nav.experience">_EXP</a>
+                        <a href="#skills" class="hover:text-cyber-primary transition-colors duration-300" data-i18n="nav.skills">_STACK</a>
+                        <a href="#contact" class="px-4 py-2 border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 rounded-sm" data-i18n="nav.contact">
                             CONTACTAR_
                         </a>
+                        <!-- Language Selector -->
+                        <div class="relative group">
+                            <button id="lang-btn" class="text-gray-400 hover:text-cyber-primary transition-colors flex items-center gap-1">
+                                <span id="current-lang">ES</span>
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div id="lang-menu" class="hidden absolute right-0 mt-2 w-24 bg-cyber-black border border-cyber-primary rounded shadow-lg overflow-hidden">
+                                <button onclick="changeLanguage('es')" class="block w-full text-left px-4 py-2 text-sm hover:bg-cyber-primary hover:text-black transition-colors">ES</button>
+                                <button onclick="changeLanguage('en')" class="block w-full text-left px-4 py-2 text-sm hover:bg-cyber-primary hover:text-black transition-colors">EN</button>
+                                <button onclick="changeLanguage('ca')" class="block w-full text-left px-4 py-2 text-sm hover:bg-cyber-primary hover:text-black transition-colors">CA</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Mobile menu -->
-                <div class="md:hidden">
-                    <a href="#contact" class="px-3 py-1.5 text-xs border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 rounded-sm font-mono">
+                <div class="md:hidden flex items-center gap-3">
+                    <!-- Mobile Language Selector -->
+                    <select id="mobile-lang" onchange="changeLanguage(this.value)" class="bg-cyber-black border border-cyber-primary text-cyber-primary text-xs px-2 py-1 rounded">
+                        <option value="es">ES</option>
+                        <option value="en">EN</option>
+                        <option value="ca">CA</option>
+                    </select>
+                    <a href="#contact" class="px-3 py-1.5 text-xs border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 rounded-sm font-mono" data-i18n="nav.contact">
                         CONTACTO
                     </a>
                 </div>
@@ -201,7 +221,7 @@
             <!-- Texto Hero -->
             <div class="md:w-1/2 text-left z-10">
                 <div class="inline-block px-3 py-1.5 mb-4 mt-4 border border-cyber-secondary rounded-full bg-opacity-10 bg-purple-900">
-                    <span class="text-cyber-secondary font-mono text-xs sm:text-sm">● DISPONIBLE PARA PROYECTOS</span>
+                    <span class="text-cyber-secondary font-mono text-xs sm:text-sm" data-i18n="hero.available">● DISPONIBLE PARA PROYECTOS</span>
                 </div>
                 <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight break-words">
                     ALEX ALVAREZ<br>
@@ -211,12 +231,12 @@
                     <span class="text-cyber-accent mr-2">></span>
                     <span id="typewriter" class="break-words"></span><span class="animate-pulse">_</span>
                 </h2>
-                <p class="text-sm sm:text-base text-gray-400 max-w-lg mb-8 leading-relaxed">
+                <p class="text-sm sm:text-base text-gray-400 max-w-lg mb-8 leading-relaxed" data-i18n="hero.description">
                     Desarrollador Fullstack apasionado por la tecnología, la programación web y la IA. Especialista en crear soluciones digitales robustas y experiencias de usuario futuristas.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
                     <a href="#contact" class="group relative px-6 py-3 font-mono font-bold text-black transition-all duration-300 bg-cyber-primary hover:bg-white overflow-hidden text-center text-sm sm:text-base">
-                        <span class="relative z-10">INICIAR_SISTEMA</span>
+                        <span class="relative z-10" data-i18n="hero.startSystem">INICIAR_SISTEMA</span>
                         <div class="absolute inset-0 h-full w-full scale-0 rounded transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
                     </a>
                     <a href="https://github.com/AlexAlvarezAlmendros" target="_blank" class="px-6 py-3 font-mono font-bold text-cyber-primary border border-cyber-primary hover:bg-cyber-primary/10 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
@@ -329,30 +349,30 @@
     <section id="about" class="py-20 relative">
         <div class="max-w-4xl mx-auto px-4 sm:px-6">
             <h2 class="text-2xl sm:text-3xl font-bold mb-8 flex items-center">
-                <span class="text-cyber-primary mr-2">01.</span> PERFIL_
+                <span class="text-cyber-primary mr-2">01.</span> <span data-i18n="about.title">PERFIL_</span>
                 <span class="h-px bg-gray-800 flex-grow ml-4"></span>
             </h2>
             <div class="grid md:grid-cols-2 gap-10">
                 <div class="font-light text-gray-300 space-y-4 text-justify">
-                    <p>
+                    <p id="about-text1" data-i18n="about.text1">
                         Hola, soy Alex. Actualmente trabajo como <span class="text-cyber-primary font-bold">FullStack Developer</span> con más de cinco años de experiencia creando soluciones web y móviles con React, Blazor, NodeJS y .NET Core 8.
                     </p>
-                    <p>
+                    <p id="about-text2" data-i18n="about.text2">
                         He colaborado con compañías como <span class="text-cyber-secondary font-bold">Experian</span>, <span class="text-cyber-secondary font-bold">Bella Aurora Labs</span> y <span class="text-cyber-secondary font-bold">Capitole</span>, desarrollando aplicaciones escalables e intuitivas. 
                     </p>
-                    <p>
+                    <p id="about-text3" data-i18n="about.text3">
                         Ubicado en Barcelona, estoy siempre abierto a colaborar en nuevas oportunidades que desafíen mis habilidades técnicas.
                     </p>
                 </div>
                 <div class="neon-box p-6 bg-cyber-gray/50 rounded-lg relative overflow-hidden group">
                     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyber-primary to-cyber-secondary"></div>
-                    <h3 class="font-mono text-xl mb-4 text-white">Soft_Skills.json</h3>
+                    <h3 class="font-mono text-xl mb-4 text-white" data-i18n="about.softSkillsTitle">Soft_Skills.json</h3>
                     <ul class="space-y-2 font-mono text-sm text-gray-400">
-                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Aprendizaje Continuo</li>
-                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Resolución de Problemas</li>
-                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Trabajo en Equipo</li>
-                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Comunicación Efectiva</li>
-                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Proactividad</li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> <span data-i18n="about.skill1">Aprendizaje Continuo</span></li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> <span data-i18n="about.skill2">Resolución de Problemas</span></li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> <span data-i18n="about.skill3">Trabajo en Equipo</span></li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> <span data-i18n="about.skill4">Comunicación Efectiva</span></li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> <span data-i18n="about.skill5">Proactividad</span></li>
                     </ul>
                 </div>
             </div>
@@ -364,7 +384,7 @@
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <h2 class="text-2xl sm:text-3xl font-bold mb-12 flex items-center justify-end flex-wrap gap-2">
                 <span class="h-px bg-gray-800 flex-grow mr-4 hidden sm:block"></span>
-                <span class="break-words">HISTORIAL_DE_SISTEMA</span> <span class="text-cyber-primary">02.</span>
+                <span class="break-words" data-i18n="experience.title">HISTORIAL_DE_SISTEMA</span> <span class="text-cyber-primary">02.</span>
             </h2>
 
             <div class="relative border-l-2 border-gray-800 ml-4 md:ml-0 md:pl-0 space-y-12">
@@ -376,10 +396,10 @@
                         SEP 2024 - PRESENTE
                     </div>
                     <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-cyan-400/30 hover:border-cyan-400 hover:bg-cyber-gray/50 transition-all duration-300">
-                        <h3 class="text-xl font-bold text-white mb-1">FullStack Web Developer</h3>
-                        <h4 class="text-lg text-gray-400 mb-4">Capitole · Jornada completa</h4>
-                        <p class="text-gray-400 text-sm mb-4">
-                            Desarrollo de soluciones para distintos clientes en frontend y backend. Uso de .NET, JavaScript, Blazor y React para crear aplicaciones robustas y escalables. Colaboración con equipos multidisciplinares bajo metodologías ágiles.
+                        <h3 class="text-xl font-bold text-white mb-1" data-i18n="experience.job1.title">FullStack Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4" data-i18n="experience.job1.company">Capitole Consulting · Jornada completa</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="experience.job1.description">
+                            Desarrollo de aplicaciones web para Experian utilizando Blazor y .NET 8. Implementación de features, mejoras de UX/UI y colaboración con equipos internacionales bajo metodología Scrum en entornos CI/CD.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyan-400">.NET</span>
@@ -398,9 +418,9 @@
                         MAY 2024 - SEP 2024
                     </div>
                     <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-purple-500/30 hover:border-purple-500 hover:bg-cyber-gray/50 transition-all duration-300">
-                        <h3 class="text-xl font-bold text-white mb-1">FullStack Web Developer</h3>
-                        <h4 class="text-lg text-gray-400 mb-4">Bella Aurora Labs S.A. · Jornada completa</h4>
-                        <p class="text-gray-400 text-sm mb-4">
+                        <h3 class="text-xl font-bold text-white mb-1" data-i18n="experience.job2.title">FullStack Web Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4" data-i18n="experience.job2.company">Bella Aurora Labs S.A. · Jornada completa</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="experience.job2.description">
                             Desarrollo FullStack de aplicaciones web internas utilizando .NET 8 y Blazor. Migración de aplicaciones, implementación de APIs y trabajo con LLMs bajo metodología Scrum.
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -421,9 +441,9 @@
                         JUN 2023 - MAY 2024
                     </div>
                     <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 hover:bg-cyber-gray/50 transition-all duration-300">
-                        <h3 class="text-xl font-bold text-white mb-1">FullStack Developer</h3>
-                        <h4 class="text-lg text-gray-400 mb-4">DAITEC Engineering</h4>
-                        <p class="text-gray-400 text-sm mb-4">
+                        <h3 class="text-xl font-bold text-white mb-1" data-i18n="experience.job3.title">FullStack Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4" data-i18n="experience.job3.company">DAITEC Engineering</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="experience.job3.description">
                             Desarrollo integral de aplicaciones web y software industrial. Implementación de soluciones FullStack utilizando tecnologías .NET y frameworks modernos de frontend.
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -442,9 +462,9 @@
                         OCT 2022 - ABR 2023
                     </div>
                     <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-cyber-accent/30 hover:border-cyber-accent hover:bg-cyber-gray/50 transition-all duration-300">
-                        <h3 class="text-xl font-bold text-white mb-1">Profesor de Programación</h3>
-                        <h4 class="text-lg text-gray-400 mb-4">Adecco · Jornada parcial</h4>
-                        <p class="text-gray-400 text-sm mb-4">
+                        <h3 class="text-xl font-bold text-white mb-1" data-i18n="experience.job4.title">Profesor de Programación</h3>
+                        <h4 class="text-lg text-gray-400 mb-4" data-i18n="experience.job4.company">Adecco · Jornada parcial</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="experience.job4.description">
                             Impartición de cursos de programación de videojuegos en Unity 3D, realidad virtual y realidad aumentada. Creación de materiales didácticos, mentoría y seguimiento de estudiantes en su proceso de formación técnica.
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -463,9 +483,9 @@
                         DIC 2020 - SEP 2022
                     </div>
                     <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-cyber-secondary/30 hover:border-cyber-secondary hover:bg-cyber-gray/50 transition-all duration-300">
-                        <h3 class="text-xl font-bold text-white mb-1">.NET / Web Developer</h3>
-                        <h4 class="text-lg text-gray-400 mb-4">SECPHO</h4>
-                        <p class="text-gray-400 text-sm mb-4">
+                        <h3 class="text-xl font-bold text-white mb-1" data-i18n="experience.job5.title">.NET / Web Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4" data-i18n="experience.job5.company">SECPHO</h4>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="experience.job5.description">
                             Mantenimiento y desarrollo de aplicaciones internas. Gestión de bases de datos y desarrollo backend con C#. Colaboración en proyectos de innovación tecnológica.
                         </p>
                         <div class="flex flex-wrap gap-2">
@@ -485,9 +505,9 @@
                         ENE 2018 - ABR 2018
                     </div>
                     <div class="md:col-span-4 p-6 rounded border border-gray-800 bg-cyber-black/40">
-                        <h3 class="text-xl font-bold text-gray-300 mb-1">FrontEnd Developer (Prácticas)</h3>
-                        <h4 class="text-lg text-gray-500 mb-4">ITAILORED APP&WEB SL</h4>
-                        <p class="text-gray-500 text-sm">
+                        <h3 class="text-xl font-bold text-gray-300 mb-1" data-i18n="experience.job6.title">FrontEnd Developer (Prácticas)</h3>
+                        <h4 class="text-lg text-gray-500 mb-4" data-i18n="experience.job6.company">ITAILORED APP&WEB SL</h4>
+                        <p class="text-gray-500 text-sm" data-i18n="experience.job6.description">
                             Primer contacto profesional con el desarrollo web. Maquetación y lógica de cliente para aplicaciones web.
                         </p>
                     </div>
@@ -501,7 +521,7 @@
     <section id="skills" class="py-20">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <h2 class="text-2xl sm:text-3xl font-bold mb-12 text-center">
-                <span class="text-cyber-primary">03.</span> TECH_STACK_
+                <span class="text-cyber-primary">03.</span> <span data-i18n="skills.title">TECH_STACK_</span>
             </h2>
             
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -564,7 +584,7 @@
         
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <h2 class="text-2xl sm:text-3xl font-bold mb-12 flex items-center flex-wrap">
-                <span class="text-cyber-primary mr-2">04.</span> <span class="break-words">PROYECTOS_DESTACADOS</span>
+                <span class="text-cyber-primary mr-2">04.</span> <span class="break-words" data-i18n="projects.title">PROYECTOS_DESTACADOS</span>
             </h2>
 
             <div class="grid md:grid-cols-2 gap-8">
@@ -584,8 +604,8 @@
                          </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-primary transition-colors">Other People Records - Web React</h3>
-                        <p class="text-gray-400 text-sm mb-4">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-primary transition-colors" data-i18n="projects.project1.title">Other People Records - Web React</h3>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="projects.project1.description">
                             Landing page para sello discográfico con integración completa de Spotify API. Sistema de gestión de artistas, álbumes y eventos con autenticación Auth0 y diseño responsive moderno.
                         </p>
                         <ul class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
@@ -613,8 +633,8 @@
                          </div>
                     </div>
                     <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-secondary transition-colors">Fincas Trimar - Portal Inmobiliario</h3>
-                        <p class="text-gray-400 text-sm mb-4">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-secondary transition-colors" data-i18n="projects.project2.title">Fincas Trimar - Portal Inmobiliario</h3>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="projects.project2.description">
                             Portal web completo para inmobiliaria con catálogo de viviendas, filtros avanzados, panel de administración, Auth0, gestión de imágenes con ImgBB y notificaciones por email.
                         </p>
                         <ul class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
@@ -658,13 +678,13 @@
         </div>
         
         <div class="relative z-10 max-w-2xl mx-auto px-4">
-            <h2 class="text-3xl sm:text-4xl font-bold mb-6 break-words">¿LISTO PARA COLABORAR?</h2>
-            <p class="text-gray-400 mb-8">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6 break-words" data-i18n="contact.title">¿LISTO PARA COLABORAR?</h2>
+            <p class="text-gray-400 mb-8" data-i18n="contact.description">
                 Actualmente estoy abierto a nuevas oportunidades. Ya sea que tengas una pregunta o simplemente quieras saludar, mi bandeja de entrada siempre está abierta.
             </p>
             
             <div class="inline-flex flex-col gap-4">
-                <a href="mailto:contact@alexalvarez.dev" class="neon-box px-8 py-4 bg-cyber-black text-cyber-primary font-mono font-bold tracking-wider hover:bg-cyber-primary hover:text-black transition-all duration-300">
+                <a href="mailto:alexalmendrosal@gmail.com" class="neon-box px-8 py-4 bg-cyber-black text-cyber-primary font-mono font-bold tracking-wider hover:bg-cyber-primary hover:text-black transition-all duration-300" data-i18n="contact.sendMessage">
                     ENVIAR_MENSAJE
                 </a>
                 
@@ -680,8 +700,8 @@
                 </div>
                 
                 <div class="mt-8 text-xs font-mono text-gray-600">
-                    <p>Diseñado & Desarrollado por Alex Alvarez</p>
-                    <p class="mt-2">© 2025 ALL RIGHTS RESERVED</p>
+                    <p data-i18n="contact.footer1">Diseñado & Desarrollado por Alex Alvarez</p>
+                    <p class="mt-2" data-i18n="contact.footer2">© 2025 ALL RIGHTS RESERVED</p>
                 </div>
             </div>
         </div>
@@ -725,7 +745,7 @@
 
         // --- Typewriter Effect ---
         const textElement = document.getElementById('typewriter');
-        const phrases = ['FullStack Developer', 'UI/UX Designer', '.NET Specialist', 'Tech Enthusiast'];
+        let phrases = ['FullStack Developer', 'UI/UX Designer', '.NET Specialist', 'Tech Enthusiast'];
         let phraseIndex = 0;
         let charIndex = 0;
         let isDeleting = false;
@@ -801,132 +821,374 @@
             }, 2000);
         });
 
-        // --- Robot Comments on Hover ---
+        // --- Robot Comments on Hover (Multilingual) ---
+        let currentLanguage = 'es'; // Se actualizará con changeLanguage()
+        
         const robotComments = {
-            // Navegación
-            'a[href="#home"]': [
-                "return home;",
-                "127.0.0.1... ¡Home sweet home!"
-            ],
-            'a[href="#about"]': [
-                "Preparando perfil de usuario...",
-                "Console.log('Conociendo al humano...')"
-            ],
-            'a[href="#experience"]': [
-                "Cargando historial.exe",
-                "git log --all --pretty"
-            ],
-            'a[href="#skills"]': [
-                "npm list --depth=infinity",
-                "Inventario de superpoderes activado"
-            ],
-            'a[href="https://github.com/AlexAlvarezAlmendros"]': [
-                "Aquí es donde tengo guardadas todas mis memorias",
-                "git clone brain.git",
-                "El almacén de bugs y features ✨"
-            ],
-            'a[href="https://www.linkedin.com/in/alexalvarezalmendros/"]': [
-                "Red social para cyborgs profesionales",
-                "LinkedIn.connect()"
-            ],
-            'a[href="mailto:contact@alexalvarez.dev"]': [
-                "¡Ping! Esperando respuesta del servidor humano",
-                "SMTP ready to send(mensaje)",
-                "Protocolo de comunicación humano-robot activado"
-            ],
-            'a[href="#contact"]': [
-                "POST /contact HTTP/1.1",
-                "Iniciando secuencia de comunicación...",
-                "Abriendo canal de transmisión"
-            ],
-            // Proyectos
-            'a[href*="ReactOtpWeb"]': [
-                "Beep boop beats",
-                "Spotify.play()"
-            ],
-            'a[href*="FincasTrimarWeb"]': [
-                "Home.find()",
-                "Real estate en el mundo digital"
-            ],
-            'a[href*="HomeScrapper"]': [
-                "Spider mode: ON",
-                "Web scraping nivel: Ninja"
-            ],
-            // Soft Skills
-            '.neon-box li:nth-child(1)': [
-                "while(alive) { learn(); }",
-                "Actualización de firmware constante"
-            ],
-            '.neon-box li:nth-child(2)': [
-                "if(problema) { resolver(); }",
-                "ERROR 404: Problem not found... ¡Lo resolví!"
-            ],
-            '.neon-box li:nth-child(3)': [
-                "git pull team --rebase",
-                "Multiplayer mode: ENABLED"
-            ],
-            '.neon-box li:nth-child(4)': [
-                "console.log(mensaje_claro);",
-                "Traduciendo código a lenguaje humano..."
-            ],
-            '.neon-box li:nth-child(5)': [
-                "setInterval(iniciativa, 0);",
-                "Auto-start enabled"
-            ],
-            // Experiencias Laborales
-            'section#experience .group:nth-child(1)': [
-                "Capítulo actual: Construyendo el futuro",
-                "Status: COMPILANDO SOLUCIONES..."
-            ],
-            'section#experience .group:nth-child(2)': [
-                "Temporada de migración y evolución"
-            ],
-            'section#experience .group:nth-child(3)': [
-                "DAITEC: Internet de las Cosas Inteligentes",
-                "Conectando máquinas con el mundo digital"
-            ],
-            'section#experience .group:nth-child(4)': [
-                "Modo profesor: Transmitiendo conocimiento",
-                "Teaching.init()"
-            ],
-            'section#experience .group:nth-child(5)': [
-                "SECPHO: Época de fotones y backend",
-                "Primeros pasos en el stack completo"
-            ],
-            'section#experience .group:nth-child(6)': [
-                "Level 1: Tutorial completado",
-                "Achievement unlocked: First job!"
-            ],
-            // Tech Stack
-            '.grid.grid-cols-2 > div:nth-child(1)': [
-                "Backend supremacy!",
-                "API.create()"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(2)': [
-                "Frontend magic!",
-                "UI.render(beautiful_things)"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(3)': [
-                "JavaScript: El idioma universal del browser",
-                "eval('código_mágico')"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(4)': [
-                "SELECT * FROM conocimiento WHERE nivel='PRO'"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(5)': [
-                "Máquina del tiempo",
-                "git commit -m 'Salvando el codigo para el futuro'"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(6)': [
-                "RESTful APIs: El pegamento del internet",
-                "HTTP.get(datos)"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(7)': [
-                "Automatización.run()"
-            ],
-            '.grid.grid-cols-2 > div:nth-child(8)': [
-                "Design.make(experiencia_increible)"
-            ]
+            es: {
+                // Navegación
+                'a[href="#home"]': [
+                    "return home;",
+                    "127.0.0.1... ¡Home sweet home!"
+                ],
+                'a[href="#about"]': [
+                    "Preparando perfil de usuario...",
+                    "Console.log('Conociendo al humano...')"
+                ],
+                'a[href="#experience"]': [
+                    "Cargando historial.exe",
+                    "git log --all --pretty"
+                ],
+                'a[href="#skills"]': [
+                    "npm list --depth=infinity",
+                    "Inventario de superpoderes activado"
+                ],
+                'a[href="https://github.com/AlexAlvarezAlmendros"]': [
+                    "Aquí es donde tengo guardadas todas mis memorias",
+                    "git clone brain.git",
+                    "El almacén de bugs y features ✨"
+                ],
+                'a[href="https://www.linkedin.com/in/alexalvarezalmendros/"]': [
+                    "Red social para cyborgs profesionales",
+                    "LinkedIn.connect()"
+                ],
+                'a[href="mailto:alexalmendrosal@gmail.com"]': [
+                    "¡Ping! Esperando respuesta del servidor humano",
+                    "SMTP ready to send(mensaje)",
+                    "Protocolo de comunicación humano-robot activado"
+                ],
+                'a[href="#contact"]': [
+                    "POST /contact HTTP/1.1",
+                    "Iniciando secuencia de comunicación...",
+                    "Abriendo canal de transmisión"
+                ],
+                'a[href*="ReactOtpWeb"]': [
+                    "Beep boop beats",
+                    "Spotify.play()"
+                ],
+                'a[href*="FincasTrimarWeb"]': [
+                    "Home.find()",
+                    "Real estate en el mundo digital"
+                ],
+                'a[href*="HomeScrapper"]': [
+                    "Spider mode: ON",
+                    "Web scraping nivel: Ninja"
+                ],
+                '.neon-box li:nth-child(1)': [
+                    "while(alive) { learn(); }",
+                    "Actualización de firmware constante"
+                ],
+                '.neon-box li:nth-child(2)': [
+                    "if(problema) { resolver(); }",
+                    "ERROR 404: Problem not found... ¡Lo resolví!"
+                ],
+                '.neon-box li:nth-child(3)': [
+                    "git pull team --rebase",
+                    "Multiplayer mode: ENABLED"
+                ],
+                '.neon-box li:nth-child(4)': [
+                    "console.log(mensaje_claro);",
+                    "Traduciendo código a lenguaje humano..."
+                ],
+                '.neon-box li:nth-child(5)': [
+                    "setInterval(iniciativa, 0);",
+                    "Auto-start enabled"
+                ],
+                'section#experience .group:nth-child(1)': [
+                    "Capítulo actual: Construyendo el futuro",
+                    "Status: COMPILANDO SOLUCIONES..."
+                ],
+                'section#experience .group:nth-child(2)': [
+                    "Temporada de migración y evolución"
+                ],
+                'section#experience .group:nth-child(3)': [
+                    "DAITEC: Internet de las Cosas Inteligentes",
+                    "Conectando máquinas con el mundo digital"
+                ],
+                'section#experience .group:nth-child(4)': [
+                    "Modo profesor: Transmitiendo conocimiento",
+                    "Teaching.init()"
+                ],
+                'section#experience .group:nth-child(5)': [
+                    "SECPHO: Época de fotones y backend",
+                    "Primeros pasos en el stack completo"
+                ],
+                'section#experience .group:nth-child(6)': [
+                    "Level 1: Tutorial completado",
+                    "Achievement unlocked: First job!"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(1)': [
+                    "Backend supremacy!",
+                    "API.create()"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(2)': [
+                    "Frontend magic!",
+                    "UI.render(beautiful_things)"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(3)': [
+                    "JavaScript: El idioma universal del browser",
+                    "eval('código_mágico')"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(4)': [
+                    "SELECT * FROM conocimiento WHERE nivel='PRO'"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(5)': [
+                    "Máquina del tiempo",
+                    "git commit -m 'Salvando el codigo para el futuro'"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(6)': [
+                    "RESTful APIs: El pegamento del internet",
+                    "HTTP.get(datos)"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(7)': [
+                    "Automatización.run()"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(8)': [
+                    "Design.make(experiencia_increible)"
+                ]
+            },
+            en: {
+                'a[href="#home"]': [
+                    "return home;",
+                    "127.0.0.1... Home sweet home!"
+                ],
+                'a[href="#about"]': [
+                    "Loading user profile...",
+                    "Console.log('Getting to know the human...')"
+                ],
+                'a[href="#experience"]': [
+                    "Loading history.exe",
+                    "git log --all --pretty"
+                ],
+                'a[href="#skills"]': [
+                    "npm list --depth=infinity",
+                    "Superpower inventory activated"
+                ],
+                'a[href="https://github.com/AlexAlvarezAlmendros"]': [
+                    "This is where I keep all my memories",
+                    "git clone brain.git",
+                    "The warehouse of bugs and features ✨"
+                ],
+                'a[href="https://www.linkedin.com/in/alexalvarezalmendros/"]': [
+                    "Social network for professional cyborgs",
+                    "LinkedIn.connect()"
+                ],
+                'a[href="mailto:alexalmendrosal@gmail.com"]': [
+                    "Ping! Waiting for human server response",
+                    "SMTP ready to send(message)",
+                    "Human-robot communication protocol activated"
+                ],
+                'a[href="#contact"]': [
+                    "POST /contact HTTP/1.1",
+                    "Initiating communication sequence...",
+                    "Opening transmission channel"
+                ],
+                'a[href*="ReactOtpWeb"]': [
+                    "Beep boop beats",
+                    "Spotify.play()"
+                ],
+                'a[href*="FincasTrimarWeb"]': [
+                    "Home.find()",
+                    "Real estate in the digital world"
+                ],
+                'a[href*="HomeScrapper"]': [
+                    "Spider mode: ON",
+                    "Web scraping level: Ninja"
+                ],
+                '.neon-box li:nth-child(1)': [
+                    "while(alive) { learn(); }",
+                    "Constant firmware update"
+                ],
+                '.neon-box li:nth-child(2)': [
+                    "if(problem) { solve(); }",
+                    "ERROR 404: Problem not found... I solved it!"
+                ],
+                '.neon-box li:nth-child(3)': [
+                    "git pull team --rebase",
+                    "Multiplayer mode: ENABLED"
+                ],
+                '.neon-box li:nth-child(4)': [
+                    "console.log(clear_message);",
+                    "Translating code to human language..."
+                ],
+                '.neon-box li:nth-child(5)': [
+                    "setInterval(initiative, 0);",
+                    "Auto-start enabled"
+                ],
+                'section#experience .group:nth-child(1)': [
+                    "Current chapter: Building the future",
+                    "Status: COMPILING SOLUTIONS..."
+                ],
+                'section#experience .group:nth-child(2)': [
+                    "Season of migration and evolution"
+                ],
+                'section#experience .group:nth-child(3)': [
+                    "DAITEC: Intelligent Internet of Things",
+                    "Connecting machines with the digital world"
+                ],
+                'section#experience .group:nth-child(4)': [
+                    "Teacher mode: Transmitting knowledge",
+                    "Teaching.init()"
+                ],
+                'section#experience .group:nth-child(5)': [
+                    "SECPHO: Photon and backend era",
+                    "First steps in the full stack"
+                ],
+                'section#experience .group:nth-child(6)': [
+                    "Level 1: Tutorial completed",
+                    "Achievement unlocked: First job!"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(1)': [
+                    "Backend supremacy!",
+                    "API.create()"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(2)': [
+                    "Frontend magic!",
+                    "UI.render(beautiful_things)"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(3)': [
+                    "JavaScript: The universal browser language",
+                    "eval('magic_code')"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(4)': [
+                    "SELECT * FROM knowledge WHERE level='PRO'"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(5)': [
+                    "Time machine",
+                    "git commit -m 'Saving code for the future'"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(6)': [
+                    "RESTful APIs: The glue of the internet",
+                    "HTTP.get(data)"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(7)': [
+                    "Automation.run()"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(8)': [
+                    "Design.make(amazing_experience)"
+                ]
+            },
+            ca: {
+                'a[href="#home"]': [
+                    "return home;",
+                    "127.0.0.1... Home sweet home!"
+                ],
+                'a[href="#about"]': [
+                    "Preparant perfil d'usuari...",
+                    "Console.log('Coneixent l\\'humà...')"
+                ],
+                'a[href="#experience"]': [
+                    "Carregant historial.exe",
+                    "git log --all --pretty"
+                ],
+                'a[href="#skills"]': [
+                    "npm list --depth=infinity",
+                    "Inventari de superpoders activat"
+                ],
+                'a[href="https://github.com/AlexAlvarezAlmendros"]': [
+                    "Aquí és on tinc guardades totes les meves memòries",
+                    "git clone brain.git",
+                    "El magatzem de bugs i features ✨"
+                ],
+                'a[href="https://www.linkedin.com/in/alexalvarezalmendros/"]': [
+                    "Xarxa social per cyborgs professionals",
+                    "LinkedIn.connect()"
+                ],
+                'a[href="mailto:alexalmendrosal@gmail.com"]': [
+                    "Ping! Esperant resposta del servidor humà",
+                    "SMTP ready to send(missatge)",
+                    "Protocol de comunicació humà-robot activat"
+                ],
+                'a[href="#contact"]': [
+                    "POST /contact HTTP/1.1",
+                    "Iniciant seqüència de comunicació...",
+                    "Obrint canal de transmissió"
+                ],
+                'a[href*="ReactOtpWeb"]': [
+                    "Beep boop beats",
+                    "Spotify.play()"
+                ],
+                'a[href*="FincasTrimarWeb"]': [
+                    "Home.find()",
+                    "Real estate al món digital"
+                ],
+                'a[href*="HomeScrapper"]': [
+                    "Spider mode: ON",
+                    "Web scraping nivell: Ninja"
+                ],
+                '.neon-box li:nth-child(1)': [
+                    "while(alive) { learn(); }",
+                    "Actualització de firmware constant"
+                ],
+                '.neon-box li:nth-child(2)': [
+                    "if(problema) { resoldre(); }",
+                    "ERROR 404: Problem not found... L'he resolt!"
+                ],
+                '.neon-box li:nth-child(3)': [
+                    "git pull team --rebase",
+                    "Multiplayer mode: ENABLED"
+                ],
+                '.neon-box li:nth-child(4)': [
+                    "console.log(missatge_clar);",
+                    "Traduint codi a llenguatge humà..."
+                ],
+                '.neon-box li:nth-child(5)': [
+                    "setInterval(iniciativa, 0);",
+                    "Auto-start enabled"
+                ],
+                'section#experience .group:nth-child(1)': [
+                    "Capítol actual: Construint el futur",
+                    "Status: COMPILANT SOLUCIONS..."
+                ],
+                'section#experience .group:nth-child(2)': [
+                    "Temporada de migració i evolució"
+                ],
+                'section#experience .group:nth-child(3)': [
+                    "DAITEC: Internet de les Coses Intel·ligents",
+                    "Connectant màquines amb el món digital"
+                ],
+                'section#experience .group:nth-child(4)': [
+                    "Mode professor: Transmetent coneixement",
+                    "Teaching.init()"
+                ],
+                'section#experience .group:nth-child(5)': [
+                    "SECPHO: Època de fotons i backend",
+                    "Primers passos en l'stack complet"
+                ],
+                'section#experience .group:nth-child(6)': [
+                    "Level 1: Tutorial completat",
+                    "Achievement unlocked: First job!"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(1)': [
+                    "Backend supremacy!",
+                    "API.create()"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(2)': [
+                    "Frontend magic!",
+                    "UI.render(beautiful_things)"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(3)': [
+                    "JavaScript: L'idioma universal del navegador",
+                    "eval('codi_màgic')"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(4)': [
+                    "SELECT * FROM coneixement WHERE nivell='PRO'"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(5)': [
+                    "Màquina del temps",
+                    "git commit -m 'Salvant el codi per al futur'"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(6)': [
+                    "RESTful APIs: L'enganxament d'internet",
+                    "HTTP.get(dades)"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(7)': [
+                    "Automatització.run()"
+                ],
+                '.grid.grid-cols-2 > div:nth-child(8)': [
+                    "Design.make(experiència_increïble)"
+                ]
+            }
         };
 
         // Función para mostrar comentario del robot
@@ -963,17 +1225,40 @@
         }
 
         // Agregar eventos a todos los elementos comentados
-        Object.keys(robotComments).forEach(selector => {
-            const elements = document.querySelectorAll(selector);
-            elements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    const comments = robotComments[selector];
-                    const randomComment = comments[Math.floor(Math.random() * comments.length)];
-                    showRobotComment(randomComment);
-                });
-                element.addEventListener('mouseleave', hideRobotComment);
+        let commentElements = []; // Almacenar elementos con listeners
+        
+        function initRobotComments() {
+            const lang = currentLanguage || 'es';
+            const comments = robotComments[lang];
+            
+            // Remover listeners anteriores
+            commentElements.forEach(({ element, enterHandler, leaveHandler }) => {
+                element.removeEventListener('mouseenter', enterHandler);
+                element.removeEventListener('mouseleave', leaveHandler);
             });
-        });
+            commentElements = [];
+            
+            // Agregar nuevos listeners
+            Object.keys(comments).forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => {
+                    const enterHandler = () => {
+                        const commentsArray = comments[selector];
+                        const randomComment = commentsArray[Math.floor(Math.random() * commentsArray.length)];
+                        showRobotComment(randomComment);
+                    };
+                    const leaveHandler = hideRobotComment;
+                    
+                    element.addEventListener('mouseenter', enterHandler);
+                    element.addEventListener('mouseleave', leaveHandler);
+                    
+                    commentElements.push({ element, enterHandler, leaveHandler });
+                });
+            });
+        }
+        
+        // Inicializar comentarios
+        initRobotComments();
 
         // --- Parallax Robot Movement (S-Shape) ---
         function updateDronePosition() {
@@ -1038,6 +1323,334 @@
         
         // Posición inicial
         updateDronePosition();
+
+        // --- Internationalization System ---
+        const translations = {
+            es: {
+                nav: {
+                    home: '_INICIO',
+                    about: '_SOBRE_MI',
+                    experience: '_EXP',
+                    skills: '_STACK',
+                    contact: 'CONTACTAR_'
+                },
+                hero: {
+                    available: '● DISPONIBLE PARA PROYECTOS',
+                    description: 'Desarrollador Fullstack apasionado por la tecnología, la programación web y la IA. Especialista en crear soluciones digitales robustas y experiencias de usuario futuristas.',
+                    startSystem: 'INICIAR_SISTEMA',
+                    phrases: ['Desarrollador FullStack', 'Diseñador UI/UX', 'Especialista .NET', 'Entusiasta Tech']
+                },
+                about: {
+                    title: 'PERFIL_',
+                    text1: 'Hola, soy Alex. Actualmente trabajo como <span class="text-cyber-primary font-bold">FullStack Developer</span> con más de cinco años de experiencia creando soluciones web y móviles con React, Blazor, NodeJS y .NET Core 8.',
+                    text2: 'He colaborado con compañías como <span class="text-cyber-secondary font-bold">Experian</span>, <span class="text-cyber-secondary font-bold">Bella Aurora Labs</span> y <span class="text-cyber-secondary font-bold">Capitole</span>, desarrollando aplicaciones escalables e intuitivas.',
+                    text3: 'Ubicado en Barcelona, estoy siempre abierto a colaborar en nuevas oportunidades que desafíen mis habilidades técnicas.',
+                    softSkillsTitle: 'Soft_Skills.json',
+                    skill1: 'Aprendizaje Continuo',
+                    skill2: 'Resolución de Problemas',
+                    skill3: 'Trabajo en Equipo',
+                    skill4: 'Comunicación Efectiva',
+                    skill5: 'Proactividad'
+                },
+                experience: {
+                    title: 'HISTORIAL_DE_SISTEMA',
+                    job1: {
+                        title: 'FullStack Developer',
+                        company: 'Capitole Consulting · Jornada completa',
+                        description: 'Desarrollo de aplicaciones web para Experian utilizando Blazor y .NET 8. Implementación de features, mejoras de UX/UI y colaboración con equipos internacionales bajo metodología Scrum en entornos CI/CD.'
+                    },
+                    job2: {
+                        title: 'FullStack Web Developer',
+                        company: 'Bella Aurora Labs S.A. · Jornada completa',
+                        description: 'Desarrollo FullStack de aplicaciones web internas utilizando .NET 8 y Blazor. Migración de aplicaciones, implementación de APIs y trabajo con LLMs bajo metodología Scrum.'
+                    },
+                    job3: {
+                        title: 'FullStack Developer',
+                        company: 'DAITEC Engineering',
+                        description: 'Desarrollo integral de aplicaciones web y software industrial. Implementación de soluciones FullStack utilizando tecnologías .NET y frameworks modernos de frontend.'
+                    },
+                    job4: {
+                        title: 'Profesor de Programación',
+                        company: 'Adecco · Jornada parcial',
+                        description: 'Impartición de cursos de programación de videojuegos en Unity 3D, realidad virtual y realidad aumentada. Creación de materiales didácticos, mentoría y seguimiento de estudiantes en su proceso de formación técnica.'
+                    },
+                    job5: {
+                        title: '.NET / Web Developer',
+                        company: 'SECPHO',
+                        description: 'Mantenimiento y desarrollo de aplicaciones internas. Gestión de bases de datos y desarrollo backend con C#. Colaboración en proyectos de innovación tecnológica.'
+                    },
+                    job6: {
+                        title: 'FrontEnd Developer (Prácticas)',
+                        company: 'ITAILORED APP&WEB SL',
+                        description: 'Primer contacto profesional con el desarrollo web. Maquetación y lógica de cliente para aplicaciones web.'
+                    }
+                },
+                skills: {
+                    title: 'TECH_STACK_'
+                },
+                projects: {
+                    title: 'PROYECTOS_DESTACADOS',
+                    project1: {
+                        title: 'Other People Records - Web React',
+                        description: 'Landing page para sello discográfico con integración completa de Spotify API. Sistema de gestión de artistas, álbumes y eventos con autenticación Auth0 y diseño responsive moderno.'
+                    },
+                    project2: {
+                        title: 'Fincas Trimar - Portal Inmobiliario',
+                        description: 'Portal web completo para inmobiliaria con catálogo de viviendas, filtros avanzados, panel de administración, Auth0, gestión de imágenes con ImgBB y notificaciones por email.'
+                    },
+                    project3: {
+                        title: 'HomeScrapper - Idealista Property Scraper',
+                        description: 'Web scraper avanzado para Idealista con filtrado inteligente de particulares vs inmobiliarias. Usa Chrome DevTools Protocol (CDP) para evitar detección, procesamiento automático de múltiples páginas y extracción completa de datos incluyendo teléfonos de contacto.'
+                    }
+                },
+                contact: {
+                    title: '¿LISTO PARA COLABORAR?',
+                    description: 'Actualmente estoy abierto a nuevas oportunidades. Ya sea que tengas una pregunta o simplemente quieras saludar, mi bandeja de entrada siempre está abierta.',
+                    sendMessage: 'ENVIAR_MENSAJE',
+                    footer1: 'Diseñado & Desarrollado por Alex Alvarez',
+                    footer2: '© 2025 ALL RIGHTS RESERVED'
+                }
+            },
+            en: {
+                nav: {
+                    home: '_HOME',
+                    about: '_ABOUT',
+                    experience: '_EXP',
+                    skills: '_STACK',
+                    contact: 'CONTACT_'
+                },
+                hero: {
+                    available: '● AVAILABLE FOR PROJECTS',
+                    description: 'Fullstack Developer passionate about technology, web programming and AI. Specialist in creating robust digital solutions and futuristic user experiences.',
+                    startSystem: 'START_SYSTEM',
+                    phrases: ['FullStack Developer', 'UI/UX Designer', '.NET Specialist', 'Tech Enthusiast']
+                },
+                about: {
+                    title: 'PROFILE_',
+                    text1: 'Hi, I\'m Alex. Currently working as a <span class="text-cyber-primary font-bold">FullStack Developer</span> with over five years of experience creating web and mobile solutions with React, Blazor, NodeJS and .NET Core 8.',
+                    text2: 'I have collaborated with companies like <span class="text-cyber-secondary font-bold">Experian</span>, <span class="text-cyber-secondary font-bold">Bella Aurora Labs</span> and <span class="text-cyber-secondary font-bold">Capitole</span>, developing scalable and intuitive applications.',
+                    text3: 'Located in Barcelona, I am always open to collaborate on new opportunities that challenge my technical skills.',
+                    softSkillsTitle: 'Soft_Skills.json',
+                    skill1: 'Continuous Learning',
+                    skill2: 'Problem Solving',
+                    skill3: 'Teamwork',
+                    skill4: 'Effective Communication',
+                    skill5: 'Proactivity'
+                },
+                experience: {
+                    title: 'SYSTEM_HISTORY',
+                    job1: {
+                        title: 'FullStack Developer',
+                        company: 'Capitole Consulting · Full-time',
+                        description: 'Web application development for Experian using Blazor and .NET 8. Feature implementation, UX/UI improvements and collaboration with international teams under Scrum methodology in CI/CD environments.'
+                    },
+                    job2: {
+                        title: 'FullStack Web Developer',
+                        company: 'Bella Aurora Labs S.A. · Full-time',
+                        description: 'FullStack development of internal web applications using .NET 8 and Blazor. Application migration, API implementation and work with LLMs under Scrum methodology.'
+                    },
+                    job3: {
+                        title: 'FullStack Developer',
+                        company: 'DAITEC Engineering',
+                        description: 'Comprehensive development of web applications and industrial software. Implementation of FullStack solutions using .NET technologies and modern frontend frameworks.'
+                    },
+                    job4: {
+                        title: 'Programming Teacher',
+                        company: 'Adecco · Part-time',
+                        description: 'Teaching courses in Unity 3D game programming, virtual reality and augmented reality. Creation of educational materials, mentoring and monitoring students in their technical training process.'
+                    },
+                    job5: {
+                        title: '.NET / Web Developer',
+                        company: 'SECPHO',
+                        description: 'Maintenance and development of internal applications. Database management and backend development with C#. Collaboration on technological innovation projects.'
+                    },
+                    job6: {
+                        title: 'FrontEnd Developer (Internship)',
+                        company: 'ITAILORED APP&WEB SL',
+                        description: 'First professional contact with web development. Layout and client-side logic for web applications.'
+                    }
+                },
+                skills: {
+                    title: 'TECH_STACK_'
+                },
+                projects: {
+                    title: 'FEATURED_PROJECTS',
+                    project1: {
+                        title: 'Other People Records - React Web',
+                        description: 'Landing page for record label with full Spotify API integration. Artist, album and event management system with Auth0 authentication and modern responsive design.'
+                    },
+                    project2: {
+                        title: 'Fincas Trimar - Real Estate Portal',
+                        description: 'Complete web portal for real estate company with property catalog, advanced filters, admin panel, Auth0, image management with ImgBB and email notifications.'
+                    },
+                    project3: {
+                        title: 'HomeScrapper - Idealista Property Scraper',
+                        description: 'Advanced web scraper for Idealista with intelligent filtering of individuals vs real estate agencies. Uses Chrome DevTools Protocol (CDP) to avoid detection, automatic multi-page processing and complete data extraction including contact phone numbers.'
+                    }
+                },
+                contact: {
+                    title: 'READY TO COLLABORATE?',
+                    description: 'I am currently open to new opportunities. Whether you have a question or just want to say hi, my inbox is always open.',
+                    sendMessage: 'SEND_MESSAGE',
+                    footer1: 'Designed & Developed by Alex Alvarez',
+                    footer2: '© 2025 ALL RIGHTS RESERVED'
+                }
+            },
+            ca: {
+                nav: {
+                    home: '_INICI',
+                    about: '_SOBRE_MI',
+                    experience: '_EXP',
+                    skills: '_STACK',
+                    contact: 'CONTACTAR_'
+                },
+                hero: {
+                    available: '● DISPONIBLE PER PROJECTES',
+                    description: 'Desenvolupador Fullstack apassionat per la tecnologia, la programació web i la IA. Especialista en crear solucions digitals robustes i experiències d\'usuari futuristes.',
+                    startSystem: 'INICIAR_SISTEMA',
+                    phrases: ['Desenvolupador FullStack', 'Dissenyador UI/UX', 'Especialista .NET', 'Entusiasta Tech']
+                },
+                about: {
+                    title: 'PERFIL_',
+                    text1: 'Hola, sóc Alex. Actualment treballo com a <span class="text-cyber-primary font-bold">FullStack Developer</span> amb més de cinc anys d\'experiència creant solucions web i mòbils amb React, Blazor, NodeJS i .NET Core 8.',
+                    text2: 'He col·laborat amb companyies com <span class="text-cyber-secondary font-bold">Experian</span>, <span class="text-cyber-secondary font-bold">Bella Aurora Labs</span> i <span class="text-cyber-secondary font-bold">Capitole</span>, desenvolupant aplicacions escalables i intuïtives.',
+                    text3: 'Ubicat a Barcelona, sempre estic obert a col·laborar en noves oportunitats que desafiïn les meves habilitats tècniques.',
+                    softSkillsTitle: 'Soft_Skills.json',
+                    skill1: 'Aprenentatge Continu',
+                    skill2: 'Resolució de Problemes',
+                    skill3: 'Treball en Equip',
+                    skill4: 'Comunicació Efectiva',
+                    skill5: 'Proactivitat'
+                },
+                experience: {
+                    title: 'HISTORIAL_DE_SISTEMA',
+                    job1: {
+                        title: 'FullStack Developer',
+                        company: 'Capitole Consulting · Jornada completa',
+                        description: 'Desenvolupament d\'aplicacions web per Experian utilitzant Blazor i .NET 8. Implementació de features, millores de UX/UI i col·laboració amb equips internacionals sota metodologia Scrum en entorns CI/CD.'
+                    },
+                    job2: {
+                        title: 'FullStack Web Developer',
+                        company: 'Bella Aurora Labs S.A. · Jornada completa',
+                        description: 'Desenvolupament FullStack d\'aplicacions web internes utilitzant .NET 8 i Blazor. Migració d\'aplicacions, implementació d\'APIs i treball amb LLMs sota metodologia Scrum.'
+                    },
+                    job3: {
+                        title: 'FullStack Developer',
+                        company: 'DAITEC Engineering',
+                        description: 'Desenvolupament integral d\'aplicacions web i programari industrial. Implementació de solucions FullStack utilitzant tecnologies .NET i frameworks moderns de frontend.'
+                    },
+                    job4: {
+                        title: 'Professor de Programació',
+                        company: 'Adecco · Jornada parcial',
+                        description: 'Impartició de cursos de programació de videojocs en Unity 3D, realitat virtual i realitat augmentada. Creació de materials didàctics, mentoria i seguiment d\'estudiants en el seu procés de formació tècnica.'
+                    },
+                    job5: {
+                        title: '.NET / Web Developer',
+                        company: 'SECPHO',
+                        description: 'Manteniment i desenvolupament d\'aplicacions internes. Gestió de bases de dades i desenvolupament backend amb C#. Col·laboració en projectes d\'innovació tecnològica.'
+                    },
+                    job6: {
+                        title: 'FrontEnd Developer (Pràctiques)',
+                        company: 'ITAILORED APP&WEB SL',
+                        description: 'Primer contacte professional amb el desenvolupament web. Maquetació i lògica de client per aplicacions web.'
+                    }
+                },
+                skills: {
+                    title: 'TECH_STACK_'
+                },
+                projects: {
+                    title: 'PROJECTES_DESTACATS',
+                    project1: {
+                        title: 'Other People Records - Web React',
+                        description: 'Landing page per segell discogràfic amb integració completa de Spotify API. Sistema de gestió d\'artistes, àlbums i esdeveniments amb autenticació Auth0 i disseny responsive modern.'
+                    },
+                    project2: {
+                        title: 'Fincas Trimar - Portal Immobiliari',
+                        description: 'Portal web complet per immobiliària amb catàleg d\'habitatges, filtres avançats, panell d\'administració, Auth0, gestió d\'imatges amb ImgBB i notificacions per email.'
+                    },
+                    project3: {
+                        title: 'HomeScrapper - Idealista Property Scraper',
+                        description: 'Web scraper avançat per Idealista amb filtratge intel·ligent de particulars vs immobiliàries. Utilitza Chrome DevTools Protocol (CDP) per evitar detecció, processament automàtic de múltiples pàgines i extracció completa de dades incloent telèfons de contacte.'
+                    }
+                },
+                contact: {
+                    title: 'PREPARAT PER COL·LABORAR?',
+                    description: 'Actualment estic obert a noves oportunitats. Tant si tens una pregunta com si simplement vols saludar, la meva bústia sempre està oberta.',
+                    sendMessage: 'ENVIAR_MISSATGE',
+                    footer1: 'Dissenyat i Desenvolupat per Alex Alvarez',
+                    footer2: '© 2025 TOTS ELS DRETS RESERVATS'
+                }
+            }
+        };
+
+        // Language toggle menu
+        const langBtn = document.getElementById('lang-btn');
+        const langMenu = document.getElementById('lang-menu');
+        
+        if (langBtn && langMenu) {
+            langBtn.addEventListener('click', () => {
+                langMenu.classList.toggle('hidden');
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+                    langMenu.classList.add('hidden');
+                }
+            });
+        }
+
+        // Change language function
+        function changeLanguage(lang) {
+            localStorage.setItem('preferredLanguage', lang);
+            document.getElementById('current-lang').textContent = lang.toUpperCase();
+            document.getElementById('mobile-lang').value = lang;
+            
+            // Update current language for robot comments
+            currentLanguage = lang;
+            
+            // Update typewriter phrases
+            phrases = translations[lang].hero.phrases;
+            
+            // Apply translations
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const keys = elem.getAttribute('data-i18n').split('.');
+                let translation = translations[lang];
+                keys.forEach(key => translation = translation[key]);
+                
+                // Use innerHTML for elements with HTML content (about paragraphs)
+                const htmlElements = ['about-text1', 'about-text2', 'about-text3'];
+                if (htmlElements.includes(elem.id)) {
+                    elem.innerHTML = translation;
+                } else {
+                    elem.textContent = translation;
+                }
+            });
+            
+            // Reinitialize robot comments with new language
+            initRobotComments();
+            
+            // Close language menu
+            if (langMenu) langMenu.classList.add('hidden');
+        }
+
+        // Load saved language or detect browser language
+        function detectBrowserLanguage() {
+            const browserLang = navigator.language || navigator.userLanguage;
+            const langCode = browserLang.toLowerCase().split('-')[0];
+            
+            // Map browser language to supported languages
+            if (langCode === 'es' || langCode === 'ca' || langCode === 'en') {
+                return langCode;
+            }
+            
+            // Default to English if not supported
+            return 'en';
+        }
+        
+        const savedLang = localStorage.getItem('preferredLanguage') || detectBrowserLanguage();
+        currentLanguage = savedLang;
+        changeLanguage(savedLang);
 
     </script>
 </body>
