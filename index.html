@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alex Alvarez Almendros | Fullstack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            black: '#050505',
+                            dark: '#0a0a0a',
+                            gray: '#121212',
+                            primary: '#00f3ff', // Cian Neón
+                            secondary: '#bc13fe', // Púrpura Neón
+                            accent: '#0aff00', // Verde Matrix
+                        }
+                    },
+                    fontFamily: {
+                        mono: ['"Fira Code"', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glitch': 'glitch 1s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glitch: {
+                            '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                            '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                            '62%': { transform: 'translate(0,0) skew(5deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;600&family=Inter:wght@300;400;700&display=swap');
+
+        body {
+            background-color: #050505;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Ocultar cursor del sistema en todos los elementos interactivos */
+        a, button, .cursor-pointer, [role="button"] {
+            cursor: none !important;
+        }
+
+        /* Scrollbar Personalizado */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f3ff;
+        }
+
+        /* Efectos de Neón */
+        .neon-text {
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.5);
+        }
+        .neon-box {
+            box-shadow: 0 0 5px rgba(0, 243, 255, 0.2), inset 0 0 10px rgba(0, 243, 255, 0.1);
+            border: 1px solid rgba(0, 243, 255, 0.3);
+        }
+        .neon-box:hover {
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.4), inset 0 0 20px rgba(0, 243, 255, 0.2);
+            border-color: #00f3ff;
+        }
+
+        .neon-purple-text {
+            text-shadow: 0 0 10px rgba(188, 19, 254, 0.7);
+        }
+        .neon-border-purple:hover {
+            border-color: #bc13fe;
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.4);
+        }
+
+        /* Fondo de rejilla */
+        .grid-bg {
+            background-image: linear-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: center center;
+        }
+
+        /* Utilidades */
+        .glass {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        
+        /* Cursor personalizado */
+        .custom-cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #00f3ff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.05s;
+            mix-blend-mode: difference;
+        }
+        
+        .cursor-dot {
+            width: 4px;
+            height: 4px;
+            background: #0aff00;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            
+        }
+
+        /* Animación de typing para el código */
+        @keyframes typing {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        .code-line {
+            opacity: 0;
+            animation: typing 8s ease-in-out infinite;
+        }
+        
+        .code-line:nth-child(1) { animation-delay: 0s; }
+        .code-line:nth-child(2) { animation-delay: 0.5s; }
+        .code-line:nth-child(3) { animation-delay: 1s; }
+        .code-line:nth-child(4) { animation-delay: 1.5s; }
+        .code-line:nth-child(5) { animation-delay: 2s; }
+        .code-line:nth-child(6) { animation-delay: 2.5s; }
+        .code-line:nth-child(7) { animation-delay: 3s; }
+        .code-line:nth-child(8) { animation-delay: 3.5s; }
+        .code-line:nth-child(9) { animation-delay: 4s; }
+        .code-line:nth-child(10) { animation-delay: 4.5s; }
+
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-cyber-primary selection:text-black relative">
+
+    <!-- Cursores (JS los moverá) -->
+    <div id="cursor" class="custom-cursor hidden md:block"></div>
+    <div id="cursor-dot" class="cursor-dot hidden md:block"></div>
+
+    <!-- Background Grid -->
+    <div class="fixed inset-0 grid-bg z-[-1] pointer-events-none"></div>
+    
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-cyber-primary font-mono text-base sm:text-xl font-bold tracking-widest">&lt;ALEX_ALVAREZ_DEV/&gt;</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8 font-mono text-sm">
+                        <a href="#home" class="hover:text-cyber-primary transition-colors duration-300">_INICIO</a>
+                        <a href="#about" class="hover:text-cyber-primary transition-colors duration-300">_SOBRE_MI</a>
+                        <a href="#experience" class="hover:text-cyber-primary transition-colors duration-300">_EXP</a>
+                        <a href="#skills" class="hover:text-cyber-primary transition-colors duration-300">_STACK</a>
+                        <a href="#contact" class="px-4 py-2 border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 rounded-sm">
+                            CONTACTAR_
+                        </a>
+                    </div>
+                </div>
+                <!-- Mobile menu -->
+                <div class="md:hidden">
+                    <a href="#contact" class="px-3 py-1.5 text-xs border border-cyber-primary text-cyber-primary hover:bg-cyber-primary hover:text-black transition-all duration-300 rounded-sm font-mono">
+                        CONTACTO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative pt-16">
+        <div class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
+            
+            <!-- Texto Hero -->
+            <div class="md:w-1/2 text-left z-10">
+                <div class="inline-block px-3 py-1.5 mb-4 mt-4 border border-cyber-secondary rounded-full bg-opacity-10 bg-purple-900">
+                    <span class="text-cyber-secondary font-mono text-xs sm:text-sm">● DISPONIBLE PARA PROYECTOS</span>
+                </div>
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-bold mb-4 leading-tight break-words">
+                    ALEX ALVAREZ<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-primary to-cyber-secondary glitch-text">ALMENDROS</span>
+                </h1>
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-mono text-gray-400 mb-6 flex items-center flex-wrap">
+                    <span class="text-cyber-accent mr-2">></span>
+                    <span id="typewriter" class="break-words"></span><span class="animate-pulse">_</span>
+                </h2>
+                <p class="text-sm sm:text-base text-gray-400 max-w-lg mb-8 leading-relaxed">
+                    Desarrollador Fullstack apasionado por la tecnología, la programación web y la IA. Especialista en crear soluciones digitales robustas y experiencias de usuario futuristas.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                    <a href="#contact" class="group relative px-6 py-3 font-mono font-bold text-black transition-all duration-300 bg-cyber-primary hover:bg-white overflow-hidden text-center text-sm sm:text-base">
+                        <span class="relative z-10">INICIAR_SISTEMA</span>
+                        <div class="absolute inset-0 h-full w-full scale-0 rounded transition-all duration-300 group-hover:scale-100 group-hover:bg-white/30"></div>
+                    </a>
+                    <a href="https://github.com/AlexAlvarezAlmendros" target="_blank" class="px-6 py-3 font-mono font-bold text-cyber-primary border border-cyber-primary hover:bg-cyber-primary/10 transition-all duration-300 flex items-center justify-center gap-2 text-sm sm:text-base">
+                        GITHUB
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Elemento Interactivo (Robot) -->
+            <div class="md:w-1/2 flex justify-center items-center md:mt-0 relative h-[400px]">
+                <!-- Interactive Drone SVG -->
+                <div id="drone-container" class="animate-float w-64 h-64 md:w-80 md:h-80 cursor-pointer transition-all duration-1000 ease-out" style="position: fixed; z-index: 40;">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full filter drop-shadow-[0_0_15px_rgba(0,243,255,0.5)]">
+                        <!-- Body -->
+                        <path d="M60 90 L140 90 L160 110 L140 150 L60 150 L40 110 Z" fill="#0a0a0a" stroke="#00f3ff" stroke-width="2"/>
+                        <!-- Inner Details -->
+                        <path d="M65 95 L135 95 L145 110 L135 140 L65 140 L55 110 Z" fill="#121212" stroke="#00f3ff" stroke-width="1" opacity="0.5"/>
+                        
+                        <!-- Eyes Container -->
+                        <g id="eyes-group">
+                            <!-- Left Eye -->
+                            <rect x="70" y="110" width="20" height="10" rx="2" fill="#000" stroke="#00f3ff" stroke-width="1"/>
+                            <rect id="eye-left" x="75" y="112" width="6" height="6" fill="#00f3ff"/>
+                            
+                            <!-- Right Eye -->
+                            <rect x="110" y="110" width="20" height="10" rx="2" fill="#000" stroke="#00f3ff" stroke-width="1"/>
+                            <rect id="eye-right" x="115" y="112" width="6" height="6" fill="#00f3ff"/>
+                        </g>
+
+                        <!-- Mouth -->
+                        <g id="mouth-group">
+                            <!-- Mouth closed (default) -->
+                            <line id="mouth-closed" x1="80" y1="130" x2="120" y2="130" stroke="#00f3ff" stroke-width="2" stroke-linecap="round"/>
+                            
+                            <!-- Mouth talking (hidden by default) -->
+                            <g id="mouth-talking" opacity="0">
+                                <path d="M 80 130 Q 85 135 90 130 T 100 130 T 110 130 T 120 130" fill="none" stroke="#00f3ff" stroke-width="2" stroke-linecap="round">
+                                    <animate id="mouth-anim" attributeName="d" 
+                                        values="M 80 130 Q 85 135 90 130 T 100 130 T 110 130 T 120 130;
+                                                M 80 130 Q 85 125 90 130 T 100 130 T 110 130 T 120 130;
+                                                M 80 130 Q 85 135 90 130 T 100 130 T 110 130 T 120 130" 
+                                        dur="0.3s" 
+                                        repeatCount="indefinite"
+                                        begin="indefinite"/>
+                                </path>
+                            </g>
+                        </g>
+
+                        <!-- Antenna -->
+                        <line x1="100" y1="90" x2="100" y2="60" stroke="#00f3ff" stroke-width="2"/>
+                        <circle cx="100" cy="55" r="5" fill="#bc13fe" class="animate-pulse">
+                            <animate attributeName="r" values="5;8;5" dur="1s" repeatCount="indefinite"/>
+                        </circle>
+                        <circle cx="100" cy="55" r="8" fill="none" stroke="#bc13fe" stroke-width="1" opacity="0.6">
+                            <animate attributeName="r" values="8;12;8" dur="1s" repeatCount="indefinite"/>
+                            <animate attributeName="opacity" values="0.6;0;0.6" dur="1s" repeatCount="indefinite"/>
+                        </circle>
+
+                        <!-- Wings/Rotors -->
+                        <g class="animate-spin origin-center" style="animation-duration: 2s;">
+                            <!-- Rotor izquierdo -->
+                            <line x1="30" y1="110" x2="10" y2="100" stroke="#00f3ff" stroke-width="2" opacity="0.7"/>
+                            <line x1="30" y1="110" x2="15" y2="120" stroke="#00f3ff" stroke-width="2" opacity="0.5"/>
+                            <line x1="30" y1="110" x2="12" y2="110" stroke="#00f3ff" stroke-width="2" opacity="0.6"/>
+                            <circle cx="30" cy="110" r="3" fill="#bc13fe" opacity="0.8"/>
+                            
+                            <!-- Rotor derecho -->
+                            <line x1="170" y1="110" x2="190" y2="100" stroke="#00f3ff" stroke-width="2" opacity="0.7"/>
+                            <line x1="170" y1="110" x2="185" y2="120" stroke="#00f3ff" stroke-width="2" opacity="0.5"/>
+                            <line x1="170" y1="110" x2="188" y2="110" stroke="#00f3ff" stroke-width="2" opacity="0.6"/>
+                            <circle cx="170" cy="110" r="3" fill="#bc13fe" opacity="0.8"/>
+                        </g>
+                    </svg>
+                    
+                    <!-- Console Output (Hidden by default) -->
+                    <div id="robot-msg" class="absolute top-full mt-4 left-1/2 transform -translate-x-1/2 bg-black border-2 border-cyber-primary text-cyber-primary font-mono text-xs py-3 px-4 rounded opacity-0 transition-opacity duration-300 pointer-events-none shadow-[0_0_20px_rgba(0,243,255,0.3)] min-w-[320px] max-w-[500px]">
+                        <div class="flex items-center gap-2 mb-2 text-[10px] text-gray-500">
+                            <span class="text-cyber-accent">●</span>
+                            <span class="text-cyber-secondary">●</span>
+                            <span class="text-yellow-400">●</span>
+                            <span class="ml-2">AlexBot Terminal v1.0</span>
+                        </div>
+                        <div class="border-t border-gray-800 pt-2">
+                            <span class="text-cyber-accent">></span> <span id="robot-msg-text">Hola, soy AlexBot v1.0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Code decoration behind -->
+                <div class="absolute -z-10 text-cyber-primary opacity-30 font-mono text-xs select-none">
+                    <pre><span class="code-line">class Dev extends Human {</span>
+<span class="code-line">  constructor() {</span>
+<span class="code-line">    this.skills = ['C#', '.NET', 'React'];</span>
+<span class="code-line">    this.coffee = true;</span>
+<span class="code-line">  }</span>
+<span class="code-line">  code() {</span>
+<span class="code-line">    while(alive) {</span>
+<span class="code-line">      learn();</span>
+<span class="code-line">      build();</span>
+<span class="code-line">    }</span>
+<span class="code-line">  }</span>
+<span class="code-line">}</span></pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-8 flex items-center">
+                <span class="text-cyber-primary mr-2">01.</span> PERFIL_
+                <span class="h-px bg-gray-800 flex-grow ml-4"></span>
+            </h2>
+            <div class="grid md:grid-cols-2 gap-10">
+                <div class="font-light text-gray-300 space-y-4 text-justify">
+                    <p>
+                        Hola, soy Alex. Actualmente trabajo como <span class="text-cyber-primary font-bold">FullStack Developer</span> con más de cinco años de experiencia creando soluciones web y móviles con React, Blazor, NodeJS y .NET Core 8.
+                    </p>
+                    <p>
+                        He colaborado con compañías como <span class="text-cyber-secondary font-bold">Experian</span>, <span class="text-cyber-secondary font-bold">Bella Aurora Labs</span> y <span class="text-cyber-secondary font-bold">Capitole</span>, desarrollando aplicaciones escalables e intuitivas. 
+                    </p>
+                    <p>
+                        Ubicado en Barcelona, estoy siempre abierto a colaborar en nuevas oportunidades que desafíen mis habilidades técnicas.
+                    </p>
+                </div>
+                <div class="neon-box p-6 bg-cyber-gray/50 rounded-lg relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyber-primary to-cyber-secondary"></div>
+                    <h3 class="font-mono text-xl mb-4 text-white">Soft_Skills.json</h3>
+                    <ul class="space-y-2 font-mono text-sm text-gray-400">
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Aprendizaje Continuo</li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Resolución de Problemas</li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Trabajo en Equipo</li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Comunicación Efectiva</li>
+                        <li class="flex items-center"><span class="text-cyber-accent mr-2">+</span> Proactividad</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="py-20 bg-cyber-dark/50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-12 flex items-center justify-end flex-wrap gap-2">
+                <span class="h-px bg-gray-800 flex-grow mr-4 hidden sm:block"></span>
+                <span class="break-words">HISTORIAL_DE_SISTEMA</span> <span class="text-cyber-primary">02.</span>
+            </h2>
+
+            <div class="relative border-l-2 border-gray-800 ml-4 md:ml-0 md:pl-0 space-y-12">
+                
+                <!-- Timeline Item 1 -->
+                <div class="relative pl-8 md:pl-0 md:grid md:grid-cols-5 items-start group">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyan-400 group-hover:bg-cyan-400 transition-colors"></div>
+                    <div class="md:col-span-1 text-sm font-mono text-cyan-400 mb-2 md:mb-0 md:text-right md:pr-8">
+                        SEP 2024 - PRESENTE
+                    </div>
+                    <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-cyan-400/30 hover:border-cyan-400 hover:bg-cyber-gray/50 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-1">FullStack Web Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">Capitole · Jornada completa</h4>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Desarrollo de soluciones para distintos clientes en frontend y backend. Uso de .NET, JavaScript, Blazor y React para crear aplicaciones robustas y escalables. Colaboración con equipos multidisciplinares bajo metodologías ágiles.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyan-400">.NET</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyan-400">React</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyan-400">Blazor</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyan-400">NodeJS</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyan-400">LLMOps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 2 -->
+                 <div class="relative pl-8 md:pl-0 md:grid md:grid-cols-5 items-start group">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-purple-500 group-hover:bg-purple-500 transition-colors"></div>
+                    <div class="md:col-span-1 text-sm font-mono text-purple-400 mb-2 md:mb-0 md:text-right md:pr-8">
+                        MAY 2024 - SEP 2024
+                    </div>
+                    <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-purple-500/30 hover:border-purple-500 hover:bg-cyber-gray/50 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-1">FullStack Web Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">Bella Aurora Labs S.A. · Jornada completa</h4>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Desarrollo FullStack de aplicaciones web internas utilizando .NET 8 y Blazor. Migración de aplicaciones, implementación de APIs y trabajo con LLMs bajo metodología Scrum.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-purple-400">.NET</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-purple-400">Blazor</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-purple-400">React</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-purple-400">LLMOps</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <!-- Timeline Item 3 -->
+                <div class="relative pl-8 md:pl-0 md:grid md:grid-cols-5 items-start group">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-primary group-hover:bg-cyber-primary transition-colors"></div>
+                    <div class="md:col-span-1 text-sm font-mono text-cyber-primary mb-2 md:mb-0 md:text-right md:pr-8">
+                        JUN 2023 - MAY 2024
+                    </div>
+                    <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 hover:bg-cyber-gray/50 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-1">FullStack Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">DAITEC Engineering</h4>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Desarrollo integral de aplicaciones web y software industrial. Implementación de soluciones FullStack utilizando tecnologías .NET y frameworks modernos de frontend.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-primary">.NET</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-primary">SQL</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-primary">IoT</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-primary">LLMOps</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 4 -->
+                <div class="relative pl-8 md:pl-0 md:grid md:grid-cols-5 items-start group">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-accent group-hover:bg-cyber-accent transition-colors"></div>
+                    <div class="md:col-span-1 text-sm font-mono text-cyber-accent mb-2 md:mb-0 md:text-right md:pr-8">
+                        OCT 2022 - ABR 2023
+                    </div>
+                    <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-cyber-accent/30 hover:border-cyber-accent hover:bg-cyber-gray/50 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-1">Profesor de Programación</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">Adecco · Jornada parcial</h4>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Impartición de cursos de programación de videojuegos en Unity 3D, realidad virtual y realidad aumentada. Creación de materiales didácticos, mentoría y seguimiento de estudiantes en su proceso de formación técnica.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-accent">Unity 3D</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-accent">C#</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-accent">VR/AR</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-accent">Docencia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 5 -->
+                <div class="relative pl-8 md:pl-0 md:grid md:grid-cols-5 items-start group">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-cyber-secondary group-hover:bg-cyber-secondary transition-colors"></div>
+                    <div class="md:col-span-1 text-sm font-mono text-cyber-secondary mb-2 md:mb-0 md:text-right md:pr-8">
+                        DIC 2020 - SEP 2022
+                    </div>
+                    <div class="md:col-span-4 neon-box p-6 rounded bg-cyber-black/80 border-cyber-secondary/30 hover:border-cyber-secondary hover:bg-cyber-gray/50 transition-all duration-300">
+                        <h3 class="text-xl font-bold text-white mb-1">.NET / Web Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">SECPHO</h4>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Mantenimiento y desarrollo de aplicaciones internas. Gestión de bases de datos y desarrollo backend con C#. Colaboración en proyectos de innovación tecnológica.
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-secondary">JavaScript</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-secondary">React</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-secondary">Express</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-secondary">NodeJS</span>
+                            <span class="px-2 py-1 text-xs font-mono border border-gray-700 rounded text-cyber-secondary">DBA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Item 6 -->
+                <div class="relative pl-8 md:pl-0 md:grid md:grid-cols-5 items-start group">
+                    <div class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-cyber-black border-2 border-gray-600 group-hover:bg-gray-400 transition-colors"></div>
+                    <div class="md:col-span-1 text-sm font-mono text-gray-500 mb-2 md:mb-0 md:text-right md:pr-8">
+                        ENE 2018 - ABR 2018
+                    </div>
+                    <div class="md:col-span-4 p-6 rounded border border-gray-800 bg-cyber-black/40">
+                        <h3 class="text-xl font-bold text-gray-300 mb-1">FrontEnd Developer (Prácticas)</h3>
+                        <h4 class="text-lg text-gray-500 mb-4">ITAILORED APP&WEB SL</h4>
+                        <p class="text-gray-500 text-sm">
+                            Primer contacto profesional con el desarrollo web. Maquetación y lógica de cliente para aplicaciones web.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-12 text-center">
+                <span class="text-cyber-primary">03.</span> TECH_STACK_
+            </h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Skill Card -->
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-cyber-primary hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-cyber-primary transition-colors">#</div>
+                    <h3 class="font-bold font-mono">Express / .NET</h3>
+                    <p class="text-xs text-gray-500 mt-2">Core Development</p>
+                </div>
+
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-cyber-accent hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-cyber-accent transition-colors">&lt;/&gt;</div>
+                    <h3 class="font-bold font-mono">Blazor / React</h3>
+                    <p class="text-xs text-gray-500 mt-2">Frontend</p>
+                </div>
+
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-yellow-400 hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-yellow-400 transition-colors">JS</div>
+                    <h3 class="font-bold font-mono">JavaScript</h3>
+                    <p class="text-xs text-gray-500 mt-2">Interactivity</p>
+                </div>
+
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-blue-500 hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-blue-500 transition-colors">DB</div>
+                    <h3 class="font-bold font-mono">SQL / NoSQL</h3>
+                    <p class="text-xs text-gray-500 mt-2">Data Management</p>
+                </div>
+
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-orange-500 hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-orange-500 transition-colors">GIT</div>
+                    <h3 class="font-bold font-mono">Git / DevOps</h3>
+                    <p class="text-xs text-gray-500 mt-2">Version Control</p>
+                </div>
+
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-cyber-secondary hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-cyber-secondary transition-colors">API</div>
+                    <h3 class="font-bold font-mono">RESTful APIs</h3>
+                    <p class="text-xs text-gray-500 mt-2">Connectivity</p>
+                </div>
+                
+                 <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-teal-400 hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-teal-400 transition-colors">IoT</div>
+                    <h3 class="font-bold font-mono">IoT / N8N</h3>
+                    <p class="text-xs text-gray-500 mt-2">Automation</p>
+                </div>
+
+                <div class="p-6 bg-cyber-gray rounded border border-gray-800 hover:border-purple-500 hover:-translate-y-2 transition-all duration-300 group text-center">
+                    <div class="text-4xl mb-3 group-hover:text-purple-500 transition-colors">UX</div>
+                    <h3 class="font-bold font-mono">UX / UI</h3>
+                    <p class="text-xs text-gray-500 mt-2">Design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Placeholder (Simulated) -->
+    <section class="py-20 bg-cyber-dark relative overflow-hidden">
+        <!-- Decoration Line -->
+        <div class="absolute top-0 w-full h-px bg-gradient-to-r from-transparent via-cyber-primary to-transparent opacity-30"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-12 flex items-center flex-wrap">
+                <span class="text-cyber-primary mr-2">04.</span> <span class="break-words">PROYECTOS_DESTACADOS</span>
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <a href="https://github.com/AlexAlvarezAlmendros/ReactOtpWeb" target="_blank" class="group relative bg-cyber-black rounded-lg overflow-hidden border border-gray-800 hover:border-cyber-primary transition-all duration-500">
+                    <div class="h-48 bg-gradient-to-br from-purple-900/20 to-cyber-primary/10 flex items-center justify-center relative overflow-hidden">
+                         <div class="absolute inset-0 bg-cyber-primary/10 group-hover:bg-cyber-primary/20 transition-all"></div>
+                         <div class="relative z-10 text-center">
+                             <div class="text-6xl mb-2">🎵</div>
+                             <div class="font-mono text-xs text-cyber-primary">otherpeople.es</div>
+                         </div>
+                         <div class="absolute bottom-2 right-2 font-mono text-xs bg-black px-2 py-1 text-cyber-primary rounded flex items-center gap-1">
+                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16">
+                                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                             </svg>
+                             PUBLIC REPO
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-primary transition-colors">Other People Records - Web React</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Landing page para sello discográfico con integración completa de Spotify API. Sistema de gestión de artistas, álbumes y eventos con autenticación Auth0 y diseño responsive moderno.
+                        </p>
+                        <ul class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                            <li class="px-2 py-1 bg-gray-800 rounded">React 19</li>
+                            <li class="px-2 py-1 bg-gray-800 rounded">Vite</li>
+                            <li class="px-2 py-1 bg-gray-800 rounded">Spotify API</li>
+                            <li class="px-2 py-1 bg-gray-800 rounded">Auth0</li>
+                        </ul>
+                    </div>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="https://github.com/AlexAlvarezAlmendros/FincasTrimarWeb" target="_blank" class="group relative bg-cyber-black rounded-lg overflow-hidden border border-gray-800 hover:border-cyber-secondary transition-all duration-500">
+                    <div class="h-48 bg-gradient-to-br from-blue-900/20 to-cyan-900/20 flex items-center justify-center relative overflow-hidden">
+                         <div class="absolute inset-0 bg-cyber-secondary/10 group-hover:bg-cyber-secondary/20 transition-all"></div>
+                         <div class="relative z-10 text-center">
+                             <div class="text-6xl mb-2">🏠</div>
+                             <div class="font-mono text-xs text-cyber-secondary">fincastrimar.com</div>
+                         </div>
+                         <div class="absolute bottom-2 right-2 font-mono text-xs bg-black px-2 py-1 text-cyber-secondary rounded flex items-center gap-1">
+                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 16 16">
+                                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+                             </svg>
+                             PUBLIC REPO
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-cyber-secondary transition-colors">Fincas Trimar - Portal Inmobiliario</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Portal web completo para inmobiliaria con catálogo de viviendas, filtros avanzados, panel de administración, Auth0, gestión de imágenes con ImgBB y notificaciones por email.
+                        </p>
+                        <ul class="flex flex-wrap gap-2 text-xs font-mono text-gray-500">
+                            <li class="px-2 py-1 bg-gray-800 rounded">React 18</li>
+                            <li class="px-2 py-1 bg-gray-800 rounded">Node.js</li>
+                            <li class="px-2 py-1 bg-gray-800 rounded">Turso/SQLite</li>
+                            <li class="px-2 py-1 bg-gray-800 rounded">Auth0</li>
+                        </ul>
+                    </div>
+                </a>
+
+                <!-- Project 3 - HomeScrapper 
+                <a href="https://github.com/AlexAlvarezAlmendros/HomeScrapper" target="_blank" class="group relative bg-cyber-black rounded-lg overflow-hidden border border-gray-800 hover:border-cyber-accent transition-all duration-500">
+                    <div class="h-48 bg-gradient-to-br from-green-900/20 to-lime-900/20 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-6xl mb-2">🕷️</div>
+                        </div>
+                        <div class="absolute bottom-4 left-4 font-mono text-xs text-cyber-accent">idealista.com</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyber-accent transition-colors">HomeScrapper - Idealista Property Scraper</h3>
+                        <p class="text-gray-400 mb-4 text-sm leading-relaxed">
+                            Web scraper avanzado para Idealista con filtrado inteligente de particulares vs inmobiliarias. Usa Chrome DevTools Protocol (CDP) para evitar detección, procesamiento automático de múltiples páginas y extracción completa de datos incluyendo teléfonos de contacto.
+                        </p>
+                        <ul class="flex flex-wrap gap-2">
+                            <li class="text-xs px-2 py-1 bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/30 rounded">Python</li>
+                            <li class="text-xs px-2 py-1 bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/30 rounded">Selenium</li>
+                            <li class="text-xs px-2 py-1 bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/30 rounded">BeautifulSoup4</li>
+                            <li class="text-xs px-2 py-1 bg-cyber-accent/20 text-cyber-accent border border-cyber-accent/30 rounded">Web Scraping</li>
+                        </ul>
+                    </div>
+                </a>-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <section id="contact" class="py-20 text-center relative">
+        <div class="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none overflow-hidden">
+            <h1 class="text-[15vw] font-bold text-gray-800 whitespace-nowrap">CONTACTO</h1>
+        </div>
+        
+        <div class="relative z-10 max-w-2xl mx-auto px-4">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-6 break-words">¿LISTO PARA COLABORAR?</h2>
+            <p class="text-gray-400 mb-8">
+                Actualmente estoy abierto a nuevas oportunidades. Ya sea que tengas una pregunta o simplemente quieras saludar, mi bandeja de entrada siempre está abierta.
+            </p>
+            
+            <div class="inline-flex flex-col gap-4">
+                <a href="mailto:contact@alexalvarez.dev" class="neon-box px-8 py-4 bg-cyber-black text-cyber-primary font-mono font-bold tracking-wider hover:bg-cyber-primary hover:text-black transition-all duration-300">
+                    ENVIAR_MENSAJE
+                </a>
+                
+                <div class="flex justify-center gap-6 mt-8">
+                    <a href="https://www.linkedin.com/in/alexalvarezalmendros/" target="_blank" class="text-gray-400 hover:text-cyber-primary transition-colors">
+                        <span class="sr-only">LinkedIn</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://github.com/AlexAlvarezAlmendros" target="_blank" class="text-gray-400 hover:text-cyber-primary transition-colors">
+                        <span class="sr-only">GitHub</span>
+                        <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    </a>
+                </div>
+                
+                <div class="mt-8 text-xs font-mono text-gray-600">
+                    <p>Diseñado & Desarrollado por Alex Alvarez</p>
+                    <p class="mt-2">© 2025 ALL RIGHTS RESERVED</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        // --- Custom Cursor ---
+        const cursor = document.getElementById('cursor');
+        const cursorDot = document.getElementById('cursor-dot');
+        const links = document.querySelectorAll('a, button, .cursor-pointer');
+
+        document.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            // Mover el punto central instantáneamente
+            cursorDot.style.left = `${posX}px`;
+            cursorDot.style.top = `${posY}px`;
+
+            // Mover el círculo exterior con un ligero retraso (efecto 'drag')
+            cursor.animate({
+                left: `${posX - 10}px`,
+                top: `${posY - 10}px`
+            }, { duration: 500, fill: "forwards" });
+        });
+
+        // Efecto hover en el cursor
+        links.forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'scale(1.5)';
+                cursor.style.borderColor = '#bc13fe';
+                cursorDot.style.background = '#bc13fe';
+            });
+            link.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'scale(1)';
+                cursor.style.borderColor = '#00f3ff';
+                cursorDot.style.background = '#0aff00';
+            });
+        });
+
+        // --- Typewriter Effect ---
+        const textElement = document.getElementById('typewriter');
+        const phrases = ['FullStack Developer', 'UI/UX Designer', '.NET Specialist', 'Tech Enthusiast'];
+        let phraseIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let typeSpeed = 100;
+
+        function type() {
+            const currentPhrase = phrases[phraseIndex];
+            
+            if (isDeleting) {
+                textElement.textContent = currentPhrase.substring(0, charIndex - 1);
+                charIndex--;
+                typeSpeed = 50;
+            } else {
+                textElement.textContent = currentPhrase.substring(0, charIndex + 1);
+                charIndex++;
+                typeSpeed = 100;
+            }
+
+            if (!isDeleting && charIndex === currentPhrase.length) {
+                isDeleting = true;
+                typeSpeed = 2000; // Pausa al final
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                phraseIndex = (phraseIndex + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        document.addEventListener('DOMContentLoaded', type);
+
+        // --- Robot Interactions ---
+        const drone = document.getElementById('drone-container');
+        const leftEye = document.getElementById('eye-left');
+        const rightEye = document.getElementById('eye-right');
+        const msg = document.getElementById('robot-msg');
+
+        // Ojos siguen al ratón
+        document.addEventListener('mousemove', (e) => {
+            const rect = drone.getBoundingClientRect();
+            const droneX = rect.left + rect.width / 2;
+            const droneY = rect.top + rect.height / 2;
+            
+            const angle = Math.atan2(e.clientY - droneY, e.clientX - droneX);
+            const move = 3; // Radio de movimiento de la pupila
+            
+            const x = Math.cos(angle) * move;
+            const y = Math.sin(angle) * move;
+
+            leftEye.setAttribute('transform', `translate(${x},${y})`);
+            rightEye.setAttribute('transform', `translate(${x},${y})`);
+        });
+
+        // Interacción al clic
+        drone.addEventListener('click', (e) => {
+            // Prevenir que el click mueva el robot
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Mostrar mensaje sin animación de pulse
+            const greetings = [
+                "¡Sistema online!",
+                "Compilando...",
+                "¡Hola, humano!",
+                "Esperando input..."
+            ];
+            msg.textContent = greetings[Math.floor(Math.random() * greetings.length)];
+            msg.style.opacity = 1;
+            
+            setTimeout(() => {
+                msg.style.opacity = 0;
+            }, 2000);
+        });
+
+        // --- Robot Comments on Hover ---
+        const robotComments = {
+            // Navegación
+            'a[href="#home"]': [
+                "return home;",
+                "127.0.0.1... ¡Home sweet home!"
+            ],
+            'a[href="#about"]': [
+                "Preparando perfil de usuario...",
+                "Console.log('Conociendo al humano...')"
+            ],
+            'a[href="#experience"]': [
+                "Cargando historial.exe",
+                "git log --all --pretty"
+            ],
+            'a[href="#skills"]': [
+                "npm list --depth=infinity",
+                "Inventario de superpoderes activado"
+            ],
+            'a[href="https://github.com/AlexAlvarezAlmendros"]': [
+                "Aquí es donde tengo guardadas todas mis memorias",
+                "git clone brain.git",
+                "El almacén de bugs y features ✨"
+            ],
+            'a[href="https://www.linkedin.com/in/alexalvarezalmendros/"]': [
+                "Red social para cyborgs profesionales",
+                "LinkedIn.connect()"
+            ],
+            'a[href="mailto:contact@alexalvarez.dev"]': [
+                "¡Ping! Esperando respuesta del servidor humano",
+                "SMTP ready to send(mensaje)",
+                "Protocolo de comunicación humano-robot activado"
+            ],
+            'a[href="#contact"]': [
+                "POST /contact HTTP/1.1",
+                "Iniciando secuencia de comunicación...",
+                "Abriendo canal de transmisión"
+            ],
+            // Proyectos
+            'a[href*="ReactOtpWeb"]': [
+                "Beep boop beats",
+                "Spotify.play()"
+            ],
+            'a[href*="FincasTrimarWeb"]': [
+                "Home.find()",
+                "Real estate en el mundo digital"
+            ],
+            'a[href*="HomeScrapper"]': [
+                "Spider mode: ON",
+                "Web scraping nivel: Ninja"
+            ],
+            // Soft Skills
+            '.neon-box li:nth-child(1)': [
+                "while(alive) { learn(); }",
+                "Actualización de firmware constante"
+            ],
+            '.neon-box li:nth-child(2)': [
+                "if(problema) { resolver(); }",
+                "ERROR 404: Problem not found... ¡Lo resolví!"
+            ],
+            '.neon-box li:nth-child(3)': [
+                "git pull team --rebase",
+                "Multiplayer mode: ENABLED"
+            ],
+            '.neon-box li:nth-child(4)': [
+                "console.log(mensaje_claro);",
+                "Traduciendo código a lenguaje humano..."
+            ],
+            '.neon-box li:nth-child(5)': [
+                "setInterval(iniciativa, 0);",
+                "Auto-start enabled"
+            ],
+            // Experiencias Laborales
+            'section#experience .group:nth-child(1)': [
+                "Capítulo actual: Construyendo el futuro",
+                "Status: COMPILANDO SOLUCIONES..."
+            ],
+            'section#experience .group:nth-child(2)': [
+                "Temporada de migración y evolución"
+            ],
+            'section#experience .group:nth-child(3)': [
+                "DAITEC: Internet de las Cosas Inteligentes",
+                "Conectando máquinas con el mundo digital"
+            ],
+            'section#experience .group:nth-child(4)': [
+                "Modo profesor: Transmitiendo conocimiento",
+                "Teaching.init()"
+            ],
+            'section#experience .group:nth-child(5)': [
+                "SECPHO: Época de fotones y backend",
+                "Primeros pasos en el stack completo"
+            ],
+            'section#experience .group:nth-child(6)': [
+                "Level 1: Tutorial completado",
+                "Achievement unlocked: First job!"
+            ],
+            // Tech Stack
+            '.grid.grid-cols-2 > div:nth-child(1)': [
+                "Backend supremacy!",
+                "API.create()"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(2)': [
+                "Frontend magic!",
+                "UI.render(beautiful_things)"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(3)': [
+                "JavaScript: El idioma universal del browser",
+                "eval('código_mágico')"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(4)': [
+                "SELECT * FROM conocimiento WHERE nivel='PRO'"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(5)': [
+                "Máquina del tiempo",
+                "git commit -m 'Salvando el codigo para el futuro'"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(6)': [
+                "RESTful APIs: El pegamento del internet",
+                "HTTP.get(datos)"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(7)': [
+                "Automatización.run()"
+            ],
+            '.grid.grid-cols-2 > div:nth-child(8)': [
+                "Design.make(experiencia_increible)"
+            ]
+        };
+
+        // Función para mostrar comentario del robot
+        let hideTimeout = null;
+        const msgText = document.getElementById('robot-msg-text');
+        const mouthClosed = document.getElementById('mouth-closed');
+        const mouthTalking = document.getElementById('mouth-talking');
+        const mouthAnim = document.getElementById('mouth-anim');
+        
+        function showRobotComment(text) {
+            // Cancelar cualquier timeout pendiente
+            if (hideTimeout) {
+                clearTimeout(hideTimeout);
+                hideTimeout = null;
+            }
+            msgText.textContent = text;
+            msg.style.opacity = 1;
+            
+            // Activar animación de boca
+            mouthClosed.style.opacity = '0';
+            mouthTalking.style.opacity = '1';
+            mouthAnim.beginElement();
+        }
+
+        function hideRobotComment() {
+            // Esperar un poco antes de ocultar
+            hideTimeout = setTimeout(() => {
+                msg.style.opacity = 0;
+                
+                // Desactivar animación de boca
+                mouthClosed.style.opacity = '1';
+                mouthTalking.style.opacity = '0';
+            }, 500);
+        }
+
+        // Agregar eventos a todos los elementos comentados
+        Object.keys(robotComments).forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+                element.addEventListener('mouseenter', () => {
+                    const comments = robotComments[selector];
+                    const randomComment = comments[Math.floor(Math.random() * comments.length)];
+                    showRobotComment(randomComment);
+                });
+                element.addEventListener('mouseleave', hideRobotComment);
+            });
+        });
+
+        // --- Parallax Robot Movement (S-Shape) ---
+        function updateDronePosition() {
+            const scrollY = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            const scrollProgress = scrollY / (documentHeight - windowHeight);
+            
+            // Calcular posición vertical (fija en el viewport, no sigue el scroll)
+            // Mantener el robot siempre visible en la pantalla
+            const topPosition = windowHeight * 0.35; // 35% desde arriba del viewport
+            
+            // Movimiento horizontal en forma de S
+            // Dividimos el scroll en secciones para crear el patrón S
+            let horizontalOffset;
+            
+            if (scrollProgress < 0.07) {
+                horizontalOffset = 55;
+                console.log('1- ' + scrollProgress + " -h: " + horizontalOffset);
+                
+            } else if (scrollProgress < 0.15) {
+                // About: moverse hacia la izquierda
+                const sectionProgress = (scrollProgress - 0.07) / 0.2;
+                horizontalOffset = 55 - (sectionProgress * 45); // de 55% a 10%
+                console.log('2- ' + scrollProgress + " -h: " + horizontalOffset + " s: " + sectionProgress);
+            } else if (scrollProgress < 0.70) {
+                console.log('3- ' + scrollProgress + " -h: " + horizontalOffset);
+
+                // Experience: mantenerse a la izquierda
+                horizontalOffset = 10;
+            } else if (scrollProgress < 0.75) {
+
+                // Skills: moverse hacia el centro-derecha
+                const sectionProgress = (scrollProgress - 0.55) / 0.2;
+                horizontalOffset = 10 + (sectionProgress * 30); // de 10% a 40%
+                console.log('4- ' + scrollProgress + " -h: " + horizontalOffset + " s: " + sectionProgress);
+            } else if (scrollProgress < 0.76) {
+
+                // Projects: moverse hacia la derecha
+                const sectionProgress = (scrollProgress - 0.75) / 0.15;
+                horizontalOffset = 40 + (sectionProgress * 35); // de 40% a 75%
+                console.log('5- ' + scrollProgress + " -h: " + horizontalOffset);
+            } else {
+
+                // Contact: posición final a la derecha
+                horizontalOffset = 75;
+                console.log('6- ' + scrollProgress + " -h: " + horizontalOffset);
+            }
+            
+            // Aplicar transformación
+            drone.style.top = `${topPosition}px`;
+            drone.style.left = `${horizontalOffset}%`;
+            
+            // Rotar ligeramente según la dirección del movimiento
+            const rotation = (horizontalOffset - 42.5) * 0.2; // Centro en 42.5%
+            drone.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+        }
+
+        // Actualizar posición en scroll
+        window.addEventListener('scroll', updateDronePosition);
+        window.addEventListener('resize', updateDronePosition);
+        
+        // Posición inicial
+        updateDronePosition();
+
+    </script>
+</body>
+</html>
