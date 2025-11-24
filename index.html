@@ -155,6 +155,26 @@
         .code-line:nth-child(9) { animation-delay: 4s; }
         .code-line:nth-child(10) { animation-delay: 4.5s; }
 
+        /* Robot Drone Responsive Styles */
+        @media (min-width: 768px) {
+            /* Desktop: robot con parallax */
+            #drone-container {
+                position: fixed !important;
+                transition: all 1s ease-out;
+            }
+        }
+
+        @media (max-width: 767px) {
+            /* Mobile: robot fijo en hero section */
+            #drone-container {
+                position: absolute !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                transition: none !important;
+            }
+        }
+
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-cyber-primary selection:text-black relative">
@@ -806,18 +826,21 @@
             e.preventDefault();
             e.stopPropagation();
             
-            // Mostrar mensaje sin animación de pulse
+            // Mostrar mensaje usando la función compartida
             const greetings = [
                 "¡Sistema online!",
                 "Compilando...",
                 "¡Hola, humano!",
                 "Esperando input..."
             ];
-            msg.textContent = greetings[Math.floor(Math.random() * greetings.length)];
-            msg.style.opacity = 1;
+            const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+            showRobotComment(randomGreeting);
             
-            setTimeout(() => {
+            // Ocultar después de 2 segundos
+            hideTimeout = setTimeout(() => {
                 msg.style.opacity = 0;
+                mouthClosed.style.opacity = '1';
+                mouthTalking.style.opacity = '0';
             }, 2000);
         });
 
@@ -1262,6 +1285,11 @@
 
         // --- Parallax Robot Movement (S-Shape) ---
         function updateDronePosition() {
+            // Solo ejecutar parallax en desktop (pantallas >= 768px)
+            if (window.innerWidth < 768) {
+                return; // En móvil, no hacer nada (CSS maneja la posición fija)
+            }
+            
             const scrollY = window.scrollY;
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
@@ -1283,29 +1311,25 @@
                 // About: moverse hacia la izquierda
                 const sectionProgress = (scrollProgress - 0.07) / 0.2;
                 horizontalOffset = 55 - (sectionProgress * 45); // de 55% a 10%
-                console.log('2- ' + scrollProgress + " -h: " + horizontalOffset + " s: " + sectionProgress);
             } else if (scrollProgress < 0.70) {
                 console.log('3- ' + scrollProgress + " -h: " + horizontalOffset);
 
                 // Experience: mantenerse a la izquierda
-                horizontalOffset = 10;
+                horizontalOffset = 5;
             } else if (scrollProgress < 0.75) {
 
                 // Skills: moverse hacia el centro-derecha
                 const sectionProgress = (scrollProgress - 0.55) / 0.2;
                 horizontalOffset = 10 + (sectionProgress * 30); // de 10% a 40%
-                console.log('4- ' + scrollProgress + " -h: " + horizontalOffset + " s: " + sectionProgress);
             } else if (scrollProgress < 0.76) {
 
                 // Projects: moverse hacia la derecha
                 const sectionProgress = (scrollProgress - 0.75) / 0.15;
                 horizontalOffset = 40 + (sectionProgress * 35); // de 40% a 75%
-                console.log('5- ' + scrollProgress + " -h: " + horizontalOffset);
             } else {
 
                 // Contact: posición final a la derecha
                 horizontalOffset = 75;
-                console.log('6- ' + scrollProgress + " -h: " + horizontalOffset);
             }
             
             // Aplicar transformación
