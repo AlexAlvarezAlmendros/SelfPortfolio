@@ -37,11 +37,11 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
       </div>
     </div>
 
-    <div class="name">
+    <h1 class="name">
       <div data-fit data-fit-group="name" data-max="210">ALEX</div>
       <div data-fit data-fit-group="name" data-max="210" class="acid">ALVAREZ</div>
       <div data-fit data-fit-group="name" data-max="210" class="stroke">ALMENDROS</div>
-    </div>
+    </h1>
 
     <div class="g-hero-cta hero-tail">
       <div class="lead">{t('hero.lead')}</div>
@@ -171,7 +171,7 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
   .avail-t { font-size: 12px; color: #ccff00; }
 
   /* name */
-  .name { padding: 48px 0 30px; font-family: 'Syne Variable', sans-serif; font-weight: 800; line-height: 0.84; letter-spacing: -0.03em; }
+  .name { margin: 0; padding: 48px 0 30px; font-family: 'Syne Variable', sans-serif; font-weight: 800; line-height: 0.84; letter-spacing: -0.03em; }
   .name > div { font-size: clamp(56px, 13.5vw, 210px); white-space: nowrap; }
   .name .acid { color: #ccff00; }
   .name .stroke { color: transparent; -webkit-text-stroke: 1.5px #f2f0ea; }

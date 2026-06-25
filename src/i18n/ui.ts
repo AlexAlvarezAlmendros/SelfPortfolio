@@ -20,7 +20,7 @@ export const ui = {
     'bio2':
       'He colaborado con Experian, Bella Aurora Labs y Capitole, enviando aplicaciones escalables e intuitivas bajo metodología Scrum.',
     'bio3':
-      'Ubicado en Barcelona, siempre abierto a retos que empujen mis límites técnicos y de producto.',
+      'Ubicado en Barcelona y disponible en remoto, siempre abierto a retos que empujen mis límites técnicos y de producto.',
     's2.title': 'EXPERIENCIA',
     's3.title': 'STACK',
     's4.title': 'PROYECTOS',
@@ -47,9 +47,9 @@ export const ui = {
     'nav.work': 'WORK',
     'nav.log': 'LOG',
     'nav.info': 'INFO',
-    'meta.home.title': 'Alex Alvarez Almendros | Fullstack Developer',
+    'meta.home.title': 'Alex Alvarez Almendros · Programador Fullstack .NET, React e IA',
     'meta.home.desc':
-      'Desarrollador Fullstack en Barcelona. Más de 5 años construyendo soluciones web y móviles con React, Blazor, NodeJS y .NET 8. Arquitecturas limpias e IA aplicada.',
+      'Programador Fullstack con +5 años en .NET, React, JavaScript y Astro. Desarrollo web, automatización de procesos e implementación de IA. Disponible en remoto.',
     'meta.blog.title': 'Blog & Devlogs | Alex Alvarez Almendros',
     'meta.blog.desc':
       'Notas técnicas, decisiones de arquitectura y aprendizajes sobre React, .NET, bases de datos y LLMOps.',
@@ -69,7 +69,7 @@ export const ui = {
     'bio2':
       'I’ve worked with Experian, Bella Aurora Labs and Capitole, shipping scalable, intuitive apps under Scrum.',
     'bio3':
-      'Based in Barcelona, always open to challenges that push my technical and product limits.',
+      'Based in Barcelona and available remote, always open to challenges that push my technical and product limits.',
     's2.title': 'EXPERIENCE',
     's3.title': 'STACK',
     's4.title': 'WORK',
@@ -96,9 +96,9 @@ export const ui = {
     'nav.work': 'WORK',
     'nav.log': 'LOG',
     'nav.info': 'INFO',
-    'meta.home.title': 'Alex Alvarez Almendros | Fullstack Developer',
+    'meta.home.title': 'Alex Alvarez Almendros · Fullstack Developer .NET, React & AI',
     'meta.home.desc':
-      'Fullstack developer based in Barcelona. 5+ years building web and mobile solutions with React, Blazor, NodeJS and .NET 8. Clean architectures and applied AI.',
+      'Fullstack developer, 5+ years in .NET, React, JavaScript and Astro. Web development, process automation and AI implementation. Available remote.',
     'meta.blog.title': 'Blog & Devlogs | Alex Alvarez Almendros',
     'meta.blog.desc':
       'Technical notes, architecture decisions and learnings about React, .NET, databases and LLMOps.',
@@ -130,6 +130,7 @@ export const skills: { name: string; cat: string }[] = [
   { name: 'C#', cat: 'core' },
   { name: '.NET', cat: 'backend' },
   { name: 'React', cat: 'frontend' },
+  { name: 'Astro', cat: 'frontend' },
   { name: 'Blazor', cat: 'frontend' },
   { name: 'NodeJS', cat: 'backend' },
   { name: 'JavaScript', cat: 'lang' },

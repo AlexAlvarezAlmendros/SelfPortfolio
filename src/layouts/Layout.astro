@@ -21,10 +21,15 @@ interface Props {
   ogType?: 'website' | 'article';
   /** Social/share image path (without origin), e.g. '/og/es/linux.png'. Defaults to the site card. */
   ogImage?: string;
+  /** ISO date string for article:published_time (article pages only). */
+  publishedTime?: string;
+  /** Tags emitted as article:tag (article pages only). */
+  tags?: string[];
   jsonLd?: unknown;
 }
 
-const { lang, title, description, path, ogType = 'website', ogImage: ogImagePath, jsonLd } = Astro.props;
+const { lang, title, description, path, ogType = 'website', ogImage: ogImagePath, publishedTime, tags, jsonLd } = Astro.props;
+const rssPath = lang === 'es' ? '/rss.xml' : '/en/rss.xml';
 const site = Astro.site ?? new URL('https://alexalvarez.dev');
 const canonical = new URL(localizePath(path, lang), site).href;
 const esUrl = new URL(localizePath(path, 'es'), site).href;
@@ -41,12 +46,13 @@ const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
   <script is:inline>document.documentElement.classList.add("js");setTimeout(function(){document.documentElement.classList.add("fonts-fitted")},1500)</script>
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="keywords" content="Alex Alvarez Almendros, Fullstack Developer, React, .NET, Blazor, NodeJS, Barcelona, desarrollador web" />
+  <meta name="keywords" content="Alex Alvarez Almendros, programador fullstack, desarrollador web, .NET, React, JavaScript, Astro, NodeJS, Blazor, automatización de procesos, implementación de IA, inteligencia artificial, desarrollador remoto, Barcelona" />
   <meta name="author" content="Alex Alvarez Almendros" />
   <meta name="robots" content="index, follow" />
   <meta name="theme-color" content="#ccff00" />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="sitemap" href="/sitemap-index.xml" />
+  <link rel="alternate" type="application/rss+xml" title="Alex Alvarez Almendros — Blog & Devlogs" href={rssPath} />
 
   <link rel="canonical" href={canonical} />
   <link rel="alternate" hreflang="es" href={esUrl} />
@@ -68,6 +74,14 @@ const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+
+  {ogType === 'article' && (
+    <>
+      {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      <meta property="article:author" content="Alex Alvarez Almendros" />
+      {tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+    </>
+  )}
 
   <link rel="preload" href={syneWoff2} as="font" type="font/woff2" crossorigin />
   <link rel="preload" href={spaceMonoWoff2} as="font" type="font/woff2" crossorigin />
