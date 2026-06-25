@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import ArticleView from '../../components/views/ArticleView.astro';
+import { articleJsonLd } from '../../lib/jsonld';
+
+const lang = 'es' as const;
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (e) => e.data.lang === 'es');
+  return posts.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const path = `/blog/${d.slug}`;
+const url = new URL(path, Astro.site).href;
+const title = `${d.title} | Alex Alvarez Almendros`;
+---
+<Layout
+  lang={lang}
+  path={path}
+  title={title}
+  description={d.excerpt}
+  ogType="article"
+  ogImage={`/og/${lang}/${d.slug}.png`}
+  jsonLd={articleJsonLd({ lang, url, title: d.title, description: d.excerpt, date: d.date })}
+>
+  <ArticleView lang={lang} entry={entry} />
+</Layout>

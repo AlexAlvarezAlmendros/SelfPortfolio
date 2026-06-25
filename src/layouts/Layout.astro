@@ -1,0 +1,141 @@
+---
+import type { Lang } from '../i18n/ui';
+import { localizePath } from '../i18n/utils';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description: string;
+  /** Logical path without language prefix, e.g. '/', '/blog', '/blog/spotify'. */
+  path: string;
+  ogType?: 'website' | 'article';
+  /** Social/share image path (without origin), e.g. '/og/es/linux.png'. Defaults to the site card. */
+  ogImage?: string;
+  jsonLd?: unknown;
+}
+
+const { lang, title, description, path, ogType = 'website', ogImage: ogImagePath, jsonLd } = Astro.props;
+const site = Astro.site ?? new URL('https://alexalvarez.dev');
+const canonical = new URL(localizePath(path, lang), site).href;
+const esUrl = new URL(localizePath(path, 'es'), site).href;
+const enUrl = new URL(localizePath(path, 'en'), site).href;
+const ogImage = new URL(ogImagePath ?? '/og-image.png', site).href;
+const ogLocale = lang === 'es' ? 'es_ES' : 'en_US';
+const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
+---
+<!doctype html>
+<html lang={lang}>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script is:inline>
+    // Mark JS early (pre-paint) so fit-to-width headings stay hidden until sized,
+    // avoiding the size flash. Safety net reveals them even if the main script fails.
+    document.documentElement.classList.add('js');
+    setTimeout(function () {
+      document.documentElement.classList.add('fonts-fitted');
+    }, 1500);
+  </script>
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta name="keywords" content="Alex Alvarez Almendros, Fullstack Developer, React, .NET, Blazor, NodeJS, Barcelona, desarrollador web" />
+  <meta name="author" content="Alex Alvarez Almendros" />
+  <meta name="robots" content="index, follow" />
+  <meta name="theme-color" content="#ccff00" />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  <link rel="canonical" href={canonical} />
+  <link rel="alternate" hreflang="es" href={esUrl} />
+  <link rel="alternate" hreflang="en" href={enUrl} />
+  <link rel="alternate" hreflang="x-default" href={esUrl} />
+
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Alex Alvarez Almendros" />
+  <meta property="og:locale" content={ogLocale} />
+  <meta property="og:locale:alternate" content={ogLocaleAlt} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Alex Alvarez Almendros — Fullstack Developer, Barcelona" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+</head>
+<body>
+  <!-- vertical grid overlay -->
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <!-- floating cursor preview -->
+  <div id="cursor-preview" aria-hidden="true">
+    <span id="cursor-preview-label">// preview</span>
+  </div>
+
+  <Header lang={lang} path={path} />
+
+  <slot />
+
+  <Footer lang={lang} />
+
+  <script>
+    import '../scripts/interactions.ts';
+  </script>
+
+  <style>
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(242, 240, 234, 0.035),
+        rgba(242, 240, 234, 0.035) 1px,
+        transparent 1px,
+        transparent calc(100% / 6)
+      );
+    }
+    #cursor-preview {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 158px;
+      z-index: 60;
+      pointer-events: none;
+      opacity: 0;
+      background-color: #0a0a08;
+      border: 1px solid #ccff00;
+      transform: translate(-50%, -50%) rotate(-3deg);
+      transition: opacity 0.18s;
+      will-change: transform;
+      overflow: hidden;
+    }
+    #cursor-preview span {
+      position: absolute;
+      left: 10px;
+      bottom: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #ccff00;
+      letter-spacing: 0.05em;
+    }
+    @media (pointer: coarse) {
+      #cursor-preview { display: none; }
+    }
+  </style>
+</body>
+</html>

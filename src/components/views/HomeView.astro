@@ -1,0 +1,271 @@
+---
+import { getCollection } from 'astro:content';
+import type { Lang } from '../../i18n/ui';
+import { soft as softData, skills, experience as expData } from '../../i18n/ui';
+import { useTranslations, localizePath } from '../../i18n/utils';
+import { projectThumb } from '../../lib/patterns';
+import { projectShot } from '../../lib/project-thumbs';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+const soft = softData[lang];
+const experience = expData[lang];
+
+const projects = (await getCollection('projects', (e) => e.data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<main>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="g-stats stats">
+      <div class="stat">
+        <div class="stat-k">ROLE</div>
+        <div class="stat-v">FULLSTACK DEV</div>
+      </div>
+      <div class="stat pad">
+        <div class="stat-k">BASE</div>
+        <div class="stat-v">BARCELONA, ES</div>
+      </div>
+      <div class="stat pad">
+        <div class="stat-k">EXP</div>
+        <div class="stat-v">EST. 2018 · 5Y+</div>
+      </div>
+      <div class="stat avail">
+        <span class="dot"></span>
+        <div class="avail-t">{t('available')}</div>
+      </div>
+    </div>
+
+    <div class="name">
+      <div data-fit data-fit-group="name" data-max="210">ALEX</div>
+      <div data-fit data-fit-group="name" data-max="210" class="acid">ALVAREZ</div>
+      <div data-fit data-fit-group="name" data-max="210" class="stroke">ALMENDROS</div>
+    </div>
+
+    <div class="g-hero-cta hero-tail">
+      <div class="lead">{t('hero.lead')}</div>
+      <div class="cta-actions">
+        <a class="btn-acid btn-push" href="#contact" data-scramble data-text={t('cta.primary')}>{t('cta.primary')}</a>
+        <a class="btn-ghost brd-hl" href="https://github.com/AlexAlvarezAlmendros" target="_blank" rel="noopener">GITHUB ↗</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 PROFILE -->
+  <section class="sec">
+    <div class="g-profile" data-reveal>
+      <div class="big-num">(01)<br />{t('s1.title')}</div>
+      <div>
+        <div class="bio1">{t('bio1')}</div>
+        <div class="g-bios">
+          <p class="bio">{t('bio2')}</p>
+          <p class="bio">{t('bio3')}</p>
+        </div>
+        <div class="soft">
+          {soft.map((s) => (
+            <div class="soft-i"><span>+</span> {s}</div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 EXPERIENCE -->
+  <section class="sec">
+    <div class="head" data-reveal>
+      <span class="head-n">(02)</span>
+      <h2 class="head-h">{t('s2.title')}</h2>
+    </div>
+    <div class="list">
+      {experience.map((job) => (
+        <div class="g-exp exp row-hl">
+          <div class="exp-period">{job.period}</div>
+          <div>
+            <div class="exp-role">{job.role}</div>
+            <div class="exp-company">{job.company}</div>
+          </div>
+          <div class="exp-tags">
+            {job.tags.map((tag) => <span class="exp-tag">{tag}</span>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 03 STACK -->
+  <section class="sec">
+    <div class="head" data-reveal>
+      <span class="head-n">(03)</span>
+      <h2 class="head-h">{t('s3.title')}</h2>
+    </div>
+    <div class="stack">
+      {skills.map((sk) => (
+        <span class="skill" data-scramble data-text={sk.name}>{sk.name}<sup>{sk.cat}</sup></span>
+      ))}
+    </div>
+  </section>
+
+  <!-- 04 PROJECTS -->
+  <section class="sec">
+    <div class="head" data-reveal>
+      <span class="head-n">(04)</span>
+      <h2 class="head-h">{t('s4.title')}</h2>
+    </div>
+    <div class="list top">
+      {projects.map((p, i) => (
+        <a
+          class="g-proj proj row-hl"
+          href={localizePath(`/work/${p.data.slug}`, lang)}
+          data-preview
+          data-img={projectShot[p.data.slug] ?? undefined}
+          data-pattern={projectThumb[p.data.slug]}
+          data-label={p.data.name}
+        >
+          <span
+            class:list={['proj-thumb', { wip: !projectShot[p.data.slug] }]}
+            aria-hidden="true"
+            style={projectShot[p.data.slug]
+              ? `background-image:url("${projectShot[p.data.slug]}")`
+              : `background:${projectThumb[p.data.slug] ?? ''}`}
+          >{!projectShot[p.data.slug] && <span class="thumb-wip">WIP · {p.data.year}</span>}</span>
+          <span class="proj-n">/0{i + 1}</span>
+          <span class="proj-name">{p.data.name}</span>
+          <span class="proj-tags">{p.data.tags.join(' · ')}</span>
+          <span class="proj-year">{p.data.year} →</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- 05 CONTACT -->
+  <section class="sec contact" id="contact">
+    <div class="contact-in" data-reveal>
+      <span class="head-n">(05) — {t('contact.kicker')}</span>
+      <div class="contact-title" data-fit data-max="150">{t('contact.title')}</div>
+      <div class="contact-row">
+        <a class="email" href="mailto:alexalmendrosal@gmail.com" data-scramble data-text="alexalmendrosal@gmail.com">alexalmendrosal@gmail.com</a>
+        <div class="socials">
+          <a class="lnk" href="https://www.linkedin.com/in/alexalvarezalmendros/" target="_blank" rel="noopener">LINKEDIN ↗</a>
+          <a class="lnk" href="https://github.com/AlexAlvarezAlmendros" target="_blank" rel="noopener">GITHUB ↗</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<style>
+  main { position: relative; z-index: 2; }
+  section { max-width: 1400px; margin: 0 auto; }
+  .hero { padding: 34px 26px 0; }
+  .sec { padding: 60px 26px 40px; }
+
+  /* stats */
+  .stats { border-top: 1px solid #1d1d1a; border-bottom: 1px solid #1d1d1a; }
+  .stat { padding: 14px 4px; border-right: 1px solid #1d1d1a; }
+  .stat.pad { padding-left: 16px; }
+  .stat.avail { display: flex; align-items: center; gap: 8px; border-right: none; padding-left: 16px; }
+  .stat-k { font-size: 9.5px; color: #55554f; letter-spacing: 0.1em; margin-bottom: 6px; }
+  .stat-v { font-size: 12px; color: #cfcdc4; }
+  .dot { width: 7px; height: 7px; background: #ccff00; animation: blink 1.6s step-end infinite; }
+  .avail-t { font-size: 12px; color: #ccff00; }
+
+  /* name */
+  .name { padding: 48px 0 30px; font-family: 'Syne', sans-serif; font-weight: 800; line-height: 0.84; letter-spacing: -0.03em; }
+  .name > div { font-size: clamp(56px, 13.5vw, 210px); white-space: nowrap; }
+  .name .acid { color: #ccff00; }
+  .name .stroke { color: transparent; -webkit-text-stroke: 1.5px #f2f0ea; }
+
+  /* hero tail */
+  .hero-tail { padding-bottom: 60px; border-bottom: 1px solid #1d1d1a; }
+  .lead { font-family: 'Syne', sans-serif; font-size: clamp(18px, 2vw, 26px); font-weight: 500; line-height: 1.35; color: #dad8ce; max-width: 560px; }
+  .cta-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
+  .btn-acid { background: #ccff00; color: #070706; font-family: 'Space Mono', monospace; font-weight: 700; font-size: 12.5px; letter-spacing: 0.04em; padding: 15px 22px; text-decoration: none; }
+  .btn-ghost { background: transparent; color: #f2f0ea; border: 1px solid #2a2a26; font-family: 'Space Mono', monospace; font-size: 12.5px; padding: 15px 22px; text-decoration: none; }
+
+  /* section heads */
+  .head { display: flex; align-items: baseline; gap: 18px; margin-bottom: 8px; }
+  .head-n { font-family: 'Space Mono', monospace; font-size: 12px; color: #ccff00; }
+  .head-h { font-family: 'Syne', sans-serif; font-size: clamp(30px, 4.5vw, 64px); font-weight: 800; margin: 0; letter-spacing: -0.02em; }
+
+  /* profile */
+  .big-num { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(40px, 5vw, 82px); color: transparent; -webkit-text-stroke: 1.5px #2a2a26; line-height: 0.9; }
+  .bio1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 2.4vw, 32px); font-weight: 600; line-height: 1.3; margin-bottom: 26px; }
+  .bio { font-size: 13px; line-height: 1.7; color: #a8a69d; margin: 0; }
+  .soft { display: flex; flex-wrap: wrap; margin-top: 30px; border-top: 1px solid #1d1d1a; }
+  .soft-i { font-family: 'Space Mono', monospace; font-size: 11px; color: #cfcdc4; padding: 11px 16px 11px 0; border-bottom: 1px solid #1d1d1a; flex: 1 1 40%; }
+  .soft-i span { color: #ccff00; }
+
+  /* experience */
+  .list { border-top: 1px solid #2a2a26; }
+  .list.top { border-top: 1px solid #2a2a26; }
+  .exp { padding: 20px 8px; border-bottom: 1px solid #1d1d1a; cursor: default; }
+  .exp-period { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.03em; }
+  .exp-role { font-family: 'Syne', sans-serif; font-size: clamp(18px, 2vw, 24px); font-weight: 700; line-height: 1.1; }
+  .exp-company { font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.7; margin-top: 3px; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-end; }
+  .exp-tag { font-family: 'Space Mono', monospace; font-size: 10px; border: 1px solid currentColor; padding: 3px 8px; opacity: 0.85; }
+
+  /* stack */
+  .stack { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 26px; border-top: 1px solid #1d1d1a; padding-top: 26px; }
+  .skill { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(24px, 3.4vw, 52px); letter-spacing: -0.02em; color: #dad8ce; cursor: default; transition: color 0.15s; }
+  .skill sup { font-family: 'Space Mono', monospace; font-size: 10px; font-weight: 400; color: #ccff00; margin-left: 4px; vertical-align: super; }
+
+  /* projects */
+  .proj { border-bottom: 1px solid #1d1d1a; padding: 26px 8px; color: #f2f0ea; text-decoration: none; }
+  .proj-n { font-family: 'Space Mono', monospace; font-size: 12px; }
+  .proj-name { font-family: 'Syne', sans-serif; font-size: clamp(26px, 3.4vw, 54px); font-weight: 800; letter-spacing: -0.02em; line-height: 1; }
+  .proj-tags { font-family: 'Space Mono', monospace; font-size: 11px; opacity: 0.75; }
+  .proj-year { font-family: 'Space Mono', monospace; font-size: 11px; text-align: right; }
+  /* inline thumbnail — only shown on touch/mobile where the hover preview is unavailable */
+  .proj-thumb { display: none; }
+
+  /* contact */
+  .contact { padding: 90px 26px 100px; scroll-margin-top: 90px; }
+  .contact-in { border-top: 1px solid #1d1d1a; padding-top: 40px; }
+  .contact-title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(44px, 10vw, 150px); line-height: 0.9; letter-spacing: -0.03em; margin: 24px 0 30px; white-space: nowrap; }
+  .head-n { font-family: 'Space Mono', monospace; font-size: 12px; color: #ccff00; }
+  .contact-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 30px; }
+  .email { font-family: 'Syne', sans-serif; font-weight: 700; font-size: clamp(20px, 2.6vw, 38px); color: #ccff00; text-decoration: none; border-bottom: 2px solid #ccff00; max-width: 100%; overflow-wrap: anywhere; }
+  .socials { display: flex; gap: 18px; font-family: 'Space Mono', monospace; font-size: 13px; }
+  .socials a { color: #a8a69d; text-decoration: none; }
+
+  /* ---------------- responsive ---------------- */
+  @media (max-width: 680px) {
+    .hero { padding: 28px 16px 0; }
+    .sec { padding: 46px 16px 30px; }
+    .contact { padding: 70px 16px 90px; }
+    .name { padding: 36px 0 24px; }
+    /* section titles must never spill past the edges */
+    .head { gap: 12px; flex-wrap: wrap; }
+    .head-h { font-size: clamp(24px, 7.5vw, 36px); overflow-wrap: anywhere; }
+    .bio1 { font-size: clamp(19px, 5.4vw, 26px); }
+    .stack { gap: 6px 16px; }
+    .skill { font-size: clamp(22px, 7vw, 34px); }
+    .email { font-size: clamp(17px, 6vw, 26px); }
+    .contact-row { gap: 12px 20px; }
+
+    /* projects become image-led cards on mobile (no hover preview on touch) */
+    .proj.g-proj { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px 2px 24px; }
+    .proj-thumb {
+      display: block;
+      order: 0;
+      width: 100%;
+      aspect-ratio: 1200 / 630;
+      border: 1px solid #1d1d1a;
+      background-size: cover;
+      background-position: top center;
+      margin-bottom: 13px;
+    }
+    .proj-thumb.wip { display: flex; align-items: center; justify-content: center; }
+    .thumb-wip { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #ccff00; }
+    .proj-n { order: 1; }
+    .proj-name { order: 2; font-size: clamp(28px, 8vw, 40px); }
+    .proj.g-proj .proj-tags { display: block; order: 3; margin-top: 4px; }
+    .proj-year { order: 4; text-align: left; margin-top: 2px; }
+  }
+  @media (max-width: 380px) {
+    .head-h { font-size: clamp(21px, 8vw, 30px); }
+    .name { padding: 28px 0 20px; }
+  }
+</style>

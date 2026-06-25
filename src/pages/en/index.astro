@@ -1,0 +1,19 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HomeView from '../../components/views/HomeView.astro';
+import { useTranslations } from '../../i18n/utils';
+import { homeJsonLd } from '../../lib/jsonld';
+
+const lang = 'en' as const;
+const t = useTranslations(lang);
+const canonical = new URL('/en', Astro.site).href;
+---
+<Layout
+  lang={lang}
+  path="/"
+  title={t('meta.home.title')}
+  description={t('meta.home.desc')}
+  jsonLd={homeJsonLd(lang, canonical)}
+>
+  <HomeView lang={lang} />
+</Layout>

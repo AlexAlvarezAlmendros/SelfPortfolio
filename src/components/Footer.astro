@@ -1,0 +1,36 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+---
+<footer>
+  <div class="inner">
+    <span>{t('footer')}</span>
+    <span>41.3874° N, 2.1686° E</span>
+  </div>
+</footer>
+
+<style>
+  footer {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid #1d1d1a;
+    padding: 26px;
+    background: #050504;
+  }
+  .inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  span {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #55554f;
+  }
+</style>

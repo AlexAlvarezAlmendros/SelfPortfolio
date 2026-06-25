@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import ProjectView from '../../../components/views/ProjectView.astro';
+import { projectShot } from '../../../lib/project-thumbs';
+
+const lang = 'en' as const;
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', (e) => e.data.lang === 'en');
+  return projects.map((entry) => ({ params: { slug: entry.data.slug }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const d = entry.data;
+const path = `/work/${d.slug}`;
+const title = `${d.name} — ${d.label} | Alex Alvarez Almendros`;
+const ogImage = projectShot[d.slug] ?? undefined;
+---
+<Layout lang={lang} path={path} title={title} description={d.tagline} ogType="article" ogImage={ogImage}>
+  <ProjectView lang={lang} entry={entry} />
+</Layout>

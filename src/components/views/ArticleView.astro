@@ -1,0 +1,62 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations, localizePath } from '../../i18n/utils';
+import { formatDate } from '../../lib/date';
+
+interface Props {
+  lang: Lang;
+  entry: CollectionEntry<'blog'>;
+}
+const { lang, entry } = Astro.props;
+const t = useTranslations(lang);
+const { Content } = await render(entry);
+const d = entry.data;
+const blogHref = localizePath('/blog', lang);
+---
+<main>
+  <article>
+    <a class="back brd-hl" href={blogHref}>← {t('back.blog')}</a>
+    <div class="meta">
+      <span>{d.tag}</span><span class="sep">/</span><span class="muted">{formatDate(d.date, lang)}</span><span class="sep">/</span><span class="muted">{d.read}</span>
+    </div>
+    <h1 class="title">{d.title}</h1>
+    <div class="author">
+      <div class="avatar">AA</div>
+      <span class="aname">Alex Alvarez Almendros</span>
+    </div>
+    <p class="excerpt">{d.excerpt}</p>
+    <div class="prose">
+      <Content />
+    </div>
+    <div class="foot">
+      <span class="thanks">{t('thanks')}</span>
+      <a class="more brd-hl" href={blogHref}>{t('more.devlogs')} →</a>
+    </div>
+  </article>
+</main>
+
+<style>
+  main { min-height: 90vh; position: relative; z-index: 2; padding: 40px 26px 100px; }
+  article { max-width: 780px; margin: 0 auto; }
+  .back { display: inline-block; background: none; border: 1px solid #2a2a26; color: #a8a69d; font-family: 'Space Mono', monospace; font-size: 11px; padding: 8px 13px; margin-bottom: 30px; text-decoration: none; }
+  .meta { font-family: 'Space Mono', monospace; font-size: 11px; color: #ccff00; margin-bottom: 16px; display: flex; gap: 12px; }
+  .meta .sep { color: #55554f; }
+  .meta .muted { color: #a8a69d; }
+  .title { font-family: 'Syne', sans-serif; font-weight: 800; font-size: clamp(34px, 5.5vw, 62px); margin: 0 0 26px; line-height: 1.02; letter-spacing: -0.03em; }
+  .author { display: flex; align-items: center; gap: 11px; padding: 16px 0; border-top: 1px solid #1d1d1a; border-bottom: 1px solid #1d1d1a; margin-bottom: 34px; }
+  .avatar { width: 34px; height: 34px; background: #ccff00; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-weight: 700; color: #070706; font-size: 13px; }
+  .aname { font-family: 'Space Mono', monospace; font-size: 12px; color: #cfcdc4; }
+  .excerpt { font-family: 'Syne', sans-serif; margin: 0 0 24px; font-size: 22px; font-weight: 500; color: #f2f0ea; line-height: 1.5; }
+  .foot { margin-top: 46px; padding-top: 26px; border-top: 1px solid #1d1d1a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
+  .thanks { font-family: 'Space Mono', monospace; font-size: 11px; color: #55554f; }
+  .more { background: none; border: 1px solid #2a2a26; color: #a8a69d; font-family: 'Space Mono', monospace; font-size: 11px; padding: 9px 15px; text-decoration: none; }
+
+  /* ---------------- responsive ---------------- */
+  @media (max-width: 680px) {
+    main { padding: 32px 16px 80px; }
+    .meta { flex-wrap: wrap; gap: 6px 10px; }
+    .excerpt { font-size: clamp(18px, 5vw, 22px); }
+    .foot { gap: 12px; }
+  }
+</style>

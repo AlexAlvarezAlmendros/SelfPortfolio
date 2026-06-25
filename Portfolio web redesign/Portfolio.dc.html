@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#07090a;color:#e8f0eb;font-family:'Space Grotesk',sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:#5cff9d;color:#07090a}
+  ::-webkit-scrollbar{width:10px;height:10px}
+  ::-webkit-scrollbar-track{background:#07090a}
+  ::-webkit-scrollbar-thumb{background:#1c2a23;border-radius:0}
+  ::-webkit-scrollbar-thumb:hover{background:#2a3d33}
+  @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+  @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes floatA{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(40px,-30px) scale(1.1)}}
+  @keyframes floatB{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-50px,40px) scale(1.15)}}
+  @keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(92,255,157,.5)}50%{opacity:.6;box-shadow:0 0 0 6px rgba(92,255,157,0)}}
+  @keyframes spinslow{to{transform:rotate(360deg)}}
+  @keyframes rise{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</helmet>
+
+<div ref="{{ cursorRef }}" style="position:fixed;top:0;left:0;width:340px;height:340px;border-radius:50%;pointer-events:none;z-index:2;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(92,255,157,0.10),transparent 60%);mix-blend-mode:screen;transition:opacity .3s;will-change:transform"></div>
+
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:18px 28px;backdrop-filter:blur(14px);background:rgba(7,9,10,0.72);border-bottom:1px solid #141c18">
+  <button onClick="{{ goHome }}" style="background:none;border:none;cursor:pointer;color:#5cff9d;font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:700;letter-spacing:.06em;padding:0;display:flex;align-items:center;gap:2px">
+    <span style="color:#3a4a42">&lt;</span>ALEX_ALVAREZ<span style="color:#5cff9d;animation:blink 1.1s step-end infinite">_</span><span style="color:#3a4a42">/&gt;</span>
+  </button>
+  <nav style="display:flex;align-items:center;gap:4px">
+    <sc-for list="{{ nav }}" as="item" hint-placeholder-count="5">
+      <button onClick="{{ item.on }}" style="background:none;border:none;cursor:pointer;color:{{ item.color }};font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.05em;padding:9px 12px;border-radius:4px;transition:color .2s,background .2s" style-hover="color:#5cff9d;background:#0e1512">{{ item.label }}</button>
+    </sc-for>
+    <div style="display:flex;align-items:center;border:1px solid #1c2a23;border-radius:6px;margin-left:8px;overflow:hidden">
+      <button onClick="{{ setLangEs }}" style="background:{{ esBg }};border:none;cursor:pointer;color:{{ esColor }};font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:7px 10px;transition:all .2s">ES</button>
+      <button onClick="{{ setLangEn }}" style="background:{{ enBg }};border:none;cursor:pointer;color:{{ enColor }};font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:7px 10px;transition:all .2s">EN</button>
+    </div>
+  </nav>
+</header>
+
+<!-- ============ HOME ============ -->
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<main style="position:relative">
+
+  <!-- HERO -->
+  <section style="position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding:120px 28px 60px">
+    <canvas ref="{{ heroRef }}" style="position:absolute;inset:0;width:100%;height:100%;z-index:0"></canvas>
+    <div style="position:absolute;top:-120px;right:-80px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(92,255,157,0.10),transparent 65%);filter:blur(20px);animation:floatA 14s ease-in-out infinite;z-index:0"></div>
+    <div style="position:absolute;bottom:-160px;left:-100px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(62,150,255,0.07),transparent 65%);filter:blur(20px);animation:floatB 18s ease-in-out infinite;z-index:0"></div>
+
+    <div style="position:relative;z-index:3;max-width:1180px;margin:0 auto;width:100%;display:grid;grid-template-columns:1.25fr .9fr;gap:48px;align-items:center">
+      <div>
+        <div style="display:inline-flex;align-items:center;gap:9px;border:1px solid rgba(92,255,157,.3);border-radius:100px;padding:7px 15px;margin-bottom:30px;background:rgba(92,255,157,.04)">
+          <span style="width:7px;height:7px;border-radius:50%;background:#5cff9d;animation:pulse 2s infinite"></span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;color:#9fe9c2">{{ t.available }}</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d;margin-bottom:14px;letter-spacing:.08em">{{ t.heroKicker }}</div>
+        <h1 ref="{{ nameRef }}" style="font-size:clamp(44px,6.4vw,92px);line-height:.96;font-weight:700;margin:0 0 26px;letter-spacing:-.02em">ALEX ALVAREZ<br>ALMENDROS</h1>
+        <p style="font-size:18px;line-height:1.6;color:#a7b5ad;max-width:520px;margin:0 0 36px">{{ t.heroLead }}</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <button onClick="{{ goContact }}" style="display:inline-flex;align-items:center;gap:9px;background:#5cff9d;color:#07090a;border:none;cursor:pointer;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;letter-spacing:.04em;padding:15px 24px;border-radius:8px;transition:all .25s" style-hover="box-shadow:0 0 34px rgba(92,255,157,.55);transform:translateY(-2px)">{{ t.ctaPrimary }} <span>→</span></button>
+          <a href="https://github.com/AlexAlvarezAlmendros" target="_blank" style="display:inline-flex;align-items:center;gap:9px;background:transparent;color:#e8f0eb;border:1px solid #233029;cursor:pointer;font-family:'JetBrains Mono',monospace;font-weight:500;font-size:13px;letter-spacing:.04em;padding:15px 24px;border-radius:8px;transition:all .25s;text-decoration:none" style-hover="border-color:#5cff9d;color:#5cff9d">GITHUB</a>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(180deg,#0c1310,#090d0b);border:1px solid #1a2620;border-radius:14px;overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)">
+        <div style="display:flex;align-items:center;gap:7px;padding:13px 16px;border-bottom:1px solid #141d18;background:#0a0f0d">
+          <span style="width:11px;height:11px;border-radius:50%;background:#ff5f57"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:#febc2e"></span>
+          <span style="width:11px;height:11px;border-radius:50%;background:#28c840"></span>
+          <span style="margin-left:10px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a6760">dev.js</span>
+        </div>
+        <pre style="margin:0;padding:22px;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.85;color:#a7b5ad;overflow-x:auto"><span style="color:#6a7a72">// always learning, always building</span>
+<span style="color:#7aa2ff">class</span> <span style="color:#5cff9d">Dev</span> <span style="color:#7aa2ff">extends</span> <span style="color:#5cff9d">Human</span> {
+  <span style="color:#7aa2ff">constructor</span>() {
+    <span style="color:#e8f0eb">this</span>.skills = [<span style="color:#ffd479">'C#'</span>, <span style="color:#ffd479">'.NET'</span>, <span style="color:#ffd479">'React'</span>];
+    <span style="color:#e8f0eb">this</span>.coffee = <span style="color:#ff8fb0">true</span>;
+  }
+  <span style="color:#5cff9d">code</span>() {
+    <span style="color:#7aa2ff">while</span> (alive) {
+      learn();
+      build();
+    }
+  }
+}</pre>
+      </div>
+    </div>
+    <div style="position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.2em;color:#3f4d45;z-index:3">{{ t.scroll }} ↓</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div style="border-top:1px solid #141c18;border-bottom:1px solid #141c18;padding:18px 0;overflow:hidden;white-space:nowrap;background:#080b0a">
+    <div style="display:inline-block;animation:marquee 28s linear infinite">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#1f2c25;letter-spacing:.1em">{{ marquee }}</span>
+      <span style="font-family:'JetBrains Mono',monospace;font-size:20px;color:#1f2c25;letter-spacing:.1em">{{ marquee }}</span>
+    </div>
+  </div>
+
+  <!-- PROFILE 01 -->
+  <section style="max-width:1180px;margin:0 auto;padding:110px 28px">
+    <div data-reveal style="transition:opacity .7s ease,transform .7s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:46px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d">// 01</span>
+        <h2 style="font-size:clamp(30px,4vw,46px);margin:0;font-weight:700;letter-spacing:-.02em">{{ t.s1title }}</h2>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,#233029,transparent)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1.4fr .9fr;gap:54px;align-items:start">
+        <div style="font-size:18.5px;line-height:1.75;color:#b9c6be">
+          <p style="margin:0 0 22px">{{ t.bio1 }}</p>
+          <p style="margin:0 0 22px">{{ t.bio2 }}</p>
+          <p style="margin:0;color:#8c9a92">{{ t.bio3 }}</p>
+        </div>
+        <div style="border:1px solid #1a2620;border-radius:12px;padding:26px;background:linear-gradient(180deg,#0c1310,#090d0b)">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5cff9d;margin-bottom:20px">soft_skills.json</div>
+          <sc-for list="{{ soft }}" as="s" hint-placeholder-count="5">
+            <div style="display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid #131b16">
+              <span style="color:#5cff9d;font-family:'JetBrains Mono',monospace;font-size:13px">+</span>
+              <span style="font-size:14.5px;color:#cdd9d2">{{ s }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE 02 -->
+  <section style="max-width:1180px;margin:0 auto;padding:40px 28px 110px">
+    <div data-reveal style="transition:opacity .7s ease,transform .7s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:46px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d">// 02</span>
+        <h2 style="font-size:clamp(30px,4vw,46px);margin:0;font-weight:700;letter-spacing:-.02em">{{ t.s2title }}</h2>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,#233029,transparent)"></div>
+      </div>
+    </div>
+    <div style="position:relative;padding-left:30px;border-left:1px solid #1c2a23">
+      <sc-for list="{{ experience }}" as="job" hint-placeholder-count="6">
+        <div data-reveal style="position:relative;padding:0 0 38px 26px;transition:opacity .7s ease,transform .7s ease">
+          <span style="position:absolute;left:-37px;top:5px;width:13px;height:13px;border-radius:50%;background:#07090a;border:2px solid {{ job.dot }}"></span>
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#5cff9d;letter-spacing:.06em;margin-bottom:9px">{{ job.period }}</div>
+          <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;margin-bottom:4px">
+            <h3 style="font-size:22px;margin:0;font-weight:600">{{ job.role }}</h3>
+            <span style="color:#6f7d75;font-size:15px">· {{ job.company }}</span>
+          </div>
+          <p style="margin:8px 0 14px;color:#94a39a;font-size:15px;line-height:1.6;max-width:760px">{{ job.desc }}</p>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ job.tags }}" as="tag" hint-placeholder-count="3">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8fbfa6;border:1px solid #1c2a23;border-radius:5px;padding:5px 10px;background:#0a100d">{{ tag }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <!-- STACK 03 -->
+  <section style="max-width:1180px;margin:0 auto;padding:40px 28px 110px">
+    <div data-reveal style="transition:opacity .7s ease,transform .7s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:46px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d">// 03</span>
+        <h2 style="font-size:clamp(30px,4vw,46px);margin:0;font-weight:700;letter-spacing:-.02em">{{ t.s3title }}</h2>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,#233029,transparent)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        <sc-for list="{{ skills }}" as="sk" hint-placeholder-count="8">
+          <div style="border:1px solid #1a2620;border-radius:12px;padding:24px 20px;background:linear-gradient(180deg,#0c1310,#090d0b);transition:all .25s;cursor:default" style-hover="border-color:rgba(92,255,157,.45);transform:translateY(-4px)">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:#5cff9d;margin-bottom:16px">{{ sk.icon }}</div>
+            <div style="font-size:16px;font-weight:600;margin-bottom:4px">{{ sk.name }}</div>
+            <div style="font-size:12.5px;color:#6f7d75;font-family:'JetBrains Mono',monospace">{{ sk.cat }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS 04 -->
+  <section style="max-width:1180px;margin:0 auto;padding:40px 28px 110px">
+    <div data-reveal style="transition:opacity .7s ease,transform .7s ease">
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:46px">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d">// 04</span>
+        <h2 style="font-size:clamp(30px,4vw,46px);margin:0;font-weight:700;letter-spacing:-.02em">{{ t.s4title }}</h2>
+        <div style="flex:1;height:1px;background:linear-gradient(90deg,#233029,transparent)"></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px">
+        <sc-for list="{{ projects }}" as="p" hint-placeholder-count="2">
+          <button onClick="{{ p.open }}" style="text-align:left;background:linear-gradient(180deg,#0c1310,#090d0b);border:1px solid #1a2620;border-radius:14px;overflow:hidden;cursor:pointer;padding:0;transition:all .28s;display:flex;flex-direction:column" style-hover="border-color:rgba(92,255,157,.45);transform:translateY(-5px)">
+            <div style="height:170px;background:{{ p.thumb }};border-bottom:1px solid #1a2620;position:relative;display:flex;align-items:flex-end;padding:14px">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#07090a;background:#5cff9d;padding:4px 9px;border-radius:5px;font-weight:700;letter-spacing:.05em">{{ p.label }}</span>
+            </div>
+            <div style="padding:22px">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <h3 style="font-size:21px;margin:0;font-weight:600">{{ p.name }}</h3>
+                <span style="color:#5cff9d;font-size:18px">↗</span>
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#5cff9d;margin-bottom:12px">{{ p.url }}</div>
+              <p style="margin:0 0 16px;color:#94a39a;font-size:14.5px;line-height:1.6">{{ p.desc }}</p>
+              <div style="display:flex;flex-wrap:wrap;gap:7px">
+                <sc-for list="{{ p.tags }}" as="tag" hint-placeholder-count="4">
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#8fbfa6;border:1px solid #1c2a23;border-radius:5px;padding:4px 9px">{{ tag }}</span>
+                </sc-for>
+              </div>
+            </div>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section ref="{{ contactRef }}" style="max-width:1180px;margin:0 auto;padding:60px 28px 130px">
+    <div data-reveal style="position:relative;border:1px solid #1a2620;border-radius:20px;padding:70px 40px;text-align:center;overflow:hidden;background:linear-gradient(180deg,#0c1310,#080b0a);transition:opacity .7s ease,transform .7s ease">
+      <div style="position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:420px;height:300px;background:radial-gradient(circle,rgba(92,255,157,0.12),transparent 70%);filter:blur(20px)"></div>
+      <div style="position:relative">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d;margin-bottom:18px">{{ t.contactKicker }}</div>
+        <h2 style="font-size:clamp(34px,5vw,60px);margin:0 0 20px;font-weight:700;letter-spacing:-.02em">{{ t.contactTitle }}</h2>
+        <p style="font-size:18px;color:#a7b5ad;max-width:540px;margin:0 auto 36px;line-height:1.65">{{ t.contactLead }}</p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <a href="mailto:alexalmendrosal@gmail.com" style="display:inline-flex;align-items:center;gap:9px;background:#5cff9d;color:#07090a;border:none;cursor:pointer;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;padding:15px 26px;border-radius:8px;transition:all .25s;text-decoration:none" style-hover="box-shadow:0 0 34px rgba(92,255,157,.55);transform:translateY(-2px)">{{ t.ctaPrimary }} →</a>
+          <a href="https://www.linkedin.com/in/alexalvarezalmendros/" target="_blank" style="display:inline-flex;align-items:center;gap:9px;background:transparent;color:#e8f0eb;border:1px solid #233029;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:13px;padding:15px 26px;border-radius:8px;transition:all .25s;text-decoration:none" style-hover="border-color:#5cff9d;color:#5cff9d">LINKEDIN</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+</sc-if>
+
+<!-- ============ BLOG INDEX ============ -->
+<sc-if value="{{ isBlog }}" hint-placeholder-val="{{ true }}">
+<main style="max-width:1180px;margin:0 auto;padding:140px 28px 120px;min-height:100vh">
+  <div style="margin-bottom:56px">
+    <div style="font-family:'JetBrains Mono',monospace;font-size:13px;color:#5cff9d;margin-bottom:16px">{{ t.blogKicker }}</div>
+    <h1 style="font-size:clamp(40px,6vw,72px);margin:0 0 18px;font-weight:700;letter-spacing:-.02em">{{ t.blogTitle }}</h1>
+    <p style="font-size:18px;color:#a7b5ad;max-width:560px;line-height:1.6;margin:0">{{ t.blogLead }}</p>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+    <sc-for list="{{ posts }}" as="post" hint-placeholder-count="6">
+      <button onClick="{{ post.open }}" style="text-align:left;background:linear-gradient(180deg,#0c1310,#090d0b);border:1px solid #1a2620;border-radius:14px;overflow:hidden;cursor:pointer;padding:0;transition:all .28s;display:flex;flex-direction:column" style-hover="border-color:rgba(92,255,157,.45);transform:translateY(-5px)">
+        <div style="height:160px;background:{{ post.thumb }};border-bottom:1px solid #1a2620;position:relative;display:flex;align-items:flex-start;padding:14px">
+          <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:#9fe9c2;background:rgba(7,9,10,.7);border:1px solid rgba(92,255,157,.3);padding:4px 9px;border-radius:5px;letter-spacing:.06em">{{ post.tag }}</span>
+        </div>
+        <div style="padding:22px;flex:1;display:flex;flex-direction:column">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6f7d75;margin-bottom:12px;display:flex;gap:12px">
+            <span>{{ post.date }}</span><span>·</span><span>{{ post.read }}</span>
+          </div>
+          <h3 style="font-size:18.5px;margin:0 0 10px;font-weight:600;line-height:1.32;flex:1">{{ post.title }}</h3>
+          <p style="margin:0 0 14px;color:#94a39a;font-size:14px;line-height:1.55">{{ post.excerpt }}</p>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5cff9d">{{ t.readMore }} →</span>
+        </div>
+      </button>
+    </sc-for>
+  </div>
+</main>
+</sc-if>
+
+<!-- ============ ARTICLE ============ -->
+<sc-if value="{{ isArticle }}" hint-placeholder-val="{{ true }}">
+<main style="min-height:100vh;padding-top:96px">
+  <div style="height:320px;background:{{ post.thumb }};position:relative;border-bottom:1px solid #1a2620">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,transparent,#07090a)"></div>
+  </div>
+  <article style="max-width:760px;margin:-90px auto 0;padding:0 28px 120px;position:relative;z-index:2">
+    <button onClick="{{ goBlog }}" style="background:none;border:1px solid #233029;color:#a7b5ad;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 14px;border-radius:7px;margin-bottom:26px;transition:all .2s" style-hover="border-color:#5cff9d;color:#5cff9d">← {{ t.backBlog }}</button>
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#6f7d75">
+      <span style="color:#9fe9c2;border:1px solid rgba(92,255,157,.3);padding:3px 9px;border-radius:5px">{{ post.tag }}</span>
+      <span>{{ post.date }}</span><span>·</span><span>{{ post.read }}</span>
+    </div>
+    <h1 style="font-size:clamp(32px,5vw,52px);margin:0 0 22px;font-weight:700;line-height:1.08;letter-spacing:-.02em">{{ post.title }}</h1>
+    <div style="display:flex;align-items:center;gap:12px;padding:18px 0;border-top:1px solid #141c18;border-bottom:1px solid #141c18;margin-bottom:36px">
+      <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#5cff9d,#3e96ff);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-weight:700;color:#07090a;font-size:14px">AA</div>
+      <div>
+        <div style="font-size:14px;font-weight:600">Alex Alvarez Almendros</div>
+        <div style="font-size:12px;color:#6f7d75;font-family:'JetBrains Mono',monospace">Fullstack Developer</div>
+      </div>
+    </div>
+    <div style="font-size:18px;line-height:1.78;color:#c2cec7">
+      <p style="margin:0 0 24px;font-size:20px;color:#dde7e1">{{ post.excerpt }}</p>
+      <p style="margin:0 0 24px">{{ t.art1 }}</p>
+      <h2 style="font-size:26px;margin:40px 0 18px;font-weight:600;color:#e8f0eb">{{ t.artH1 }}</h2>
+      <p style="margin:0 0 24px">{{ t.art2 }}</p>
+      <pre style="background:#0a0f0d;border:1px solid #1a2620;border-radius:10px;padding:20px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.7;color:#a7b5ad;overflow-x:auto;margin:0 0 28px"><span style="color:#6a7a72">// {{ post.tag }} — example</span>
+<span style="color:#7aa2ff">const</span> data = <span style="color:#7aa2ff">await</span> fetch(<span style="color:#ffd479">'/api/v1/resource'</span>)
+  .then(r =&gt; r.json());
+
+<span style="color:#7aa2ff">if</span> (data.ok) {
+  render(data.items);
+}</pre>
+      <h2 style="font-size:26px;margin:40px 0 18px;font-weight:600;color:#e8f0eb">{{ t.artH2 }}</h2>
+      <p style="margin:0 0 24px">{{ t.art3 }}</p>
+      <blockquote style="margin:0 0 28px;padding:16px 24px;border-left:3px solid #5cff9d;background:#0a100d;border-radius:0 8px 8px 0;color:#b9c6be;font-size:18px;font-style:italic">{{ t.artQuote }}</blockquote>
+      <p style="margin:0 0 24px">{{ t.art4 }}</p>
+    </div>
+    <div style="margin-top:50px;padding-top:30px;border-top:1px solid #141c18;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#6f7d75">{{ t.thanks }}</span>
+      <button onClick="{{ goBlog }}" style="background:none;border:1px solid #233029;color:#a7b5ad;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;padding:9px 16px;border-radius:7px;transition:all .2s" style-hover="border-color:#5cff9d;color:#5cff9d">{{ t.moreDevlogs }} →</button>
+    </div>
+  </article>
+</main>
+</sc-if>
+
+<!-- ============ PROJECT CASE STUDY ============ -->
+<sc-if value="{{ isProject }}" hint-placeholder-val="{{ true }}">
+<main style="min-height:100vh;padding:120px 28px 120px">
+  <div style="max-width:1000px;margin:0 auto">
+    <button onClick="{{ goHome }}" style="background:none;border:1px solid #233029;color:#a7b5ad;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12px;padding:8px 14px;border-radius:7px;margin-bottom:30px;transition:all .2s" style-hover="border-color:#5cff9d;color:#5cff9d">← {{ t.backHome }}</button>
+    <div style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5cff9d;margin-bottom:14px">{{ proj.label }} · {{ proj.year }}</div>
+    <h1 style="font-size:clamp(38px,6vw,68px);margin:0 0 16px;font-weight:700;letter-spacing:-.02em">{{ proj.name }}</h1>
+    <p style="font-size:20px;color:#a7b5ad;max-width:640px;line-height:1.6;margin:0 0 26px">{{ proj.tagline }}</p>
+    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:44px">
+      <a href="{{ proj.live }}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#5cff9d;color:#07090a;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;padding:12px 20px;border-radius:8px;text-decoration:none;transition:all .25s" style-hover="box-shadow:0 0 28px rgba(92,255,157,.5)">{{ t.visitSite }} ↗</a>
+      <a href="{{ proj.repo }}" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:transparent;color:#e8f0eb;border:1px solid #233029;font-family:'JetBrains Mono',monospace;font-size:12.5px;padding:12px 20px;border-radius:8px;text-decoration:none;transition:all .25s" style-hover="border-color:#5cff9d;color:#5cff9d">{{ t.viewRepo }}</a>
+    </div>
+
+    <div style="height:380px;background:{{ proj.thumb }};border:1px solid #1a2620;border-radius:16px;margin-bottom:24px;position:relative;display:flex;align-items:center;justify-content:center">
+      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#3f4d45;letter-spacing:.1em">// {{ t.screenshot }} — {{ proj.url }}</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:60px">
+      <div style="height:200px;background:{{ proj.thumb2 }};border:1px solid #1a2620;border-radius:14px;display:flex;align-items:center;justify-content:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#3f4d45">// {{ t.screenshot }} 02</span>
+      </div>
+      <div style="height:200px;background:{{ proj.thumb3 }};border:1px solid #1a2620;border-radius:14px;display:flex;align-items:center;justify-content:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#3f4d45">// {{ t.screenshot }} 03</span>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:.8fr 1.2fr;gap:54px;margin-bottom:60px">
+      <div>
+        <div style="margin-bottom:30px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6f7d75;letter-spacing:.1em;margin-bottom:12px">{{ t.role }}</div>
+          <div style="font-size:16px;color:#cdd9d2">{{ proj.role }}</div>
+        </div>
+        <div style="margin-bottom:30px">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#6f7d75;letter-spacing:.1em;margin-bottom:12px">{{ t.stack }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ proj.tags }}" as="tag" hint-placeholder-count="4">
+              <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:#8fbfa6;border:1px solid #1c2a23;border-radius:5px;padding:5px 10px">{{ tag }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-size:26px;margin:0 0 18px;font-weight:600">{{ t.overview }}</h2>
+        <p style="font-size:17px;line-height:1.75;color:#b9c6be;margin:0 0 28px">{{ proj.overview }}</p>
+        <h2 style="font-size:26px;margin:0 0 18px;font-weight:600">{{ t.keyFeatures }}</h2>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <sc-for list="{{ proj.features }}" as="f" hint-placeholder-count="4">
+            <div style="display:flex;gap:13px;align-items:flex-start">
+              <span style="color:#5cff9d;font-family:'JetBrains Mono',monospace;margin-top:2px">▸</span>
+              <span style="font-size:15.5px;color:#b9c6be;line-height:1.55">{{ f }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;justify-content:space-between;align-items:center;padding-top:30px;border-top:1px solid #141c18;flex-wrap:wrap">
+      <sc-for list="{{ otherProjects }}" as="op" hint-placeholder-count="1">
+        <button onClick="{{ op.open }}" style="background:none;border:1px solid #233029;color:#e8f0eb;cursor:pointer;font-family:'JetBrains Mono',monospace;font-size:12.5px;padding:12px 18px;border-radius:8px;transition:all .2s" style-hover="border-color:#5cff9d;color:#5cff9d">{{ t.nextProject }}: {{ op.name }} →</button>
+      </sc-for>
+    </div>
+  </div>
+</main>
+</sc-if>
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid #141c18;padding:34px 28px;background:#080b0a">
+  <div style="max-width:1180px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px">
+    <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#5a6760">{{ t.footer }}</span>
+    <div style="display:flex;gap:20px">
+      <a href="https://github.com/AlexAlvarezAlmendros" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#8c9a92;text-decoration:none;transition:color .2s" style-hover="color:#5cff9d">GITHUB</a>
+      <a href="https://www.linkedin.com/in/alexalvarezalmendros/" target="_blank" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#8c9a92;text-decoration:none;transition:color .2s" style-hover="color:#5cff9d">LINKEDIN</a>
+      <a href="mailto:alexalmendrosal@gmail.com" style="font-family:'JetBrains Mono',monospace;font-size:12px;color:#8c9a92;text-decoration:none;transition:color .2s" style-hover="color:#5cff9d">EMAIL</a>
+    </div>
+  </div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:860}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { page: 'home', lang: 'es', postId: 'spotify', projId: 'otp' };
+    this.cursorRef = React.createRef();
+    this.heroRef = React.createRef();
+    this.nameRef = React.createRef();
+    this.contactRef = React.createRef();
+    this._mouse = { x: -999, y: -999 };
+    this._raf = null;
+  }
+
+  L(es, en) { return this.state.lang === 'en' ? en : es; }
+
+  componentDidMount() {
+    this.setupCursor();
+    this.setupReveal();
+    if (this.state.page === 'home') { this.setupHero(); this.scramble(); }
+  }
+
+  componentDidUpdate(pp, ps) {
+    if (ps.page !== this.state.page) {
+      window.scrollTo(0, 0);
+      this.setupReveal();
+      if (this.state.page === 'home') { this.setupHero(); this.scramble(); }
+      else { this.stopHero(); }
+    }
+  }
+
+  componentWillUnmount() { this.stopHero(); }
+
+  setupCursor() {
+    if (this._cursorInit) return;
+    this._cursorInit = true;
+    document.addEventListener('mousemove', (e) => {
+      this._mouse = { x: e.clientX, y: e.clientY };
+      if (this.cursorRef.current) {
+        this.cursorRef.current.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
+      }
+    });
+  }
+
+  setupReveal() {
+    setTimeout(() => {
+      const els = document.querySelectorAll('[data-reveal]');
+      els.forEach((el) => {
+        if (el.dataset.revealed) return;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(34px)';
+      });
+      if (this._io) this._io.disconnect();
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) {
+            en.target.style.opacity = '1';
+            en.target.style.transform = 'translateY(0)';
+            en.target.dataset.revealed = '1';
+            this._io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      els.forEach((el) => { if (!el.dataset.revealed) this._io.observe(el); });
+    }, 30);
+  }
+
+  stopHero() { if (this._raf) { cancelAnimationFrame(this._raf); this._raf = null; } }
+
+  setupHero() {
+    this.stopHero();
+    setTimeout(() => {
+      const canvas = this.heroRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      let w, h, pts;
+      const build = () => {
+        w = canvas.offsetWidth; h = canvas.offsetHeight;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const gap = 34; pts = [];
+        for (let x = gap / 2; x < w; x += gap)
+          for (let y = gap / 2; y < h; y += gap)
+            pts.push({ x, y });
+      };
+      build();
+      if (!this._resizeBound) { this._resizeBound = true; window.addEventListener('resize', () => { if (this.heroRef.current) build(); }); }
+      const start = performance.now();
+      const draw = (now) => {
+        const t = (now - start) / 1000;
+        ctx.clearRect(0, 0, w, h);
+        const r = canvas.getBoundingClientRect();
+        const mx = this._mouse.x - r.left, my = this._mouse.y - r.top;
+        for (const p of pts) {
+          const dx = p.x - mx, dy = p.y - my;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          const near = Math.max(0, 1 - dist / 200);
+          const wave = 0.5 + 0.5 * Math.sin(t * 1.4 + p.x * 0.012 + p.y * 0.012);
+          const a = 0.05 + wave * 0.06 + near * 0.5;
+          const s = 1.1 + near * 2.2;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, s, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(92,255,157,' + a + ')';
+          ctx.fill();
+        }
+        this._raf = requestAnimationFrame(draw);
+      };
+      this._raf = requestAnimationFrame(draw);
+    }, 40);
+  }
+
+  scramble() {
+    setTimeout(() => {
+      const el = this.nameRef.current;
+      if (!el) return;
+      const final = 'ALEX ALVAREZ ALMENDROS';
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ#$%&_/<>';
+      let frame = 0;
+      const total = 28;
+      const tick = () => {
+        let out = '';
+        const reveal = Math.floor((frame / total) * final.length);
+        for (let i = 0; i < final.length; i++) {
+          if (final[i] === ' ') { out += ' '; continue; }
+          if (i < reveal) out += final[i];
+          else out += chars[Math.floor(Math.random() * chars.length)];
+        }
+        const mid = final.indexOf(' ', 6);
+        el.innerHTML = out.slice(0, mid >= 0 ? 11 : out.length).trim() + '<br>' + out.slice(11).trim();
+        frame++;
+        if (frame <= total) setTimeout(tick, 34);
+        else el.innerHTML = 'ALEX ALVAREZ<br>ALMENDROS';
+      };
+      tick();
+    }, 120);
+  }
+
+  go(page, extra) { this.setState(Object.assign({ page }, extra || {})); }
+
+  renderVals() {
+    const lang = this.state.lang;
+    const L = (es, en) => lang === 'en' ? en : es;
+    const NG = 'repeating-linear-gradient(135deg,#0d1611,#0d1611 9px,#0a120e 9px,#0a120e 18px)';
+    const NG2 = 'radial-gradient(circle at 30% 30%,#10211a,#0a120e 70%),repeating-linear-gradient(0deg,#0e1812,#0e1812 1px,transparent 1px,transparent 16px)';
+    const NG3 = 'linear-gradient(135deg,#0e1d16,#0a120e),repeating-linear-gradient(90deg,rgba(92,255,157,.06),rgba(92,255,157,.06) 1px,transparent 1px,transparent 14px)';
+    const NG4 = 'radial-gradient(circle at 70% 40%,#13261d,#0a120e 65%)';
+    const patterns = [NG, NG2, NG3, NG4, NG2, NG3];
+
+    const t = {
+      available: L('DISPONIBLE PARA PROYECTOS', 'AVAILABLE FOR PROJECTS'),
+      heroKicker: L('> Fullstack Developer · Barcelona', '> Fullstack Developer · Barcelona'),
+      heroLead: L('Desarrollador Fullstack apasionado por la tecnología, la web y la IA. Creo soluciones digitales robustas y experiencias de usuario futuristas.', 'Fullstack developer passionate about technology, the web and AI. I build robust digital products and forward-looking user experiences.'),
+      ctaPrimary: L('INICIAR_CONTACTO', 'START_CONTACT'),
+      scroll: L('DESPLAZA', 'SCROLL'),
+      s1title: L('PERFIL', 'PROFILE'),
+      bio1: L('Hola, soy Alex. Trabajo como Fullstack Developer con más de cinco años de experiencia creando soluciones web y móviles con React, Blazor, NodeJS y .NET Core 8.', 'Hi, I\u2019m Alex. I work as a Fullstack Developer with 5+ years building web and mobile solutions with React, Blazor, NodeJS and .NET Core 8.'),
+      bio2: L('He colaborado con compañías como Experian, Bella Aurora Labs y Capitole, desarrollando aplicaciones escalables e intuitivas.', 'I\u2019ve worked with companies such as Experian, Bella Aurora Labs and Capitole, shipping scalable and intuitive applications.'),
+      bio3: L('Ubicado en Barcelona, siempre abierto a nuevas oportunidades que desafíen mis habilidades técnicas.', 'Based in Barcelona, always open to new opportunities that challenge my technical skills.'),
+      s2title: L('EXPERIENCIA', 'EXPERIENCE'),
+      s3title: L('TECH STACK', 'TECH STACK'),
+      s4title: L('PROYECTOS', 'PROJECTS'),
+      contactKicker: L('// 05 — CONTACTO', '// 05 — CONTACT'),
+      contactTitle: L('¿Listos para colaborar?', 'Ready to build together?'),
+      contactLead: L('Actualmente abierto a nuevas oportunidades. Tengas una pregunta o quieras saludar, mi bandeja siempre está abierta.', 'Currently open to new opportunities. Whether you have a question or just want to say hi, my inbox is always open.'),
+      blogKicker: L('// DEVLOGS', '// DEVLOGS'),
+      blogTitle: L('Blog & Devlogs', 'Blog & Devlogs'),
+      blogLead: L('Notas técnicas, decisiones de arquitectura y aprendizajes mientras construyo cosas.', 'Technical notes, architecture decisions and lessons learned while building things.'),
+      readMore: L('Leer', 'Read'),
+      backBlog: L('Volver al blog', 'Back to blog'),
+      backHome: L('Volver al inicio', 'Back home'),
+      art1: L('Cuando empecé a integrar esta pieza en producción, lo primero que descubrí es que la documentación oficial cuenta solo la mitad de la historia. El resto se aprende a base de logs, errores y bastante café.', 'When I started taking this into production, the first thing I learned is that the official docs only tell half the story. The rest you learn through logs, errors and plenty of coffee.'),
+      artH1: L('El problema', 'The problem'),
+      art2: L('El reto principal era mantener la experiencia fluida sin sacrificar fiabilidad. Necesitaba un enfoque que escalara y que cualquier persona del equipo pudiera mantener sin fricción.', 'The main challenge was keeping the experience fluid without sacrificing reliability. I needed an approach that scaled and that anyone on the team could maintain without friction.'),
+      artH2: L('La solución', 'The solution'),
+      art3: L('Opté por una capa de abstracción ligera y tipada que centraliza la lógica y deja los componentes limpios. El resultado: menos bugs, despliegues más rápidos y un código que se lee solo.', 'I went for a lightweight, typed abstraction layer that centralizes the logic and keeps components clean. The result: fewer bugs, faster deploys and code that reads itself.'),
+      artQuote: L('La mejor arquitectura es la que tu yo del futuro agradecerá a las 3 de la mañana.', 'The best architecture is the one your future self will thank at 3am.'),
+      art4: L('Si estás peleándote con algo parecido, mi consejo es empezar pequeño, medir todo y no tener miedo de refactorizar pronto. Lo escribiré en más detalle en el próximo devlog.', 'If you\u2019re fighting something similar, my advice is to start small, measure everything and don\u2019t be afraid to refactor early. More detail in the next devlog.'),
+      thanks: L('// gracias por leer', '// thanks for reading'),
+      moreDevlogs: L('Más devlogs', 'More devlogs'),
+      visitSite: L('VISITAR WEB', 'VISIT SITE'),
+      viewRepo: L('VER REPO', 'VIEW REPO'),
+      screenshot: L('captura', 'screenshot'),
+      role: L('ROL', 'ROLE'),
+      stack: L('STACK', 'STACK'),
+      overview: L('Resumen', 'Overview'),
+      keyFeatures: L('Características clave', 'Key features'),
+      nextProject: L('Siguiente', 'Next'),
+      footer: L('Diseñado & desarrollado por Alex Alvarez · © 2026', 'Designed & built by Alex Alvarez · © 2026'),
+    };
+
+    const nav = [
+      { label: L('_INICIO', '_HOME'), on: () => this.go('home') },
+      { label: L('_EXP', '_EXP'), on: () => { this.go('home'); setTimeout(() => window.scrollTo({ top: window.innerHeight * 1.6, behavior: 'smooth' }), 60); } },
+      { label: '_BLOG', on: () => this.go('blog') },
+      { label: L('_PROYECTOS', '_WORK'), on: () => this.go('project', { projId: 'otp' }) },
+      { label: L('CONTACTO_', 'CONTACT_'), on: () => this.go('home', {}) },
+    ].map(n => Object.assign({ color: '#9aa8a0' }, n));
+
+    const soft = [
+      L('Aprendizaje Continuo', 'Continuous Learning'),
+      L('Resolución de Problemas', 'Problem Solving'),
+      L('Trabajo en Equipo', 'Teamwork'),
+      L('Comunicación Efectiva', 'Effective Communication'),
+      L('Proactividad', 'Proactivity'),
+    ];
+
+    const experience = [
+      { period: L('SEP 2024 — PRESENTE', 'SEP 2024 — PRESENT'), role: 'Fullstack Developer', company: 'Capitole Consulting', desc: L('Desarrollo de apps web para Experian con Blazor y .NET 8. Implementación de features, mejoras de UX/UI y colaboración con equipos internacionales bajo Scrum en entornos CI/CD.', 'Building web apps for Experian with Blazor and .NET 8. Feature delivery, UX/UI improvements and collaboration with international teams under Scrum in CI/CD environments.'), tags: ['.NET', 'React', 'Blazor', 'NodeJS', 'LLMOps'], dot: '#5cff9d' },
+      { period: 'MAY 2024 — SEP 2024', role: 'Fullstack Web Developer', company: 'Bella Aurora Labs S.A.', desc: L('Desarrollo fullstack de aplicaciones internas con .NET 8 y Blazor. Migración de apps, APIs y trabajo con LLMs bajo metodología Scrum.', 'Fullstack development of internal apps with .NET 8 and Blazor. App migration, APIs and LLM work under Scrum.'), tags: ['.NET', 'Blazor', 'React', 'LLMOps'], dot: '#3e96ff' },
+      { period: L('JUN 2023 — MAY 2024', 'JUN 2023 — MAY 2024'), role: 'Fullstack Developer', company: 'DAITEC Engineering', desc: L('Desarrollo integral de aplicaciones web y software industrial con tecnologías .NET y frameworks modernos de frontend.', 'End-to-end development of web apps and industrial software with .NET and modern frontend frameworks.'), tags: ['.NET', 'SQL', 'IoT', 'LLMOps'], dot: '#3e96ff' },
+      { period: L('OCT 2022 — ABR 2023', 'OCT 2022 — APR 2023'), role: L('Profesor de Programación', 'Programming Teacher'), company: 'Adecco', desc: L('Cursos de programación de videojuegos en Unity 3D, VR y AR. Creación de materiales, mentoría y seguimiento de estudiantes.', 'Game programming courses in Unity 3D, VR and AR. Materials, mentoring and student follow-up.'), tags: ['Unity 3D', 'C#', 'VR/AR'], dot: '#3e96ff' },
+      { period: L('DIC 2020 — SEP 2022', 'DEC 2020 — SEP 2022'), role: '.NET / Web Developer', company: 'SECPHO', desc: L('Mantenimiento y desarrollo de aplicaciones internas. Gestión de bases de datos y backend con C#.', 'Maintenance and development of internal apps. Database management and C# backend.'), tags: ['JavaScript', 'React', 'Express', 'NodeJS'], dot: '#3e96ff' },
+      { period: L('ENE 2018 — ABR 2018', 'JAN 2018 — APR 2018'), role: L('Frontend Developer (Prácticas)', 'Frontend Developer (Intern)'), company: 'iTailored App&Web', desc: L('Primer contacto profesional con el desarrollo web. Maquetación y lógica de cliente.', 'First professional contact with web development. Markup and client-side logic.'), tags: ['HTML', 'CSS', 'JS'], dot: '#2a3d33' },
+    ];
+
+    const skills = [
+      { icon: '{ }', name: 'Express / .NET', cat: 'Core Dev' },
+      { icon: '</>', name: 'Blazor / React', cat: 'Frontend' },
+      { icon: 'JS', name: 'JavaScript', cat: 'Interactivity' },
+      { icon: 'DB', name: 'SQL / NoSQL', cat: 'Data' },
+      { icon: 'GIT', name: 'Git / DevOps', cat: 'Version Control' },
+      { icon: 'API', name: 'RESTful APIs', cat: 'Connectivity' },
+      { icon: 'IoT', name: 'IoT / N8N', cat: 'Automation' },
+      { icon: 'UX', name: 'UX / UI', cat: 'Design' },
+    ];
+
+    const projData = {
+      otp: {
+        label: 'PUBLIC REPO', year: '2025', name: 'Other People Records', url: 'otherpeople.es',
+        live: 'https://otherpeople.es', repo: 'https://github.com/AlexAlvarezAlmendros/ReactOtpWeb',
+        tagline: L('Landing y plataforma para un sello discográfico con integración completa de Spotify.', 'Landing and platform for a record label with full Spotify integration.'),
+        desc: L('Landing page para sello discográfico con integración de Spotify API, gestión de artistas, álbumes y eventos, autenticación Auth0 y diseño responsive.', 'Record-label landing with Spotify API integration, artist/album/event management, Auth0 auth and a responsive design.'),
+        tags: ['React 19', 'Vite', 'Spotify API', 'Auth0'],
+        role: L('Diseño y desarrollo fullstack', 'Fullstack design & development'),
+        overview: L('Una plataforma web para un sello discográfico independiente que conecta directamente con Spotify para sincronizar artistas, lanzamientos y eventos en tiempo real, con un panel de administración para el equipo.', 'A web platform for an independent record label that connects directly to Spotify to sync artists, releases and events in real time, with an admin panel for the team.'),
+        features: [
+          L('Integración completa con la Spotify API para artistas y álbumes', 'Full Spotify API integration for artists and albums'),
+          L('Autenticación y roles con Auth0', 'Authentication and roles with Auth0'),
+          L('Gestión de eventos y lanzamientos desde un panel propio', 'Event and release management from a custom dashboard'),
+          L('Diseño responsive y rendimiento optimizado con Vite', 'Responsive design and optimized performance with Vite'),
+        ],
+      },
+      trimar: {
+        label: 'PUBLIC REPO', year: '2024', name: 'Fincas Trimar', url: 'fincastrimar.com',
+        live: 'https://fincastrimar.com', repo: 'https://github.com/AlexAlvarezAlmendros/FincasTrimarWeb',
+        tagline: L('Portal inmobiliario completo con catálogo, filtros avanzados y panel de administración.', 'Full real-estate portal with catalog, advanced filters and an admin panel.'),
+        desc: L('Portal web para inmobiliaria con catálogo de viviendas, filtros avanzados, panel de administración, Auth0, gestión de imágenes y notificaciones por email.', 'Real-estate web portal with property catalog, advanced filters, admin panel, Auth0, image management and email notifications.'),
+        tags: ['React 18', 'Node.js', 'Turso/SQLite', 'Auth0'],
+        role: L('Desarrollo fullstack', 'Fullstack development'),
+        overview: L('Un portal inmobiliario completo donde los visitantes filtran viviendas por múltiples criterios y el equipo gestiona el catálogo, las imágenes y las consultas desde un panel privado.', 'A complete real-estate portal where visitors filter properties by multiple criteria and the team manages the catalog, images and inquiries from a private panel.'),
+        features: [
+          L('Catálogo con filtros avanzados de búsqueda', 'Catalog with advanced search filters'),
+          L('Panel de administración con Auth0', 'Admin panel with Auth0'),
+          L('Gestión de imágenes con ImgBB', 'Image management with ImgBB'),
+          L('Notificaciones por email automáticas', 'Automatic email notifications'),
+        ],
+      },
+    };
+    const projThumbs = { otp: NG2, trimar: NG3 };
+    const projects = ['otp', 'trimar'].map((id) => Object.assign({}, projData[id], {
+      thumb: projThumbs[id], open: () => this.go('project', { projId: id }),
+    }));
+
+    const curProj = projData[this.state.projId];
+    const proj = Object.assign({}, curProj, { thumb: NG2, thumb2: NG3, thumb3: NG4 });
+    const otherProjects = ['otp', 'trimar'].filter(id => id !== this.state.projId).map(id => ({
+      name: projData[id].name, open: () => this.go('project', { projId: id }),
+    }));
+
+    const postData = [
+      { id: 'spotify', tag: 'REACT', date: L('12 JUN 2026', 'JUN 12 2026'), read: L('6 min', '6 min'), title: L('Integrando la Spotify API en React 19', 'Integrating the Spotify API in React 19'), excerpt: L('Tokens, rate limits y cómo evitar que tu UI se bloquee esperando a Spotify.', 'Tokens, rate limits and how to keep your UI from blocking while waiting on Spotify.') },
+      { id: 'turso', tag: 'DATABASE', date: L('28 MAY 2026', 'MAY 28 2026'), read: L('8 min', '8 min'), title: L('Migrando de SQLite a Turso en producción', 'Migrating from SQLite to Turso in production'), excerpt: L('Edge replicas, latencia y por qué dejé de temer a las bases de datos distribuidas.', 'Edge replicas, latency and why I stopped fearing distributed databases.') },
+      { id: 'blazor', tag: '.NET', date: L('14 MAY 2026', 'MAY 14 2026'), read: L('10 min', '10 min'), title: L('Blazor vs React: lo que aprendí', 'Blazor vs React: what I learned'), excerpt: L('Dos años saltando entre ambos mundos. Cuándo usar cada uno y por qué.', 'Two years jumping between both worlds. When to use each and why.') },
+      { id: 'auth0', tag: 'AUTH', date: L('30 ABR 2026', 'APR 30 2026'), read: L('7 min', '7 min'), title: L('Auth0 sin dolor en un portal inmobiliario', 'Painless Auth0 in a real-estate portal'), excerpt: L('Roles, reglas y la configuración que ojalá hubiera conocido antes.', 'Roles, rules and the config I wish I\u2019d known earlier.') },
+      { id: 'n8n', tag: 'AUTOMATION', date: L('18 ABR 2026', 'APR 18 2026'), read: L('5 min', '5 min'), title: L('Automatizando mi flujo de trabajo con N8N', 'Automating my workflow with N8N'), excerpt: L('De tareas repetitivas a pipelines que trabajan mientras duermo.', 'From repetitive tasks to pipelines that work while I sleep.') },
+      { id: 'llmops', tag: 'AI', date: L('02 ABR 2026', 'APR 02 2026'), read: L('9 min', '9 min'), title: L('LLMOps: llevar LLMs a producción de verdad', 'LLMOps: taking LLMs to real production'), excerpt: L('Prompts versionados, evals y monitorización. El día a día de los LLMs reales.', 'Versioned prompts, evals and monitoring. The day-to-day of real-world LLMs.') },
+    ];
+    const posts = postData.map((p, i) => Object.assign({}, p, {
+      thumb: patterns[i % patterns.length], open: () => this.go('article', { postId: p.id }),
+    }));
+    const curPost = postData.find(p => p.id === this.state.postId) || postData[0];
+    const post = Object.assign({}, curPost, { thumb: patterns[postData.findIndex(p => p.id === curPost.id) % patterns.length] });
+
+    return {
+      cursorRef: this.cursorRef, heroRef: this.heroRef, nameRef: this.nameRef, contactRef: this.contactRef,
+      isHome: this.state.page === 'home', isBlog: this.state.page === 'blog',
+      isArticle: this.state.page === 'article', isProject: this.state.page === 'project',
+      t, nav, soft, experience, skills, projects, posts, post, proj, otherProjects,
+      marquee: '  C#  ·  .NET 8  ·  REACT  ·  BLAZOR  ·  NODEJS  ·  TYPESCRIPT  ·  SQL  ·  AUTH0  ·  IoT  ·  N8N  ·  LLMOps  ·  VITE  ·  ',
+      goHome: () => this.go('home'),
+      goBlog: () => this.go('blog'),
+      goContact: () => { setTimeout(() => { if (this.contactRef.current) window.scrollTo({ top: this.contactRef.current.offsetTop - 80, behavior: 'smooth' }); }, 30); },
+      setLangEs: () => this.setState({ lang: 'es' }),
+      setLangEn: () => this.setState({ lang: 'en' }),
+      esBg: lang === 'es' ? '#5cff9d' : 'transparent', esColor: lang === 'es' ? '#07090a' : '#8c9a92',
+      enBg: lang === 'en' ? '#5cff9d' : 'transparent', enColor: lang === 'en' ? '#07090a' : '#8c9a92',
+    };
+  }
+}
+</script>
+</body>
+</html>

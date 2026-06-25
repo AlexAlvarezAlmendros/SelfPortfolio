@@ -1,0 +1,210 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations, localizePath } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  path: string;
+}
+const { lang, path } = Astro.props;
+const t = useTranslations(lang);
+
+const nav = [
+  { label: t('nav.index'), href: localizePath('/', lang) },
+  { label: t('nav.work'), href: localizePath('/work/otp', lang) },
+  { label: t('nav.log'), href: localizePath('/blog', lang) },
+  { label: t('nav.info'), href: `${localizePath('/', lang)}#contact` },
+];
+const esHref = localizePath(path, 'es');
+const enHref = localizePath(path, 'en');
+const menuLabel = lang === 'es' ? 'Menú' : 'Menu';
+---
+<header>
+  <a class="logo" href={localizePath('/', lang)}>ALEX_ALVAREZ_ALMENDROS<span>™</span></a>
+
+  <!-- desktop nav -->
+  <nav class="nav-desktop">
+    {nav.map((item) => (
+      <a class="navlink lnk" href={item.href} data-scramble data-text={item.label}>{item.label}</a>
+    ))}
+    <span class="clock" data-clock>--:--:--</span>
+    <div class="lang">
+      <a href={esHref} class:list={['langbtn', { active: lang === 'es' }]}>ES</a>
+      <a href={enHref} class:list={['langbtn', { active: lang === 'en' }]}>EN</a>
+    </div>
+  </nav>
+
+  <!-- mobile hamburger -->
+  <button
+    class="menu-btn"
+    type="button"
+    aria-label={menuLabel}
+    aria-expanded="false"
+    aria-controls="mobile-nav"
+    data-menu-toggle
+  >
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+</header>
+
+<!-- mobile fullscreen menu -->
+<div class="mobile-nav" id="mobile-nav" data-mobile-nav aria-hidden="true">
+  <nav>
+    {nav.map((item, i) => (
+      <a class="m-link" href={item.href} style={`--i:${i}`}>
+        <span class="m-n">/0{i + 1}</span>{item.label}
+      </a>
+    ))}
+  </nav>
+  <div class="m-foot">
+    <div class="m-lang">
+      <a href={esHref} class:list={['langbtn', { active: lang === 'es' }]}>ES</a>
+      <a href={enHref} class:list={['langbtn', { active: lang === 'en' }]}>EN</a>
+    </div>
+    <span class="m-clock" data-clock>--:--:--</span>
+  </div>
+</div>
+
+<style>
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 26px;
+    background: rgba(7, 7, 6, 0.82);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #1d1d1a;
+  }
+  .logo {
+    color: #f2f0ea;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .logo span { color: #ccff00; }
+  nav.nav-desktop { display: flex; align-items: center; gap: 2px; }
+  .navlink {
+    color: #8a8a82;
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    letter-spacing: 0.04em;
+    padding: 8px 11px;
+    text-decoration: none;
+  }
+  .clock {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: #55554f;
+    margin: 0 10px;
+    min-width: 64px;
+    text-align: right;
+  }
+  .lang { display: flex; align-items: center; border: 1px solid #2a2a26; }
+  .langbtn {
+    color: #8a8a82;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 6px 9px;
+    text-decoration: none;
+  }
+  .langbtn.active { background: #ccff00; color: #070706; }
+
+  /* hamburger button — hidden on desktop */
+  .menu-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 42px;
+    height: 42px;
+    margin-right: -9px;
+    padding: 0;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    z-index: 60;
+  }
+  .menu-btn .bar {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 0 auto;
+    background: #f2f0ea;
+    transition: transform 0.25s ease, opacity 0.2s ease;
+  }
+
+  /* mobile menu — fills the screen BELOW the header so the logo + close (X)
+     button stay visible and tappable on top */
+  .mobile-nav {
+    display: none;
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 45;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 22px 32px;
+    background: #070706;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.28s ease;
+    overflow-y: auto;
+  }
+  .mobile-nav nav { display: flex; flex-direction: column; }
+  .m-link {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #1d1d1a;
+    color: #f2f0ea;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(34px, 11vw, 56px);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  .m-link .m-n {
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    font-size: 13px;
+    color: #ccff00;
+  }
+  .m-link:active { color: #ccff00; }
+  .m-foot { display: flex; align-items: center; justify-content: space-between; }
+  .m-lang { display: flex; border: 1px solid #2a2a26; }
+  .m-lang .langbtn { padding: 9px 14px; font-size: 13px; }
+  .m-clock { font-family: 'Space Mono', monospace; font-size: 12px; color: #55554f; }
+
+  /* open state (toggled by JS on <html>) */
+  :global(html.menu-open) header { background: #070706; }
+  :global(html.menu-open) .mobile-nav { opacity: 1; pointer-events: auto; }
+  :global(html.menu-open) .menu-btn .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  :global(html.menu-open) .menu-btn .bar:nth-child(2) { opacity: 0; }
+  :global(html.menu-open) .menu-btn .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  :global(html.menu-open) .m-link { opacity: 1; transform: none; transition: opacity 0.3s ease, transform 0.3s ease; transition-delay: calc(var(--i) * 0.05s + 0.08s); }
+
+  @media (max-width: 680px) {
+    header { padding: 0 16px; }
+    nav.nav-desktop { display: none; }
+    .menu-btn { display: flex; }
+    .mobile-nav { display: flex; }
+  }
+</style>
