@@ -202,8 +202,17 @@ function init() {
     const t = (e.target as HTMLElement).closest<HTMLElement>('[data-scramble]');
     if (t) scramble(t);
   });
-  window.addEventListener('resize', fitText);
-  if (window.ResizeObserver) new ResizeObserver(() => fitText()).observe(document.body);
+  // Only re-fit when the viewport WIDTH changes. On mobile, scrolling shows/hides
+  // the URL bar, which fires `resize` with a new height but the same width; refitting
+  // there resizes the headings mid-scroll and makes the page jump.
+  let lastFitWidth = window.innerWidth;
+  const refitOnWidthChange = () => {
+    if (window.innerWidth === lastFitWidth) return;
+    lastFitWidth = window.innerWidth;
+    fitText();
+  };
+  window.addEventListener('resize', refitOnWidthChange);
+  if (window.ResizeObserver) new ResizeObserver(refitOnWidthChange).observe(document.documentElement);
 }
 
 if (document.readyState === 'loading') {
