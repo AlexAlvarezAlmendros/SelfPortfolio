@@ -236,13 +236,17 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
     .sec { padding: 46px 16px 30px; }
     .contact { padding: 70px 16px 90px; }
     .name { padding: 36px 0 24px; }
+    /* stats: on the 2-col mobile grid, drop the desktop column indent so
+       each column stays left-aligned (ROLE above EXP, BASE above AVAIL) */
+    .stat.pad, .stat.avail { padding-left: 4px; }
     /* section titles must never spill past the edges */
     .head { gap: 12px; flex-wrap: wrap; }
     .head-h { font-size: clamp(24px, 7.5vw, 36px); overflow-wrap: anywhere; }
     .bio1 { font-size: clamp(19px, 5.4vw, 26px); }
     .stack { gap: 6px 16px; }
     .skill { font-size: clamp(22px, 7vw, 34px); }
-    .email { font-size: clamp(17px, 6vw, 26px); }
+    /* email: keep it on a single line (size scales with viewport so it always fits) */
+    .email { font-size: clamp(14px, 5.2vw, 24px); white-space: nowrap; overflow-wrap: normal; }
     .contact-row { gap: 12px 20px; }
 
     /* projects become image-led cards on mobile (no hover preview on touch) */
