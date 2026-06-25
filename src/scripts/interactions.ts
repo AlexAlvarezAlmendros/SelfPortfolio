@@ -129,6 +129,12 @@ function scramble(el: HTMLElement) {
   const final = el.getAttribute('data-text') || '';
   if (!final || el.dataset.animating) return;
   el.dataset.animating = '1';
+  // Freeze the box: the random uppercase glyphs are wider than the real text, so
+  // without this the element grows mid-animation and reflows/wraps the layout.
+  const prevWidth = el.style.width;
+  const prevWhiteSpace = el.style.whiteSpace;
+  el.style.width = `${el.getBoundingClientRect().width}px`;
+  el.style.whiteSpace = 'nowrap';
   const sup = el.querySelector('sup');
   const supHTML = sup ? sup.outerHTML : '';
   let frame = 0;
@@ -150,6 +156,9 @@ function scramble(el: HTMLElement) {
     else {
       if (supHTML) el.innerHTML = final + supHTML;
       else el.textContent = final;
+      // Release the frozen box now that the real text is back.
+      el.style.width = prevWidth;
+      el.style.whiteSpace = prevWhiteSpace;
       delete el.dataset.animating;
     }
   };

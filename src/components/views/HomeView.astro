@@ -249,20 +249,8 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
     .email { font-size: clamp(14px, 5.2vw, 24px); white-space: nowrap; overflow-wrap: normal; }
     .contact-row { gap: 12px 20px; }
 
-    /* projects become image-led cards on mobile (no hover preview on touch) */
-    .proj.g-proj { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 16px 2px 24px; }
-    .proj-thumb {
-      display: block;
-      order: 0;
-      width: 100%;
-      aspect-ratio: 1200 / 630;
-      border: 1px solid #1d1d1a;
-      background-size: cover;
-      background-position: top center;
-      margin-bottom: 13px;
-    }
-    .proj-thumb.wip { display: flex; align-items: center; justify-content: center; }
-    .thumb-wip { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 0.12em; color: #ccff00; }
+    /* text-only listing on mobile (no thumbnails / no hover preview on touch) */
+    .proj.g-proj { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px 2px; }
     .proj-n { order: 1; }
     .proj-name { order: 2; font-size: clamp(28px, 8vw, 40px); }
     .proj.g-proj .proj-tags { display: block; order: 3; margin-top: 4px; }
