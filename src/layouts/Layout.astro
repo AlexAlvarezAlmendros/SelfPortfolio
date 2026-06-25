@@ -4,6 +4,13 @@ import { localizePath } from '../i18n/utils';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
+// Self-hosted fonts (no third-party request). Variable axis for Syne; latin-only Space Mono.
+import '@fontsource-variable/syne/wght.css';
+import '@fontsource/space-mono/latin-400.css';
+import '@fontsource/space-mono/latin-700.css';
+// Hashed URLs for above-the-fold preload (must match the @font-face URLs Vite emits).
+import syneWoff2 from '@fontsource-variable/syne/files/syne-latin-wght-normal.woff2?url';
+import spaceMonoWoff2 from '@fontsource/space-mono/files/space-mono-latin-400-normal.woff2?url';
 
 interface Props {
   lang: Lang;
@@ -31,14 +38,7 @@ const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script is:inline>
-    // Mark JS early (pre-paint) so fit-to-width headings stay hidden until sized,
-    // avoiding the size flash. Safety net reveals them even if the main script fails.
-    document.documentElement.classList.add('js');
-    setTimeout(function () {
-      document.documentElement.classList.add('fonts-fitted');
-    }, 1500);
-  </script>
+  <script is:inline>document.documentElement.classList.add("js");setTimeout(function(){document.documentElement.classList.add("fonts-fitted")},1500)</script>
   <title>{title}</title>
   <meta name="description" content={description} />
   <meta name="keywords" content="Alex Alvarez Almendros, Fullstack Developer, React, .NET, Blazor, NodeJS, Barcelona, desarrollador web" />
@@ -69,17 +69,14 @@ const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="preload" href={syneWoff2} as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href={spaceMonoWoff2} as="font" type="font/woff2" crossorigin />
 
   {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 </head>
 <body>
-  <!-- vertical grid overlay -->
   <div class="grid-overlay" aria-hidden="true"></div>
 
-  <!-- floating cursor preview -->
   <div id="cursor-preview" aria-hidden="true">
     <span id="cursor-preview-label">// preview</span>
   </div>

@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && node ./scripts/strip-html-comments.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "screenshots": "astro build && node scripts/og-screenshots.mjs",
@@ -15,8 +15,10 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.0.0",
-    "@astrojs/sitemap": "^3.7.0"
+    "@astrojs/sitemap": "^3.7.0",
+    "@fontsource-variable/syne": "^5.2.7",
+    "@fontsource/space-mono": "^5.2.9",
+    "astro": "^7.0.0"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
