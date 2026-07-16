@@ -19,9 +19,12 @@
     "@astrojs/sitemap": "^3.7.0",
     "@fontsource-variable/syne": "^5.2.7",
     "@fontsource/space-mono": "^5.2.9",
-    "astro": "^7.0.0"
+    "astro": "^7.0.0",
+    "postprocessing": "^6.39.2",
+    "three": "^0.185.1"
   },
   "devDependencies": {
+    "@types/three": "^0.185.1",
     "playwright": "^1.49.0"
   }
 }

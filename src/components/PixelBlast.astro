@@ -1,0 +1,45 @@
+---
+// Animated pixel background (React Bits "PixelBlast", ported to vanilla three.js).
+// Sits fixed behind all content; loads lazily on idle so it never blocks LCP.
+// Skipped entirely for users with prefers-reduced-motion.
+---
+<div id="pixel-blast-bg" aria-hidden="true"></div>
+
+<script>
+  const start = () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const el = document.getElementById('pixel-blast-bg');
+    if (!el) return;
+    // three.js is a separate chunk; only fetched here, after the page is idle.
+    import('../scripts/pixel-blast').then(({ mountPixelBlast }) => {
+      mountPixelBlast(el, {
+        variant: 'square',
+        pixelSize: 2,
+        color: '#2b2d25',
+        patternScale: 7.5,
+        patternDensity: 0.05,
+        pixelSizeJitter: 2,
+        enableRipples: true,
+        liquid: false,
+        speed: 0.55,
+        edgeFade: 0.25,
+        transparent: true,
+      });
+    });
+  };
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(start, { timeout: 2500 });
+  } else {
+    setTimeout(start, 500);
+  }
+</script>
+
+<style>
+  #pixel-blast-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1; /* above the body background, below all content */
+    pointer-events: none;
+    overflow: hidden;
+  }
+</style>
