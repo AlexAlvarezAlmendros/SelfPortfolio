@@ -6,7 +6,7 @@ tag: "LINUX"
 date: 2026-03-10
 read: "5 min"
 excerpt: "Me compré un ThinkPad, le metí Ubuntu y se ha convertido en mi máquina favorita para programar."
-order: 7
+order: 8
 ---
 Llevaba años en Windows y, sinceramente, nunca me lo había planteado demasiado. Funcionaba, abría el editor, compilaba y a correr. Pero algo me picaba: cada vez sentía que el sistema trabajaba más para sí mismo que para mí.
 

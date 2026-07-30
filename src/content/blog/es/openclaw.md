@@ -6,7 +6,7 @@ tag: "AI"
 date: 2026-04-15
 read: "9 min"
 excerpt: "Memoria por procesos, curado de datos y automatizaciones diarias corriendo en una cajita de segunda mano."
-order: 5
+order: 6
 ---
 Si has seguido el mundillo de los agentes de IA, seguramente te suene OpenClaw. Causó bastante revuelo: un agente capaz de orquestar tareas complejas, mantener contexto y trabajar de forma casi autónoma. Yo quería ver hasta dónde podía exprimirlo en hardware modesto, así que lo monté en mi ThinkCentre 700.
 

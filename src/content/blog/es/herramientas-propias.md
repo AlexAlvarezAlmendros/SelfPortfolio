@@ -6,7 +6,7 @@ tag: "INDIE"
 date: 2026-05-20
 read: "8 min"
 excerpt: "Hosting, base de datos, mailing, auth... dejar de delegar por pereza y montármelo yo."
-order: 3
+order: 4
 ---
 En mi vida como desarrollador, en la parte personal (del trabajo no hablo, ejem, NDAs y esas cosas...), siempre he dependido de herramientas de terceros para ahorrarme faena: el hosting, la base de datos, la autenticación, el mailing. Todas esas piezas que acabamos delegando por pereza o comodidad y que, sumadas, te cobran un ojo de la cara.
 

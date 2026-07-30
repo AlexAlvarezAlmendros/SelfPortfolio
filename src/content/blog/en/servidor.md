@@ -6,7 +6,7 @@ tag: "HOMELAB"
 date: 2026-05-04
 read: "7 min"
 excerpt: "I put together a desktop rig from spare parts, and suddenly the homelab got out of hand (in a good way)."
-order: 4
+order: 5
 ---
 The ThinkCentre did its job, but it was starting to show its limits. So I put together a desktop rig from spare parts, a bit Frankenstein-style, to have a much more capable main server.
 
