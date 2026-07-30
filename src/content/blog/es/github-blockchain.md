@@ -6,7 +6,7 @@ tag: "BLOCKCHAIN"
 date: 2026-06-18
 read: "8 min"
 excerpt: "Vincular repositorios de GitHub a Ethereum para gestionar bounties y decisiones entre mantenedores."
-order: 1
+order: 2
 ---
 El otro día me topé con alguien defendiendo que GitHub no significa open source. Un statement un poco raro y bastante obvio para los que llevamos tiempo en esto, pero me hizo pensar.
 

@@ -6,7 +6,7 @@ tag: "BLOCKCHAIN"
 date: 2026-06-18
 read: "8 min"
 excerpt: "Linking GitHub repos to Ethereum to handle bounties and high-level decisions between maintainers."
-order: 1
+order: 2
 ---
 The other day I ran into someone arguing that GitHub doesn't mean open source. A slightly odd and fairly obvious statement for those of us who've been at this a while, but it got me thinking.
 

@@ -6,7 +6,7 @@ tag: "HOMELAB"
 date: 2026-03-28
 read: "6 min"
 excerpt: "From tinkering with Arduino and ESP32 to finally having a machine dedicated to being my personal server."
-order: 6
+order: 7
 ---
 I've always been the experimenting type: Arduino, ESP32, a thousand microcontrollers wired to anything that would hold still. But I'd never had a whole computer dedicated to being my personal server. And it turns out that changes the rules of the game quite a bit.
 

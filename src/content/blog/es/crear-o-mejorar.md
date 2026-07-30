@@ -6,7 +6,7 @@ tag: "MINDSET"
 date: 2026-06-05
 read: "6 min"
 excerpt: "El debate que tengo conmigo mismo últimamente: pulir lo conocido o lanzarme a algo que aún no existe."
-order: 2
+order: 3
 ---
 Últimamente tengo este debate constante en la cabeza: ¿es mejor mejorar algo que ya existe o construir algo nuevo desde cero?
 

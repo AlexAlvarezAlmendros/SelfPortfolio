@@ -6,7 +6,7 @@ tag: "MINDSET"
 date: 2026-06-05
 read: "6 min"
 excerpt: "The debate I keep having with myself lately: polish the known, or jump into something that doesn't exist yet."
-order: 2
+order: 3
 ---
 Lately I keep having this constant debate in my head: is it better to improve something that already exists or to build something new from scratch?
 

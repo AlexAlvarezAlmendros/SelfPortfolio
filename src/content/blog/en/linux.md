@@ -6,7 +6,7 @@ tag: "LINUX"
 date: 2026-03-10
 read: "5 min"
 excerpt: "I bought a ThinkPad, threw Ubuntu on it, and it became my favorite machine to code on."
-order: 7
+order: 8
 ---
 I'd been on Windows for years and, honestly, I'd never really questioned it. It worked, it opened my editor, it compiled, and off I went. But something kept nagging at me: more and more it felt like the system was working for itself rather than for me.
 

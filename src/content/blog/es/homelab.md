@@ -6,7 +6,7 @@ tag: "HOMELAB"
 date: 2026-03-28
 read: "6 min"
 excerpt: "De cacharrear con Arduino y ESP32 a tener por fin un ordenador dedicado a ser mi servidor personal."
-order: 6
+order: 7
 ---
 Siempre he sido de hacer experimentos: Arduino, ESP32, mil microcontroladores conectados a cualquier cosa que se dejara. Pero nunca había tenido un ordenador entero dedicado a ser mi servidor personal. Y resulta que eso cambia bastante las reglas del juego.
 
