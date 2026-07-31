@@ -33,4 +33,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://alexalvarez.dev/sitemap-index.xml
+Sitemap: https://www.alexalvarez.dev/sitemap-index.xml
