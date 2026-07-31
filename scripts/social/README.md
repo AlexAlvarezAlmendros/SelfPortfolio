@@ -72,23 +72,43 @@ En tu instancia: Preferences → Development → New application, scope
 `MASTODON_ACCESS_TOKEN`.
 
 ### Threads
-1. developers.facebook.com → nueva app tipo *Threads*.
-2. Permisos `threads_basic` y `threads_content_publish`.
-3. Genera un token de larga duración → `THREADS_ACCESS_TOKEN`.
+1. developers.facebook.com → nueva app, caso de uso **Access the Threads API**.
+2. En *Customize*, añade los permisos `threads_basic` y `threads_content_publish`.
+3. En esa misma pantalla, baja hasta **User Token Generator** y genera un token.
+   Es de una hora: sirve solo como punto de partida.
+4. Cámbialo por uno de 60 días:
 
-Caduca a los 60 días pero se refresca por API: `refresh()` en
-`providers/threads.mjs`. Si lo automatizas, guarda el token nuevo con
-`gh secret set THREADS_ACCESS_TOKEN`.
+```bash
+node --env-file=.env.local scripts/social/auth.mjs threads --token=<el-de-una-hora>
+```
+
+Necesita `THREADS_APP_SECRET` en `.env.local`. Este atajo evita montar el OAuth
+completo, que en Meta exige una redirect URI HTTPS.
+
+Antes de que caduque, se renueva sin volver al dashboard:
+
+```bash
+node --env-file=.env.local scripts/social/auth.mjs threads --refresh
+```
 
 ### LinkedIn
-1. linkedin.com/developers → crea la app (necesita una página de empresa asociada,
-   aunque publiques en tu perfil).
+1. linkedin.com/developers → crea la app (pide asociar una página de empresa,
+   aunque publiques en tu perfil personal).
 2. Pestaña Products → añade **Share on LinkedIn** (self-serve, aprobación rápida).
-3. Flujo OAuth con scopes `openid profile w_member_social` → `LINKEDIN_ACCESS_TOKEN`.
+3. Pestaña Auth → añade `http://localhost:3000/callback` como redirect URL
+   autorizada, y copia el Client ID y el Client Secret a `.env.local`.
+4. Lanza el flujo:
+
+```bash
+node --env-file=.env.local scripts/social/auth.mjs linkedin
+```
+
+Abre el consentimiento en el navegador, recoge el redirect en localhost y te
+imprime el token ya listo para pegar.
 
 El token dura 60 días y en el tier consumer **no hay refresh desatendido**: toca
-rehacer el OAuth. Guarda la fecha en la variable `LINKEDIN_TOKEN_ISSUED`
-(`2026-07-31`) y el script te avisará cuando se acerque el vencimiento.
+repetir ese comando. Guarda la fecha en la variable `LINKEDIN_TOKEN_ISSUED` y el
+script te avisará 10 días antes del vencimiento.
 
 El post sale sin enlace en el cuerpo y con la URL en el primer comentario, porque
 el feed penaliza los enlaces salientes. Se controla con `linkInComment` en
