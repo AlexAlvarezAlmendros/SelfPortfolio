@@ -16,6 +16,17 @@ const blog = defineCollection({
     read: z.string(),
     excerpt: z.string(),
     order: z.number(),
+    // Optional hand-written copy per social network, used by
+    // scripts/social/publish.mjs. Unset networks fall back to generated copy.
+    social: z
+      .object({
+        x: z.string().optional(),
+        linkedin: z.string().optional(),
+        threads: z.string().optional(),
+        bluesky: z.string().optional(),
+        mastodon: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 

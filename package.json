@@ -12,6 +12,8 @@
     "check": "astro check",
     "screenshots": "astro build && node scripts/og-screenshots.mjs",
     "thumbs": "node scripts/project-thumbs.mjs",
+    "social:preview": "node scripts/social/publish.mjs",
+    "social:publish": "node scripts/social/publish.mjs --live",
     "astro": "astro"
   },
   "dependencies": {

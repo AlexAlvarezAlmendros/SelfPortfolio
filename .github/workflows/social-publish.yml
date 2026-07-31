@@ -1,0 +1,118 @@
+name: Social autopost
+
+# Cross-posts new blog entries. Runs on push to main when a post file changes,
+# and can be triggered by hand for a preview or a backfill.
+#
+# Safety rails, in order:
+#   1. Live publishing requires the repo variable SOCIAL_AUTOPOST == 'true'.
+#      Until you set it, every automatic run is a dry run that only prints copy.
+#   2. scripts/social/published.json is the ledger — a post already listed there
+#      is never sent again, so reruns and rebases are harmless.
+#   3. Posts older than max-age are ignored, so switching a network on cannot
+#      dump the back catalogue onto a timeline.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/blog/**'
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'Publish for real (unchecked = dry run)'
+        type: boolean
+        default: false
+      network:
+        description: 'Limit to one network (blank = all)'
+        type: string
+        default: ''
+      post:
+        description: 'Limit to one post, e.g. es/tty-launcher (blank = all pending)'
+        type: string
+        default: ''
+      max_age:
+        description: 'Only posts newer than N days'
+        type: string
+        default: '14'
+
+concurrency:
+  group: social-autopost
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Resolve run mode
+        id: mode
+        env:
+          AUTOPOST_ENABLED: ${{ vars.SOCIAL_AUTOPOST }}
+          DISPATCH_LIVE: ${{ inputs.live }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            LIVE="$DISPATCH_LIVE"
+          elif [ "$AUTOPOST_ENABLED" = "true" ]; then
+            LIVE=true
+          else
+            LIVE=false
+          fi
+          echo "live=$LIVE" >> "$GITHUB_OUTPUT"
+          echo "Run mode: live=$LIVE"
+
+      - name: Publish
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+          LINKEDIN_TOKEN_ISSUED: ${{ vars.LINKEDIN_TOKEN_ISSUED }}
+          THREADS_ACCESS_TOKEN: ${{ secrets.THREADS_ACCESS_TOKEN }}
+          BLUESKY_HANDLE: ${{ secrets.BLUESKY_HANDLE }}
+          BLUESKY_APP_PASSWORD: ${{ secrets.BLUESKY_APP_PASSWORD }}
+          MASTODON_INSTANCE: ${{ secrets.MASTODON_INSTANCE }}
+          MASTODON_ACCESS_TOKEN: ${{ secrets.MASTODON_ACCESS_TOKEN }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+          # Dispatch inputs go through env, never straight into the shell line —
+          # interpolating them would be a command-injection hole.
+          RUN_LIVE: ${{ steps.mode.outputs.live }}
+          IN_NETWORK: ${{ inputs.network }}
+          IN_POST: ${{ inputs.post }}
+          IN_MAX_AGE: ${{ inputs.max_age }}
+        run: |
+          ARGS=()
+          if [ "$RUN_LIVE" = "true" ]; then ARGS+=(--live); fi
+          if [ -n "$IN_NETWORK" ]; then ARGS+=("--network=$IN_NETWORK"); fi
+          if [ -n "$IN_POST" ]; then ARGS+=("--post=$IN_POST"); fi
+          if [ -n "$IN_MAX_AGE" ]; then ARGS+=("--max-age=$IN_MAX_AGE"); fi
+          node scripts/social/publish.mjs "${ARGS[@]}"
+
+      # Committing the ledger is what makes "already published" survive between
+      # runs. Skipped on dry runs, which never touch it.
+      # always(): a partially failed run still published something, and that
+      # something must be recorded or the next run posts it twice.
+      - name: Commit ledger
+        if: always() && steps.mode.outputs.live == 'true'
+        run: |
+          if git diff --quiet -- scripts/social/published.json; then
+            echo "Ledger unchanged."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/social/published.json
+          git commit -m "chore: registra las publicaciones sociales [skip ci]"
+          git push
