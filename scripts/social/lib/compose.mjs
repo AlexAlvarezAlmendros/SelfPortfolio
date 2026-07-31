@@ -60,10 +60,12 @@ export function compose(post, network, cfg) {
   const tags = hashtags(post.tag);
   const override = post.social?.[network];
 
-  // On LinkedIn the URL never sits in the body text: it is either the ARTICLE
-  // card attached by the provider or the first comment. Anywhere else it is
-  // appended below, and costs characters.
-  const bodyCarriesLink = network !== 'linkedin';
+  // Two networks attach the link out of band rather than in the body text:
+  // LinkedIn as an ARTICLE card (or the first comment), Threads as a
+  // link_attachment. On Threads a URL left in the body would become the preview
+  // on its own and render twice. Everywhere else the link is appended below,
+  // and costs characters.
+  const bodyCarriesLink = network !== 'linkedin' && network !== 'threads';
   const linkCost = bodyCarriesLink ? (cfg.urlWeight ?? url.length) + 2 : 0;
   const tagLine = tags.join(' ');
   const tagCost = tagLine.length + 2;

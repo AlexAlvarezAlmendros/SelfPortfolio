@@ -53,6 +53,10 @@ export const NETWORKS = {
     requires: ['LINKEDIN_ACCESS_TOKEN'],
   },
 
+  // The link rides as a link_attachment rather than in the body — a URL left in
+  // the text becomes the preview by itself and would render twice.
+  // Meta counts the 500 towards UTF-8 bytes for emoji; the copy here is plain
+  // text, so JS string length is a safe proxy. Revisit if emoji creep in.
   threads: {
     enabled: true,
     langs: ['es'],

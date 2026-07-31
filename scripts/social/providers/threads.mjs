@@ -24,10 +24,42 @@ async function userId(token) {
   return json.id;
 }
 
+/**
+ * Meta advises waiting ~30s before publishing a container so the server can
+ * finish processing it. Polling the container's own status beats a blind sleep:
+ * a text post is usually ready in a second or two, and a genuine failure
+ * surfaces as ERROR instead of a confusing publish error later.
+ */
+async function awaitContainer(containerId, token, { tries = 15, delayMs = 3000 } = {}) {
+  for (let i = 0; i < tries; i++) {
+    let status;
+    try {
+      const { json } = await request(
+        'threads',
+        `${API}/${containerId}?fields=status,error_message&access_token=${token}`,
+      );
+      status = json?.status;
+      if (status === 'FINISHED') return;
+      if (status === 'ERROR' || status === 'EXPIRED') {
+        throw new Error(`threads: container ${status} — ${json?.error_message ?? 'no detail'}`);
+      }
+    } catch (err) {
+      // A container that cannot be inspected is not necessarily broken; text
+      // posts have been observed to publish fine. Fall through and try.
+      if (err.message.startsWith('threads: container')) throw err;
+      return;
+    }
+    await new Promise((r) => setTimeout(r, delayMs));
+  }
+  // Out of patience: attempt the publish anyway rather than dropping the post.
+}
+
 export async function publish({ text, url }, creds) {
   const token = creds.THREADS_ACCESS_TOKEN;
   const id = await userId(token);
 
+  // The URL is deliberately absent from `text` (see compose.mjs): a URL in the
+  // body would become the preview by itself and render alongside this card.
   const params = new URLSearchParams({
     media_type: 'TEXT',
     text,
@@ -41,6 +73,8 @@ export async function publish({ text, url }, creds) {
   });
   const creationId = container.json?.id;
   if (!creationId) throw new Error('threads: container creation returned no id');
+
+  await awaitContainer(creationId, token);
 
   const published = await request('threads', `${API}/${id}/threads_publish`, {
     method: 'POST',
