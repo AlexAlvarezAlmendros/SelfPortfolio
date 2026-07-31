@@ -17,6 +17,13 @@
       ]
     },
     {
+      "source": "/.well-known/atproto-did",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
       "source": "/og/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800, immutable" }
