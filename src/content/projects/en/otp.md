@@ -16,5 +16,5 @@ features:
   - "Authentication and roles with Auth0"
   - "Event and release management"
   - "Responsive and optimized with Vite"
-order: 1
+order: 2
 ---

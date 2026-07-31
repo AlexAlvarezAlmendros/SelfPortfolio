@@ -16,5 +16,5 @@ features:
   - "Bounties con escrow liberados al fusionar PRs"
   - "Reputación portable de devs mediante Soulbound Tokens"
   - "Gobernanza por proyecto y micropagos a dependencias"
-order: 5
+order: 6
 ---

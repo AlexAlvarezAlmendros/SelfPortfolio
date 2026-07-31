@@ -9,28 +9,30 @@ interface Props {
 const { lang, path } = Astro.props;
 const t = useTranslations(lang);
 
+const es = lang === 'es';
 const nav = [
-  { label: t('nav.index'), href: localizePath('/', lang) },
-  { label: t('nav.work'), href: localizePath('/work/otp', lang) },
-  { label: t('nav.log'), href: localizePath('/blog', lang) },
-  { label: t('nav.info'), href: `${localizePath('/', lang)}#contact` },
+  { label: t('nav.index'), href: localizePath('/', lang), title: es ? 'Inicio' : 'Home' },
+  { label: t('nav.work'), href: localizePath('/work/tty', lang), title: es ? 'Proyectos' : 'Work' },
+  { label: t('nav.log'), href: localizePath('/blog', lang), title: 'Blog & Devlogs' },
+  { label: t('nav.info'), href: `${localizePath('/', lang)}#contact`, title: es ? 'Contacto' : 'Contact' },
 ];
 const esHref = localizePath(path, 'es');
 const enHref = localizePath(path, 'en');
-const menuLabel = lang === 'es' ? 'Menú' : 'Menu';
+const menuLabel = es ? 'Menú' : 'Menu';
+const logoTitle = es ? 'Alex Alvarez Almendros — Inicio' : 'Alex Alvarez Almendros — Home';
 ---
 <header>
-  <a class="logo" href={localizePath('/', lang)}>ALEX_ALVAREZ_ALMENDROS<span>™</span></a>
+  <a class="logo" href={localizePath('/', lang)} title={logoTitle}>ALEX_ALVAREZ_ALMENDROS<span>™</span></a>
 
   <!-- desktop nav -->
   <nav class="nav-desktop">
     {nav.map((item) => (
-      <a class="navlink lnk" href={item.href} data-scramble data-text={item.label}>{item.label}</a>
+      <a class="navlink lnk" href={item.href} title={item.title} data-scramble data-text={item.label}>{item.label}</a>
     ))}
     <span class="clock" data-clock>--:--:--</span>
     <div class="lang">
-      <a href={esHref} class:list={['langbtn', { active: lang === 'es' }]}>ES</a>
-      <a href={enHref} class:list={['langbtn', { active: lang === 'en' }]}>EN</a>
+      <a href={esHref} hreflang="es" title="Ver en español" class:list={['langbtn', { active: lang === 'es' }]}>ES</a>
+      <a href={enHref} hreflang="en" title="View in English" class:list={['langbtn', { active: lang === 'en' }]}>EN</a>
     </div>
   </nav>
 
@@ -53,15 +55,15 @@ const menuLabel = lang === 'es' ? 'Menú' : 'Menu';
 <div class="mobile-nav" id="mobile-nav" data-mobile-nav aria-hidden="true">
   <nav>
     {nav.map((item, i) => (
-      <a class="m-link" href={item.href} style={`--i:${i}`}>
+      <a class="m-link" href={item.href} title={item.title} style={`--i:${i}`}>
         <span class="m-n">/0{i + 1}</span>{item.label}
       </a>
     ))}
   </nav>
   <div class="m-foot">
     <div class="m-lang">
-      <a href={esHref} class:list={['langbtn', { active: lang === 'es' }]}>ES</a>
-      <a href={enHref} class:list={['langbtn', { active: lang === 'en' }]}>EN</a>
+      <a href={esHref} hreflang="es" title="Ver en español" class:list={['langbtn', { active: lang === 'es' }]}>ES</a>
+      <a href={enHref} hreflang="en" title="View in English" class:list={['langbtn', { active: lang === 'en' }]}>EN</a>
     </div>
     <span class="m-clock" data-clock>--:--:--</span>
   </div>

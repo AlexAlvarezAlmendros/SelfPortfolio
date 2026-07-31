@@ -16,5 +16,5 @@ features:
   - "Suscripción con pagos gestionados por Stripe"
   - "Autenticación de usuarios con Auth0"
   - "Base de datos distribuida con Turso"
-order: 2
+order: 3
 ---

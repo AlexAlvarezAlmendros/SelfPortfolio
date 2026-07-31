@@ -16,5 +16,5 @@ features:
   - "Admin panel with Auth0"
   - "Image management with ImgBB"
   - "Automatic email notifications"
-order: 4
+order: 5
 ---

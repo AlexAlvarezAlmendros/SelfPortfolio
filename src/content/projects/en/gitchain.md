@@ -16,5 +16,5 @@ features:
   - "Escrowed bounties released when PRs are merged"
   - "Portable dev reputation via Soulbound Tokens"
   - "Per-project governance and micro-payments to dependencies"
-order: 5
+order: 6
 ---

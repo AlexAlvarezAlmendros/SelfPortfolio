@@ -13,6 +13,7 @@ export const patterns = [grid, dots, diag, cross, dots, diag];
 // Per-project thumbnail pattern, keyed by slug. Used as the hover-preview /
 // mobile-thumbnail fallback for projects without a live-site screenshot.
 export const projectThumb: Record<string, string> = {
+  tty: cross,
   otp: dots,
   inmocapt: grid,
   gogestia: cross,

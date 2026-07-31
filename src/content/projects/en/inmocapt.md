@@ -16,5 +16,5 @@ features:
   - "Subscription with Stripe-managed payments"
   - "User authentication with Auth0"
   - "Distributed database with Turso"
-order: 2
+order: 3
 ---
