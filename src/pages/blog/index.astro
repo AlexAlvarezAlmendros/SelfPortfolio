@@ -1,11 +1,36 @@
 ---
+import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import BlogListView from '../../components/views/BlogListView.astro';
 import { useTranslations } from '../../i18n/utils';
+import { blogListJsonLd } from '../../lib/jsonld';
 
 const lang = 'es' as const;
 const t = useTranslations(lang);
+const url = new URL('/blog', Astro.site).href;
+
+const posts = (await getCollection('blog', (e) => e.data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const jsonLd = blogListJsonLd({
+  lang,
+  url,
+  name: t('blog.title'),
+  description: t('meta.blog.desc'),
+  posts: posts.map((p) => ({
+    title: p.data.title,
+    url: new URL(`/blog/${p.data.slug}`, Astro.site).href,
+    description: p.data.excerpt,
+    date: p.data.date,
+  })),
+});
 ---
-<Layout lang={lang} path="/blog" title={t('meta.blog.title')} description={t('meta.blog.desc')}>
+<Layout
+  lang={lang}
+  path="/blog"
+  title={t('meta.blog.title')}
+  description={t('meta.blog.desc')}
+  jsonLd={jsonLd}
+>
   <BlogListView lang={lang} />
 </Layout>

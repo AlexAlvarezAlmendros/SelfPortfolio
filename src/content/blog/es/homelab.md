@@ -7,6 +7,8 @@ date: 2026-03-28
 read: "6 min"
 excerpt: "De cacharrear con Arduino y ESP32 a tener por fin un ordenador dedicado a ser mi servidor personal."
 order: 7
+seoTitle: "Primeros pasos en homelab: de Arduino a un servidor propio"
+seoDesc: "De cacharrear con Arduino y ESP32 a montar mi primer servidor casero 24/7: qué hardware usé, qué servicios self-hosted levanté y qué haría distinto hoy."
 ---
 Siempre he sido de hacer experimentos: Arduino, ESP32, mil microcontroladores conectados a cualquier cosa que se dejara. Pero nunca había tenido un ordenador entero dedicado a ser mi servidor personal. Y resulta que eso cambia bastante las reglas del juego.
 

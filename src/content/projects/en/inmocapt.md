@@ -17,4 +17,6 @@ features:
   - "User authentication with Auth0"
   - "Distributed database with Turso"
 order: 3
+seoTitle: "InmoCapt — Owner lead capture for real-estate agents"
+seoDesc: "A platform connecting private property owners with real-estate agents, no middlemen. React, TypeScript, Fastify and Stripe. How I built it, and why."
 ---

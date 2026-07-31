@@ -136,6 +136,7 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
         </a>
       ))}
     </div>
+    <a class="all brd-hl" href={localizePath('/work', lang)}>{t('work.all')} →</a>
   </section>
 
   <!-- 05 CONTACT -->
@@ -199,6 +200,7 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
   /* experience */
   .list { border-top: 1px solid #2a2a26; }
   .list.top { border-top: 1px solid #2a2a26; }
+  .all { display: inline-block; margin-top: 22px; background: none; border: 1px solid #2a2a26; color: #a8a69d; font-family: 'Space Mono', monospace; font-size: 11px; padding: 10px 15px; text-decoration: none; }
   .exp { padding: 20px 8px; border-bottom: 1px solid #1d1d1a; cursor: default; }
   .exp-period { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.03em; }
   .exp-role { font-family: 'Syne Variable', sans-serif; font-size: clamp(18px, 2vw, 24px); font-weight: 700; line-height: 1.1; }

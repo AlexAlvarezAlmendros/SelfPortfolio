@@ -17,6 +17,11 @@ const others = (await getCollection('projects', (e) => e.data.lang === lang && e
   (a, b) => a.data.order - b.data.order,
 );
 
+// The devlog telling this project's story, when the frontmatter declares one.
+const post = d.relatedPost
+  ? (await getCollection('blog', (e) => e.data.lang === lang && e.data.slug === d.relatedPost))[0]
+  : undefined;
+
 const thumb = projectThumb[d.slug] ?? grid;
 const shot = projectShot[d.slug];
 const shotStyle = shot
@@ -26,7 +31,7 @@ const features = d.features.map((text, i) => ({ n: `0${i + 1}`, text }));
 ---
 <main>
   <div class="wrap">
-    <a class="back brd-hl" href={localizePath('/', lang)}>← {t('back.home')}</a>
+    <a class="back brd-hl" href={localizePath('/work', lang)}>← {t('back.work')}</a>
     <div class="kicker">{d.label} · {d.year}</div>
     <h1 class="name" data-fit data-max="110">{d.name}</h1>
     <p class="tagline">{d.tagline}</p>
@@ -69,6 +74,14 @@ const features = d.features.map((text, i) => ({ n: `0${i + 1}`, text }));
       </div>
     </div>
 
+    {post && (
+      <a class="related brd-hl" href={localizePath(`/blog/${post.data.slug}`, lang)}>
+        <span class="related-lbl">{t('related.post')}</span>
+        <span class="related-name">{post.data.title} →</span>
+        <span class="related-tag">{post.data.excerpt}</span>
+      </a>
+    )}
+
     <div class="next">
       {others.map((op) => (
         <a class="next-a lnk" href={localizePath(`/work/${op.data.slug}`, lang)}>{t('next.project')} → {op.data.name}</a>
@@ -105,6 +118,11 @@ const features = d.features.map((text, i) => ({ n: `0${i + 1}`, text }));
   .feat { display: flex; gap: 14px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid #1d1d1a; }
   .feat-n { color: #ccff00; font-family: 'Space Mono', monospace; font-size: 11px; }
   .feat-t { font-family: 'Syne Variable', sans-serif; font-size: 16px; color: #cfcdc4; line-height: 1.4; }
+  /* cross-link to the devlog that tells this project's story */
+  .related { display: block; margin-top: 50px; padding: 20px 22px; border: 1px solid #2a2a26; text-decoration: none; color: #f2f0ea; }
+  .related-lbl { display: block; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #ccff00; margin-bottom: 8px; }
+  .related-name { display: block; font-family: 'Syne Variable', sans-serif; font-size: clamp(20px, 2.6vw, 28px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; }
+  .related-tag { display: block; font-family: 'Syne Variable', sans-serif; font-size: 15px; color: #a8a69d; line-height: 1.4; margin-top: 8px; max-width: 62ch; }
   .next { margin-top: 50px; padding-top: 26px; border-top: 1px solid #1d1d1a; }
   .next-a { display: inline-block; color: #f2f0ea; text-decoration: none; font-family: 'Syne Variable', sans-serif; font-size: clamp(24px, 3vw, 42px); font-weight: 800; letter-spacing: -0.02em; }
   .ov + .h { margin-top: 30px; }

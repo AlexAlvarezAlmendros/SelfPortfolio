@@ -17,4 +17,6 @@ features:
   - "Image management with ImgBB"
   - "Automatic email notifications"
 order: 5
+seoTitle: "Fincas Trimar — Real-estate portal with an admin panel"
+seoDesc: "A full real-estate portal: catalog, advanced filters and an admin panel. React 18, Node.js, Turso/SQLite and Auth0. A look at how it works under the hood."
 ---

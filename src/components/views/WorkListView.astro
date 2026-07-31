@@ -1,0 +1,80 @@
+---
+import { getCollection } from 'astro:content';
+import type { Lang } from '../../i18n/ui';
+import { useTranslations, localizePath } from '../../i18n/utils';
+import { projectThumb } from '../../lib/patterns';
+import { projectShot } from '../../lib/project-thumbs';
+
+const { lang } = Astro.props as { lang: Lang };
+const t = useTranslations(lang);
+
+const projects = (await getCollection('projects', (e) => e.data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<main>
+  <div class="g-bloghead head">
+    <div class="kicker">{t('work.kicker')}</div>
+    <div>
+      <h1 class="title">{t('work.title')}</h1>
+      <p class="lead">{t('work.lead')}</p>
+    </div>
+  </div>
+  <div class="list">
+    {projects.map((p, i) => (
+      <a
+        class="g-proj proj row-hl"
+        href={localizePath(`/work/${p.data.slug}`, lang)}
+        data-preview
+        data-img={projectShot[p.data.slug] ?? undefined}
+        data-pattern={projectThumb[p.data.slug]}
+        data-label={p.data.name}
+      >
+        <span
+          class:list={['proj-thumb', { wip: !projectShot[p.data.slug] }]}
+          aria-hidden="true"
+          style={projectShot[p.data.slug]
+            ? `background-image:url("${projectShot[p.data.slug]}")`
+            : `background:${projectThumb[p.data.slug] ?? ''}`}
+        ></span>
+        <span class="proj-n">/0{i + 1}</span>
+        <span class="proj-body">
+          <span class="proj-name">{p.data.name}</span>
+          <span class="proj-tagline">{p.data.tagline}</span>
+        </span>
+        <span class="proj-tags">{p.data.tags.join(' · ')}</span>
+        <span class="proj-year">{p.data.year} →</span>
+      </a>
+    ))}
+  </div>
+</main>
+
+<style>
+  main { max-width: 1400px; margin: 0 auto; padding: 60px 26px 100px; min-height: 90vh; position: relative; z-index: 2; }
+  .head { border-bottom: 1px solid #1d1d1a; padding-bottom: 30px; margin-bottom: 10px; }
+  .kicker { font-family: 'Space Mono', monospace; font-size: 12px; color: #ccff00; }
+  .title { font-family: 'Syne Variable', sans-serif; font-weight: 800; font-size: clamp(40px, 7vw, 96px); margin: 0 0 16px; letter-spacing: -0.03em; line-height: 0.92; }
+  .lead { font-family: 'Syne Variable', sans-serif; font-size: clamp(16px, 1.8vw, 22px); color: #a8a69d; max-width: 560px; margin: 0; line-height: 1.4; }
+  .list { border-top: 1px solid #2a2a26; margin-top: 30px; }
+  .proj { padding: 24px 8px; border-bottom: 1px solid #1d1d1a; color: #f2f0ea; text-decoration: none; }
+  .proj-n { font-family: 'Space Mono', monospace; font-size: 12px; }
+  .proj-name { display: block; font-family: 'Syne Variable', sans-serif; font-size: clamp(20px, 2.6vw, 38px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; }
+  .proj-tagline { display: block; font-family: 'Syne Variable', sans-serif; font-size: 14px; color: #a8a69d; line-height: 1.35; margin-top: 6px; max-width: 46ch; }
+  .proj-tags { font-family: 'Space Mono', monospace; font-size: 10.5px; opacity: 0.75; }
+  .proj-year { font-family: 'Space Mono', monospace; font-size: 11px; text-align: right; white-space: nowrap; }
+  /* inline thumbnail — only shown on touch/mobile where the hover preview is unavailable */
+  .proj-thumb { display: none; }
+
+  /* ---------------- responsive ---------------- */
+  @media (max-width: 680px) {
+    main { padding: 40px 16px 90px; }
+    /* "Proyectos" is a letter longer than "Blog & Devlogs" wraps at — 11vw keeps it inside the gutter */
+    .title { font-size: clamp(34px, 11vw, 64px); }
+    .proj.g-proj { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; padding: 18px 2px; }
+    .proj-n { order: 1; }
+    .proj-body { order: 2; }
+    .proj-name { font-size: clamp(22px, 6.4vw, 32px); }
+    .proj.g-proj .proj-tags { display: block; order: 3; margin-top: 2px; }
+    .proj-year { order: 4; text-align: left; margin-top: 2px; }
+  }
+</style>

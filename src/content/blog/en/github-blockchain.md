@@ -7,6 +7,9 @@ date: 2026-06-18
 read: "8 min"
 excerpt: "Linking GitHub repos to Ethereum to handle bounties and high-level decisions between maintainers."
 order: 2
+seoTitle: "GitHub on the blockchain? Bounties and licenses on Ethereum"
+seoDesc: "Linking GitHub repos to Ethereum to pay bounties, enforce open-source licenses and give contributors portable reputation. The idea, and where it cracks."
+relatedProject: "gitchain"
 ---
 The other day I ran into someone arguing that GitHub doesn't mean open source. A slightly odd and fairly obvious statement for those of us who've been at this a while, but it got me thinking.
 
