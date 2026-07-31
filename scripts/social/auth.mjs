@@ -58,6 +58,13 @@ function awaitRedirect(expectedState) {
         return;
       }
       const params = Object.fromEntries(url.searchParams);
+      // Keep listening unless this is a genuine OAuth callback. A health check,
+      // a favicon fetch or a browser prefetch arrives bare, and treating that
+      // as a state mismatch would kill the flow before the user even consents.
+      if (!params.code && !params.error) {
+        res.writeHead(204).end();
+        return;
+      }
       const ok = params.code && params.state === expectedState;
       res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
       res.end(
@@ -138,15 +145,23 @@ async function linkedin() {
 
   const clientId = need('LINKEDIN_CLIENT_ID');
   const clientSecret = need('LINKEDIN_CLIENT_SECRET');
-  const state = randomBytes(16).toString('hex');
-  const authorize = authorizeUrl(clientId, state);
 
-  console.log('\nOpening the LinkedIn consent screen. If nothing happens, paste this:\n');
-  console.log(`  ${authorize}\n`);
-  console.log(`Make sure ${REDIRECT} is listed as an authorized redirect URL in the app.\n`);
-  openBrowser(authorize);
+  // --code= covers the case where the browser could not reach this machine's
+  // localhost (consented on a phone, remote session, listener already gone).
+  // Paste the `code` query param off the redirect URL; it is valid 30 minutes
+  // and single use.
+  let code = arg('code');
+  if (!code) {
+    const state = randomBytes(16).toString('hex');
+    const authorize = authorizeUrl(clientId, state);
 
-  const { code } = await awaitRedirect(state);
+    console.log('\nOpening the LinkedIn consent screen. If nothing happens, paste this:\n');
+    console.log(`  ${authorize}\n`);
+    console.log(`Make sure ${REDIRECT} is listed as an authorized redirect URL in the app.\n`);
+    openBrowser(authorize);
+
+    ({ code } = await awaitRedirect(state));
+  }
 
   const res = await fetch('https://www.linkedin.com/oauth/v2/accessToken', {
     method: 'POST',

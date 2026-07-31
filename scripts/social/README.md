@@ -97,14 +97,29 @@ node --env-file=.env.local scripts/social/auth.mjs threads --refresh
 2. Pestaña Products → añade **Share on LinkedIn** (self-serve, aprobación rápida).
 3. Pestaña Auth → añade `http://localhost:3000/callback` como redirect URL
    autorizada, y copia el Client ID y el Client Secret a `.env.local`.
-4. Lanza el flujo:
+4. Comprueba la configuración antes de pasar por el navegador:
+
+```bash
+node --env-file=.env.local scripts/social/auth.mjs linkedin --check
+```
+
+LinkedIn responde a una app mal configurada con HTTP 200 y el error dentro del
+HTML, no con un error OAuth; esto lo lee y te dice el motivo exacto.
+
+5. Lanza el flujo:
 
 ```bash
 node --env-file=.env.local scripts/social/auth.mjs linkedin
 ```
 
 Abre el consentimiento en el navegador, recoge el redirect en localhost y te
-imprime el token ya listo para pegar.
+imprime el token. Si el navegador no puede llegar a tu localhost (autorizaste
+desde el móvil, sesión remota, se cerró el listener), copia el `code` de la URL
+de redirección y canjéalo a mano — vale 30 minutos y un solo uso:
+
+```bash
+node --env-file=.env.local scripts/social/auth.mjs linkedin --code=<el-code>
+```
 
 El token dura 60 días y en el tier consumer **no hay refresh desatendido**: toca
 repetir ese comando. Guarda la fecha en la variable `LINKEDIN_TOKEN_ISSUED` y el
