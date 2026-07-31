@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
-const SITE = 'https://alexalvarez.dev';
+const SITE = 'https://www.alexalvarez.dev';
 
 // /llms.txt — curated, machine-readable map for LLMs (llmstxt.org).
 export const GET: APIRoute = async () => {

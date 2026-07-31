@@ -1,6 +1,6 @@
 import type { Lang } from '../i18n/ui';
 
-const SITE = 'https://alexalvarez.dev';
+const SITE = 'https://www.alexalvarez.dev';
 const PERSON_ID = `${SITE}/#person`;
 const REMOTE = { '@type': 'Place', name: 'Worldwide (remote / en remoto)' } as const;
 
@@ -26,8 +26,8 @@ export function personNode(lang: Lang = 'es') {
     '@id': PERSON_ID,
     name: 'Alex Alvarez Almendros',
     alternateName: ['Alex Alvarez', 'Alex Álvarez Almendros', 'Alex Almendros'],
-    url: 'https://alexalvarez.dev/',
-    image: 'https://alexalvarez.dev/og-image.png',
+    url: 'https://www.alexalvarez.dev/',
+    image: 'https://www.alexalvarez.dev/og-image.png',
     jobTitle: es ? 'Programador Fullstack' : 'Fullstack Developer',
     email: 'alexalmendrosal@gmail.com',
     description: es
@@ -154,7 +154,7 @@ export function articleJsonLd(opts: {
       dateModified: opts.date.toISOString(),
       mainEntityOfPage: opts.url,
       url: opts.url,
-      image: 'https://alexalvarez.dev/og-image.png',
+      image: 'https://www.alexalvarez.dev/og-image.png',
       author: { '@id': PERSON_ID },
       publisher: { '@id': PERSON_ID },
     },
