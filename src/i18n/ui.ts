@@ -16,7 +16,7 @@ export const ui = {
     'cta.primary': 'CONTACTAR',
     's1.title': 'PERFIL',
     'bio1':
-      'Más de cinco años construyendo soluciones web y móviles con React, Blazor, NodeJS y .NET 8.',
+      'Soy Alex Alvarez Almendros, programador fullstack con más de cinco años construyendo soluciones web y móviles con React, Blazor, NodeJS y .NET 8.',
     'bio2':
       'He colaborado con Experian, Bella Aurora Labs y Capitole, enviando aplicaciones escalables e intuitivas bajo metodología Scrum.',
     'bio3':
@@ -65,7 +65,7 @@ export const ui = {
     'cta.primary': 'GET IN TOUCH',
     's1.title': 'PROFILE',
     'bio1':
-      '5+ years building web and mobile solutions with React, Blazor, NodeJS and .NET 8.',
+      "I'm Alex Alvarez Almendros, a fullstack developer with 5+ years building web and mobile solutions with React, Blazor, NodeJS and .NET 8.",
     'bio2':
       'I’ve worked with Experian, Bella Aurora Labs and Capitole, shipping scalable, intuitive apps under Scrum.',
     'bio3':
