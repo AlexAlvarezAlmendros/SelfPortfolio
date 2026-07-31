@@ -110,9 +110,18 @@ El token dura 60 días y en el tier consumer **no hay refresh desatendido**: toc
 repetir ese comando. Guarda la fecha en la variable `LINKEDIN_TOKEN_ISSUED` y el
 script te avisará 10 días antes del vencimiento.
 
-El post sale sin enlace en el cuerpo y con la URL en el primer comentario, porque
-el feed penaliza los enlaces salientes. Se controla con `linkInComment` en
-`config.mjs`.
+El post usa `POST /v2/ugcPosts`, que es lo que documenta el producto self-serve.
+Si LinkedIn lo rechaza con 403 o 426, el proveedor reintenta contra
+`/rest/posts` con `LinkedIn-Version: 202607`. Esa versión hay que subirla antes
+de julio de 2027: LinkedIn garantiza un año por versión y luego la retira con
+error duro.
+
+El enlace viaja como **tarjeta de artículo**, no en el cuerpo del texto. Existe
+`linkInComment` en `config.mjs` para moverlo al primer comentario (el truco
+clásico contra la penalización de enlaces salientes), pero está **desactivado**:
+comentar parece requerir `w_member_social_feed`, que este producto no concede, y
+si el comentario falla el post se queda sin enlace ninguno. Actívalo solo si
+compruebas que tu token puede comentar.
 
 ### X
 developer.x.com → app con permisos *Read and write* → pestaña Keys and tokens:

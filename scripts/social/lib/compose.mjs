@@ -60,8 +60,11 @@ export function compose(post, network, cfg) {
   const tags = hashtags(post.tag);
   const override = post.social?.[network];
 
-  // Budget: total limit minus the link, the hashtags and the joining newlines.
-  const linkCost = network === 'linkedin' && cfg.linkInComment ? 0 : (cfg.urlWeight ?? url.length) + 2;
+  // On LinkedIn the URL never sits in the body text: it is either the ARTICLE
+  // card attached by the provider or the first comment. Anywhere else it is
+  // appended below, and costs characters.
+  const bodyCarriesLink = network !== 'linkedin';
+  const linkCost = bodyCarriesLink ? (cfg.urlWeight ?? url.length) + 2 : 0;
   const tagLine = tags.join(' ');
   const tagCost = tagLine.length + 2;
   const budget = cfg.limit - linkCost - tagCost;
@@ -84,7 +87,7 @@ export function compose(post, network, cfg) {
   body = truncate(body.trim(), Math.max(budget, 40));
 
   const parts = [body];
-  if (!(network === 'linkedin' && cfg.linkInComment)) parts.push(url);
+  if (bodyCarriesLink) parts.push(url);
   if (tagLine) parts.push(tagLine);
 
   return { text: parts.join('\n\n'), url, tags };

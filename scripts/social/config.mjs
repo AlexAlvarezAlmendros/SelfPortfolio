@@ -38,13 +38,18 @@ export const NETWORKS = {
   },
 
   // Personal profile via the self-serve "Share on LinkedIn" product.
-  // The feed demotes posts with outbound links, so the link goes in the first
-  // comment instead — see providers/linkedin.mjs.
+  //
+  // linkInComment moves the URL out of the post and into the first comment, the
+  // usual trick against the feed demoting outbound links. It is OFF because
+  // commenting appears to need w_member_social_feed, which this product does
+  // not grant: if the comment fails the post ships with no link at all. With it
+  // off, the URL rides along as an ARTICLE card, which always renders.
+  // Flip it to true only after confirming your token can comment.
   linkedin: {
     enabled: true,
     langs: ['es'],
     limit: 2800,
-    linkInComment: true,
+    linkInComment: false,
     requires: ['LINKEDIN_ACCESS_TOKEN'],
   },
 
