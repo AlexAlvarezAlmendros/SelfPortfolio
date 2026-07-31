@@ -73,28 +73,73 @@ function awaitRedirect(expectedState) {
       resolve(params);
     });
 
+    // Generous: the consent screen can involve a login and 2FA, and you may
+    // not be sitting at the machine when the flow starts.
     const timer = setTimeout(() => {
       server.close();
-      reject(new Error('timed out after 5 minutes waiting for the redirect'));
-    }, 300_000);
+      reject(new Error('timed out after 15 minutes waiting for the redirect'));
+    }, 900_000);
 
     server.listen(PORT, () => {});
     server.on('error', reject);
   });
 }
 
-async function linkedin() {
-  const clientId = need('LINKEDIN_CLIENT_ID');
-  const clientSecret = need('LINKEDIN_CLIENT_SECRET');
-  const state = randomBytes(16).toString('hex');
-
-  const authorize = `https://www.linkedin.com/oauth/v2/authorization?${new URLSearchParams({
+function authorizeUrl(clientId, state) {
+  return `https://www.linkedin.com/oauth/v2/authorization?${new URLSearchParams({
     response_type: 'code',
     client_id: clientId,
     redirect_uri: REDIRECT,
     state,
     scope: 'openid profile w_member_social',
   })}`;
+}
+
+/**
+ * Ask LinkedIn to render the consent screen and read what comes back.
+ * Misconfigured apps answer 200 with an error sentence in the HTML rather than
+ * an OAuth error code, so this is the cheapest way to catch a wrong redirect
+ * URI or a missing product before burning a browser round trip.
+ */
+async function linkedinCheck() {
+  const clientId = need('LINKEDIN_CLIENT_ID');
+  const res = await fetch(authorizeUrl(clientId, 'preflight'));
+  const html = await res.text();
+
+  // The heading and the actual reason live in separate elements, so the reason
+  // has to be pulled out on its own — matching straight after the heading text
+  // silently finds nothing and reports a false pass.
+  if (/Bummer, something went wrong/i.test(html)) {
+    const tagged = html.match(/error__message-text[^>]*>\s*([^<]+)/i);
+    const plain = html
+      .replace(/<(script|style)[\s\S]*?<\/\1>/gi, '')
+      .replace(/<[^>]+>/g, ' ')
+      .replace(/\s+/g, ' ');
+    const after = plain.match(/went wrong\.\s*(.+?)\s*(?:©|$)/i);
+    const reason = (tagged?.[1] ?? after?.[1] ?? 'no reason given').trim();
+
+    console.error(`\n❌ LinkedIn rejected the request: ${reason}\n`);
+    if (/redirect_uri/i.test(reason)) {
+      console.error("Add exactly this to the app's Auth tab -> Authorized redirect URLs:");
+      console.error(`  ${REDIRECT}\n`);
+    }
+    if (/scope|permission|unauthorized/i.test(reason)) {
+      console.error('Add the "Share on LinkedIn" product on the app\'s Products tab.\n');
+    }
+    process.exit(1);
+  }
+
+  console.log('\n✅ The consent screen renders. Client id and redirect URI are accepted.');
+  console.log('   (A missing "Share on LinkedIn" product only surfaces once you sign in.)\n');
+}
+
+async function linkedin() {
+  if (has('check')) return linkedinCheck();
+
+  const clientId = need('LINKEDIN_CLIENT_ID');
+  const clientSecret = need('LINKEDIN_CLIENT_SECRET');
+  const state = randomBytes(16).toString('hex');
+  const authorize = authorizeUrl(clientId, state);
 
   console.log('\nOpening the LinkedIn consent screen. If nothing happens, paste this:\n');
   console.log(`  ${authorize}\n`);
