@@ -1,1 +1,16 @@
-{}
+{
+  "en/tty-launcher": {
+    "mastodon": {
+      "at": "2026-07-31T15:39:44.233Z",
+      "url": "https://mastodon.social/@alexalvarezdev/117015339599647832",
+      "id": "117015339599647832"
+    }
+  },
+  "es/tty-launcher": {
+    "bluesky": {
+      "at": "2026-07-31T15:39:41.333Z",
+      "url": "https://bsky.app/profile/alexalvarez.dev/post/3mrxbznnymd23",
+      "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mrxbznnymd23"
+    }
+  }
+}
