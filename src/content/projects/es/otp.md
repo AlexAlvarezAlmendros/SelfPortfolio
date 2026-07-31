@@ -16,5 +16,5 @@ features:
   - "Autenticación y roles con Auth0"
   - "Gestión de eventos y lanzamientos"
   - "Responsive y optimizado con Vite"
-order: 1
+order: 2
 ---

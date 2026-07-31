@@ -16,5 +16,5 @@ features:
   - "Catálogo de servicios con detalle expandible"
   - "Formulario de contacto con validación"
   - "Blog y suscripción a newsletter"
-order: 3
+order: 4
 ---

@@ -16,5 +16,5 @@ features:
   - "Services catalog with expandable detail"
   - "Contact form with validation"
   - "Blog and newsletter subscription"
-order: 3
+order: 4
 ---

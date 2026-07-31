@@ -26,6 +26,7 @@ const HEIGHT = 630;
 // slug -> live homepage. Edit here when domains change. Projects without a live
 // site are intentionally omitted and fall back to a pattern.
 const SITES = [
+  { slug: 'tty', url: 'https://www.ttylauncher.com/es/' },
   { slug: 'otp', url: 'https://otherpeople.es' },
   { slug: 'inmocapt', url: 'https://inmocapt.com' },
   { slug: 'gogestia', url: 'https://gogestia.com' },

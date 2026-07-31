@@ -5,6 +5,7 @@
 //
 // Regenerate the images with: npm run thumbs
 export const projectShot: Record<string, string | null> = {
+  tty: '/og/projects/tty.png',
   otp: '/og/projects/otp.png',
   inmocapt: '/og/projects/inmocapt.png',
   gogestia: '/og/projects/gogestia.png',
