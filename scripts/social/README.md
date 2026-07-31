@@ -35,6 +35,18 @@ Publicar de verdad exige `--live` explícito:
 npm run social:publish              # equivale a --live
 ```
 
+## Probar desde tu máquina antes de tocar GitHub
+
+Copia `.env.local.example` a `.env.local` (está en `.gitignore`) y rellena solo
+la red que estés montando. Los scripts de npm lo cargan solos, así que las
+credenciales nunca pasan por el historial del shell:
+
+```bash
+cp .env.local.example .env.local
+$EDITOR .env.local
+node --env-file=.env.local scripts/social/publish.mjs --network=bluesky --live
+```
+
 ## Activar la automatización
 
 Nada se publica solo hasta que crees la **variable** de repositorio
