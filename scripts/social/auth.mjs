@@ -213,14 +213,33 @@ async function threads() {
     process.exit(1);
   }
 
-  const url = `https://graph.threads.net/access_token?${new URLSearchParams({
-    grant_type: 'th_exchange_token',
-    client_secret: secret,
-    access_token: short,
-  })}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  if (!res.ok) throw new Error(`exchange failed: ${JSON.stringify(json)}`);
+  // The dashboard's User Token Generator hands out a token that is ALREADY
+  // long-lived, and th_exchange_token only accepts short-lived ones — it answers
+  // "Session key invalid" (code 452), which reads like a broken token but is
+  // not. So: try the exchange, and if it is refused, refresh instead. Both
+  // routes end at a 60-day token.
+  const exchange = await fetch(
+    `https://graph.threads.net/access_token?${new URLSearchParams({
+      grant_type: 'th_exchange_token',
+      client_secret: secret,
+      access_token: short,
+    })}`,
+  );
+  let json = await exchange.json();
+
+  if (!exchange.ok) {
+    console.log('  Exchange refused — the token looks already long-lived, refreshing instead.');
+    const refreshed = await fetch(
+      `https://graph.threads.net/refresh_access_token?grant_type=th_refresh_token&access_token=${short}`,
+    );
+    const refreshedJson = await refreshed.json();
+    if (!refreshed.ok) {
+      throw new Error(
+        `neither exchange nor refresh worked.\n  exchange: ${JSON.stringify(json)}\n  refresh:  ${JSON.stringify(refreshedJson)}`,
+      );
+    }
+    json = refreshedJson;
+  }
 
   console.log(`\n✅ Long-lived token obtained. Valid ~${Math.round(json.expires_in / 86400)} days.\n`);
   console.log('Add to .env.local:\n');

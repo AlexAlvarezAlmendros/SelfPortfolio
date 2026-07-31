@@ -57,7 +57,8 @@ export function truncate(text, max) {
  */
 export function compose(post, network, cfg) {
   const url = postUrl(post.lang, post.slug);
-  const tags = hashtags(post.tag);
+  // Some networks cap how many tags they will actually honour — see maxTags.
+  const tags = hashtags(post.tag).slice(0, cfg.maxTags ?? Infinity);
   const override = post.social?.[network];
 
   // Two networks attach the link out of band rather than in the body text:

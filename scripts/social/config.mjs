@@ -57,10 +57,13 @@ export const NETWORKS = {
   // the text becomes the preview by itself and would render twice.
   // Meta counts the 500 towards UTF-8 bytes for emoji; the copy here is plain
   // text, so JS string length is a safe proxy. Revisit if emoji creep in.
+  // maxTags 1: Threads takes a single topic tag per post. Send more and it
+  // silently eats the '#' off one of them, which just looks broken.
   threads: {
     enabled: true,
     langs: ['es'],
     limit: 500,
+    maxTags: 1,
     requires: ['THREADS_ACCESS_TOKEN'],
   },
 

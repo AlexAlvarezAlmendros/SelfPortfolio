@@ -83,7 +83,22 @@ export async function publish({ text, url }, creds) {
   });
 
   const postId = published.json?.id;
-  return { id: postId, url: postId ? `https://www.threads.net/@me/post/${postId}` : API };
+  if (!postId) throw new Error('threads: publish returned no id');
+
+  // The publish response carries only an id, so ask for the real permalink
+  // rather than guessing a URL — a guessed one would be dead in the ledger.
+  let permalink = null;
+  try {
+    const { json } = await request(
+      'threads',
+      `${API}/${postId}?fields=permalink&access_token=${token}`,
+    );
+    permalink = json?.permalink ?? null;
+  } catch {
+    // Not worth failing a published post over a missing URL.
+  }
+
+  return { id: postId, url: permalink };
 }
 
 /** Exchange the current long-lived token for a fresh 60-day one. */
