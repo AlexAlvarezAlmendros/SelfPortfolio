@@ -7,6 +7,8 @@ date: 2026-04-15
 read: "9 min"
 excerpt: "Per-process memory, data curation and daily automations running on a second-hand little box."
 order: 6
+seoTitle: "OpenClaw on a ThinkCentre: an AI agent on old hardware"
+seoDesc: "I ran OpenClaw on a second-hand mini PC: per-process memory, data curation and daily automations running at home, with nothing depending on the cloud."
 ---
 If you've been following the AI agent scene, OpenClaw probably rings a bell. It caused quite a stir: an agent able to orchestrate complex tasks, hold context and work almost autonomously. I wanted to see how far I could push it on modest hardware, so I set it up on my ThinkCentre 700.
 

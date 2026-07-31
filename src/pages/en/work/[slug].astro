@@ -16,18 +16,21 @@ const { entry } = Astro.props;
 const d = entry.data;
 const path = `/work/${d.slug}`;
 const url = new URL(`/en${path}`, Astro.site).href;
-const title = `${d.name} — ${d.label} | Alex Alvarez Almendros`;
+// seoTitle is used verbatim (kept under ~60 chars so the SERP doesn't truncate it);
+// projects without one fall back to name + label + brand.
+const title = d.seoTitle ?? `${d.name} — ${d.label} | Alex Alvarez Almendros`;
+const description = d.seoDesc ?? d.tagline;
 const ogImage = projectShot[d.slug] ?? undefined;
 ---
 <Layout
   lang={lang}
   path={path}
   title={title}
-  description={d.tagline}
+  description={description}
   ogType="article"
   ogImage={ogImage}
   tags={d.tags}
-  jsonLd={projectJsonLd({ lang, url, name: d.name, description: d.tagline, image: ogImage, tags: d.tags, year: d.year, live: d.live, repo: d.repo })}
+  jsonLd={projectJsonLd({ lang, url, name: d.name, description, image: ogImage, tags: d.tags, year: d.year, live: d.live, repo: d.repo })}
 >
   <ProjectView lang={lang} entry={entry} />
 </Layout>

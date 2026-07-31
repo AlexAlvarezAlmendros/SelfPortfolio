@@ -141,6 +141,12 @@ export function articleJsonLd(opts: {
   title: string;
   description: string;
   date: Date;
+  updated?: Date;
+  /** Post-specific social card, e.g. '/og/es/linux.png'. */
+  image?: string;
+  /** Editorial section, e.g. 'HOMELAB'. */
+  section?: string;
+  wordCount?: number;
 }) {
   const es = opts.lang === 'es';
   const blogUrl = `${SITE}${es ? '/blog' : '/en/blog'}`;
@@ -151,10 +157,13 @@ export function articleJsonLd(opts: {
       description: opts.description,
       inLanguage: opts.lang,
       datePublished: opts.date.toISOString(),
-      dateModified: opts.date.toISOString(),
+      dateModified: (opts.updated ?? opts.date).toISOString(),
       mainEntityOfPage: opts.url,
       url: opts.url,
-      image: 'https://www.alexalvarez.dev/og-image.png',
+      image: new URL(opts.image ?? '/og-image.png', SITE).href,
+      ...(opts.section ? { articleSection: opts.section, keywords: opts.section } : {}),
+      ...(opts.wordCount ? { wordCount: opts.wordCount } : {}),
+      isPartOf: { '@id': `${SITE}/#blog` },
       author: { '@id': PERSON_ID },
       publisher: { '@id': PERSON_ID },
     },
@@ -163,6 +172,84 @@ export function articleJsonLd(opts: {
       { name: es ? 'Inicio' : 'Home', url: homeUrl(opts.lang) },
       { name: 'Blog', url: blogUrl },
       { name: opts.title, url: opts.url },
+    ]),
+  ]);
+}
+
+/** Blog index: a Blog node listing every post, so crawlers see the whole set from one URL. */
+export function blogListJsonLd(opts: {
+  lang: Lang;
+  url: string;
+  name: string;
+  description: string;
+  posts: { title: string; url: string; description: string; date: Date }[];
+}) {
+  const es = opts.lang === 'es';
+  return graph([
+    {
+      '@type': 'Blog',
+      '@id': `${SITE}/#blog`,
+      url: opts.url,
+      name: opts.name,
+      description: opts.description,
+      inLanguage: opts.lang,
+      author: { '@id': PERSON_ID },
+      publisher: { '@id': PERSON_ID },
+      blogPost: opts.posts.map((p) => ({
+        '@type': 'BlogPosting',
+        headline: p.title,
+        description: p.description,
+        url: p.url,
+        datePublished: p.date.toISOString(),
+        author: { '@id': PERSON_ID },
+      })),
+    },
+    personNode(opts.lang),
+    breadcrumbNode([
+      { name: es ? 'Inicio' : 'Home', url: homeUrl(opts.lang) },
+      { name: 'Blog', url: opts.url },
+    ]),
+  ]);
+}
+
+/** Work index: CollectionPage + ItemList of every project. */
+export function workListJsonLd(opts: {
+  lang: Lang;
+  url: string;
+  name: string;
+  description: string;
+  projects: { name: string; url: string; description: string; image?: string }[];
+}) {
+  const es = opts.lang === 'es';
+  return graph([
+    {
+      '@type': 'CollectionPage',
+      '@id': `${opts.url}#collection`,
+      url: opts.url,
+      name: opts.name,
+      description: opts.description,
+      inLanguage: opts.lang,
+      about: { '@id': PERSON_ID },
+      mainEntity: {
+        '@type': 'ItemList',
+        itemListElement: opts.projects.map((p, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item: {
+            '@type': 'CreativeWork',
+            name: p.name,
+            description: p.description,
+            url: p.url,
+            ...(p.image ? { image: new URL(p.image, SITE).href } : {}),
+            author: { '@id': PERSON_ID },
+          },
+        })),
+      },
+    },
+    personNode(opts.lang),
+    breadcrumbNode([
+      { name: es ? 'Inicio' : 'Home', url: homeUrl(opts.lang) },
+      { name: es ? 'Proyectos' : 'Work', url: opts.url },
     ]),
   ]);
 }
@@ -198,7 +285,7 @@ export function projectJsonLd(opts: {
     personNode(opts.lang),
     breadcrumbNode([
       { name: es ? 'Inicio' : 'Home', url: homeUrl(opts.lang) },
-      { name: es ? 'Proyectos' : 'Work', url: `${homeUrl(opts.lang)}#proyectos` },
+      { name: es ? 'Proyectos' : 'Work', url: `${SITE}${es ? '/work' : '/en/work'}` },
       { name: opts.name, url: opts.url },
     ]),
   ]);

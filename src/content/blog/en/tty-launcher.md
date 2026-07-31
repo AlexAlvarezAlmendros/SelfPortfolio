@@ -7,6 +7,9 @@ date: 2026-07-29
 read: "5 min"
 excerpt: "Turning the phone from a pick-from-a-list model into an ask-for-it model: that's how TTY Launcher, a terminal-style Android launcher, came about."
 order: 1
+seoTitle: "Phone addiction: why I built a terminal-style launcher"
+seoDesc: "Minimalist launchers stop working once your brain adapts. So I built TTY Launcher: no icons, no lists, just a prompt where you type what you actually want."
+relatedProject: "tty"
 ---
 You see it everywhere these days: people have built up a dependency on their smartphones that's genuinely worrying. And I think we developers, along with the tech companies, have some responsibility in making technology more useful and less addictive. I'm not going to list the thousand situations where we shouldn't be glued to our phones; I'd rather do my small part.
 

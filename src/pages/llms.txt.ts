@@ -29,9 +29,11 @@ export const GET: APIRoute = async () => {
 - Web (EN): ${SITE}/en
 
 ## Proyectos
+- [Todos los proyectos](${SITE}/work): índice completo de casos y proyectos.
 ${projects.map((p) => `- [${p.data.name}](${SITE}/work/${p.data.slug}): ${p.data.tagline}`).join('\n')}
 
 ## Blog y devlogs
+- [Blog & Devlogs](${SITE}/blog): índice completo de artículos.
 ${posts.map((p) => `- [${p.data.title}](${SITE}/blog/${p.data.slug}): ${p.data.excerpt}`).join('\n')}
 
 ## Feeds

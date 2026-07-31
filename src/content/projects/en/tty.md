@@ -17,4 +17,7 @@ features:
   - "File navigation and app lookup straight from the prompt"
   - "Explicit Termux gateway for running a real shell"
 order: 1
+seoTitle: "TTY Launcher — A terminal-shaped Android launcher"
+seoDesc: "An Android launcher with no icons and no app drawer: the home screen is a prompt with 26 commands and a door to Termux. Kotlin and Jetpack Compose. Open source."
+relatedPost: "tty-launcher"
 ---

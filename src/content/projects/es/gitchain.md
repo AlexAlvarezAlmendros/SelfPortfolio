@@ -17,4 +17,7 @@ features:
   - "Reputación portable de devs mediante Soulbound Tokens"
   - "Gobernanza por proyecto y micropagos a dependencias"
 order: 6
+seoTitle: "GitChain — Bounties y licencias open source en Ethereum"
+seoDesc: "Protocolo que vincula repos de GitHub a Ethereum: bounties que se pagan solos, licencias ejecutables y reputación portable. Solidity, Foundry, React y viem."
+relatedPost: "github-blockchain"
 ---

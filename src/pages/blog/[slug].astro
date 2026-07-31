@@ -15,18 +15,33 @@ const { entry } = Astro.props;
 const d = entry.data;
 const path = `/blog/${d.slug}`;
 const url = new URL(path, Astro.site).href;
-const title = `${d.title} | Alex Alvarez Almendros`;
+const ogImage = `/og/${lang}/${d.slug}.png`;
+// seoTitle is used verbatim (kept under ~60 chars so the SERP doesn't truncate it);
+// posts without one fall back to the on-page title plus the brand.
+const title = d.seoTitle ?? `${d.title} | Alex Alvarez Almendros`;
+const description = d.seoDesc ?? d.excerpt;
+const wordCount = entry.body?.trim().split(/\s+/).length;
 ---
 <Layout
   lang={lang}
   path={path}
   title={title}
-  description={d.excerpt}
+  description={description}
   ogType="article"
-  ogImage={`/og/${lang}/${d.slug}.png`}
+  ogImage={ogImage}
   publishedTime={d.date.toISOString()}
   tags={[d.tag]}
-  jsonLd={articleJsonLd({ lang, url, title: d.title, description: d.excerpt, date: d.date })}
+  jsonLd={articleJsonLd({
+    lang,
+    url,
+    title: d.title,
+    description,
+    date: d.date,
+    updated: d.updated,
+    image: ogImage,
+    section: d.tag,
+    wordCount,
+  })}
 >
   <ArticleView lang={lang} entry={entry} />
 </Layout>

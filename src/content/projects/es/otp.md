@@ -17,4 +17,6 @@ features:
   - "Gestión de eventos y lanzamientos"
   - "Responsive y optimizado con Vite"
 order: 2
+seoTitle: "Other People — Plataforma de sello discográfico con Spotify"
+seoDesc: "Landing y plataforma para un sello discográfico con integración completa de la API de Spotify y Auth0. React 19 y Vite. El problema, las decisiones y el stack."
 ---

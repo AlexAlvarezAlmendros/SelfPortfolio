@@ -17,4 +17,6 @@ features:
   - "Event and release management"
   - "Responsive and optimized with Vite"
 order: 2
+seoTitle: "Other People — Record label platform with Spotify API"
+seoDesc: "Landing page and platform for a record label with full Spotify API and Auth0 integration, built in React 19 and Vite. The problem, the decisions, the stack."
 ---

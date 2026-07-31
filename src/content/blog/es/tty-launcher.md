@@ -7,6 +7,9 @@ date: 2026-07-29
 read: "5 min"
 excerpt: "Cambiar el móvil de un modelo de selección a uno de petición: así nació TTY Launcher, un launcher Android con estética de terminal."
 order: 1
+seoTitle: "Adicción al móvil: por qué hice un launcher tipo terminal"
+seoDesc: "Los launchers minimalistas dejan de funcionar cuando el cerebro se acostumbra. Por eso hice TTY Launcher: sin iconos ni listas, solo un prompt donde escribes."
+relatedProject: "tty"
 ---
 Hoy en día lo vemos en todas partes: la gente ha creado una dependencia del smartphone que da bastante que pensar. Y creo que nosotros, los desarrolladores, y las empresas tecnológicas, tenemos parte del trabajo de hacer que la tecnología sea más útil y menos adictiva. No voy a entrar en las mil situaciones en las que no deberíamos estar absorbidos por el móvil; prefiero aportar mi granito de arena.
 
