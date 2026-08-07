@@ -26,7 +26,7 @@ alexalvarez.dev (este repo, Vercel)
    └── script.js    ─┐
    └── recorder.js  ─┤ tras consentimiento
                      ▼
-analytics.alexalvarez.dev (Umami, Vercel)
+analiticas.alexalvarez.dev (Umami, Vercel)
                      ▼
              Neon Postgres (free)
 ```
@@ -61,7 +61,7 @@ Son **dos proyectos de Vercel distintos**: este portfolio y la instancia de Umam
 
 ### 3. Dominio
 
-Apunta `analytics.alexalvarez.dev` al proyecto de Umami en Vercel. Un subdominio propio
+Apunta `analiticas.alexalvarez.dev` al proyecto de Umami en Vercel. Un subdominio propio
 evita buena parte de los bloqueadores, que sí filtran los dominios conocidos de analítica.
 
 ### 4. Primer acceso
@@ -76,7 +76,7 @@ el **Website ID** que genera.
 En el proyecto de Vercel **de este repo**, añade:
 
 ```
-PUBLIC_UMAMI_SRC        = https://analytics.alexalvarez.dev/script.js
+PUBLIC_UMAMI_SRC        = https://analiticas.alexalvarez.dev/script.js
 PUBLIC_UMAMI_WEBSITE_ID = <el ID del paso anterior>
 PUBLIC_UMAMI_DOMAINS    = www.alexalvarez.dev
 ```
