@@ -46,8 +46,8 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
     <div class="g-hero-cta hero-tail">
       <div class="lead">{t('hero.lead')}</div>
       <div class="cta-actions">
-        <a class="btn-acid btn-push" href="#contact" data-scramble data-text={t('cta.primary')}>{t('cta.primary')}</a>
-        <a class="btn-ghost brd-hl" href="https://github.com/AlexAlvarezAlmendros" target="_blank" rel="noopener" title="GitHub — Alex Alvarez Almendros">GITHUB ↗</a>
+        <a class="btn-acid btn-push" href="#contact" data-scramble data-text={t('cta.primary')} data-umami-event="cta-contact" data-umami-event-place="hero">{t('cta.primary')}</a>
+        <a class="btn-ghost brd-hl" href="https://github.com/AlexAlvarezAlmendros" target="_blank" rel="noopener" title="GitHub — Alex Alvarez Almendros" data-umami-event="outbound-github" data-umami-event-place="hero">GITHUB ↗</a>
       </div>
     </div>
   </section>
@@ -145,10 +145,10 @@ const projects = (await getCollection('projects', (e) => e.data.lang === lang)).
       <span class="head-n">(05) — {t('contact.kicker')}</span>
       <div class="contact-title" data-fit data-max="150">{t('contact.title')}</div>
       <div class="contact-row">
-        <a class="email" href="mailto:alexalmendrosal@gmail.com" data-scramble data-text="alexalmendrosal@gmail.com">alexalmendrosal@gmail.com</a>
+        <a class="email" href="mailto:alexalmendrosal@gmail.com" data-scramble data-text="alexalmendrosal@gmail.com" data-umami-event="contact-email">alexalmendrosal@gmail.com</a>
         <div class="socials">
-          <a class="lnk" href="https://www.linkedin.com/in/alexalvarezalmendros/" target="_blank" rel="noopener" title="LinkedIn — Alex Alvarez Almendros">LINKEDIN ↗</a>
-          <a class="lnk" href="https://github.com/AlexAlvarezAlmendros" target="_blank" rel="noopener" title="GitHub — Alex Alvarez Almendros">GITHUB ↗</a>
+          <a class="lnk" href="https://www.linkedin.com/in/alexalvarezalmendros/" target="_blank" rel="noopener" title="LinkedIn — Alex Alvarez Almendros" data-umami-event="outbound-linkedin">LINKEDIN ↗</a>
+          <a class="lnk" href="https://github.com/AlexAlvarezAlmendros" target="_blank" rel="noopener" title="GitHub — Alex Alvarez Almendros" data-umami-event="outbound-github" data-umami-event-place="contact">GITHUB ↗</a>
         </div>
       </div>
     </div>
