@@ -11,3 +11,5 @@ npm-debug.log*
 .env.production
 # macOS / editor
 .DS_Store
+# lighthouse ci
+.lighthouseci/

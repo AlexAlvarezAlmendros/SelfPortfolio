@@ -1,0 +1,105 @@
+---
+/**
+ * Consent gate for session replay / heatmaps.
+ *
+ * The pageview tracker is cookieless and runs regardless — this banner exists only
+ * for `recorder.js`, which captures the actual session and therefore needs an
+ * explicit opt-in. The choice lives in localStorage, so a visitor is asked once.
+ */
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+const { lang, recorderSrc, websiteId } = Astro.props as {
+  lang: Lang;
+  recorderSrc: string;
+  websiteId: string;
+};
+const t = useTranslations(lang);
+---
+<div id="consent" class="consent" role="dialog" aria-live="polite" aria-label={t('consent.label')} hidden>
+  <p class="consent-text">{t('consent.text')}</p>
+  <div class="consent-actions">
+    <button type="button" data-consent="yes" class="c-yes">{t('consent.accept')}</button>
+    <button type="button" data-consent="no" class="c-no">{t('consent.reject')}</button>
+  </div>
+</div>
+
+<script is:inline define:vars={{ recorderSrc, websiteId }}>
+  (function () {
+    var KEY = 'replay-consent';
+    var el = document.getElementById('consent');
+
+    function loadRecorder() {
+      var s = document.createElement('script');
+      s.defer = true;
+      s.src = recorderSrc;
+      s.setAttribute('data-website-id', websiteId);
+      document.head.appendChild(s);
+    }
+
+    // A blocked/unavailable localStorage must not break the page, and must not be
+    // read as consent either: on failure we simply ask again next time.
+    var saved = null;
+    try { saved = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
+
+    if (saved === 'yes') { loadRecorder(); return; }
+    if (saved === 'no' || !el) return;
+
+    el.hidden = false;
+    el.addEventListener('click', function (ev) {
+      var btn = ev.target.closest('[data-consent]');
+      if (!btn) return;
+      var choice = btn.getAttribute('data-consent');
+      try { localStorage.setItem(KEY, choice); } catch (e) { /* private mode */ }
+      el.hidden = true;
+      if (choice === 'yes') loadRecorder();
+    });
+  })();
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    left: 26px;
+    bottom: 26px;
+    z-index: 70;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 18px;
+    background: #0d0d0b;
+    border: 1px solid #1d1d1a;
+    border-left: 2px solid #ccff00;
+  }
+  .consent[hidden] { display: none; }
+  .consent-text {
+    margin: 0;
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    line-height: 1.7;
+    color: #a8a69d;
+  }
+  .consent-actions { display: flex; gap: 10px; }
+  button {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 9px 16px;
+    border: 1px solid #1d1d1a;
+    background: transparent;
+    color: #55554f;
+    cursor: pointer;
+    transition: color .15s, border-color .15s, background .15s, transform .15s;
+  }
+  .c-yes { background: #ccff00; border-color: #ccff00; color: #070706; }
+  .c-yes:hover { transform: translate(-2px, -2px); }
+  .c-no:hover { border-color: #ccff00; color: #ccff00; }
+  @media (max-width: 560px) {
+    .consent { left: 14px; right: 14px; bottom: 14px; max-width: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    button { transition: none; }
+    .c-yes:hover { transform: none; }
+  }
+</style>

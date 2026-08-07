@@ -44,6 +44,11 @@ export const ui = {
     'key.features': 'Características',
     'next.project': 'Siguiente',
     'footer': 'Diseñado & desarrollado por Alex Alvarez · © 2026',
+    'consent.label': 'Consentimiento de grabación de sesión',
+    'consent.text':
+      '¿Me dejas grabar cómo te mueves por la web? Solo lo uso para detectar qué falla en el diseño. Las visitas ya se cuentan de forma anónima y sin cookies.',
+    'consent.accept': 'VALE',
+    'consent.reject': 'NO, GRACIAS',
     'nav.index': 'INDEX',
     'nav.work': 'WORK',
     'nav.log': 'LOG',
@@ -105,6 +110,11 @@ export const ui = {
     'key.features': 'Key features',
     'next.project': 'Next',
     'footer': 'Designed & built by Alex Alvarez · © 2026',
+    'consent.label': 'Session recording consent',
+    'consent.text':
+      'Mind if I record how you move around the site? I only use it to spot what is off in the design. Visits are already counted anonymously, with no cookies.',
+    'consent.accept': 'SURE',
+    'consent.reject': 'NO THANKS',
     'nav.index': 'INDEX',
     'nav.work': 'WORK',
     'nav.log': 'LOG',

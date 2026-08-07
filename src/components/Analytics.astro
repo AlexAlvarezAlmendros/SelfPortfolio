@@ -1,0 +1,71 @@
+---
+/**
+ * Umami analytics — self-hosted instance (MIT), no third-party SaaS involved.
+ *
+ * Two scripts, deliberately separated because they carry different privacy weight:
+ *
+ *   script.js    Pageviews, events and Core Web Vitals. Cookieless and anonymous,
+ *                so it loads for everyone with no consent prompt.
+ *   recorder.js  Session replay and heatmaps. This records what the visitor does,
+ *                so it only loads once they have explicitly agreed.
+ *
+ * Everything is driven by env vars: with none set the component renders nothing,
+ * which keeps `astro dev` and any build without credentials completely clean.
+ */
+import type { Lang } from '../i18n/ui';
+import ConsentBanner from './ConsentBanner.astro';
+
+const { lang } = Astro.props as { lang: Lang };
+
+const src = import.meta.env.PUBLIC_UMAMI_SRC;
+const websiteId = import.meta.env.PUBLIC_UMAMI_WEBSITE_ID;
+const enabled = Boolean(src && websiteId);
+
+// Replay is opt-in twice over: the deploy has to ask for it *and* the visitor has
+// to accept it. Without the flag there is no banner and no recorder at all.
+const replayEnabled = enabled && import.meta.env.PUBLIC_UMAMI_REPLAY === 'true';
+// The instance serves `script.js` and `recorder.js` side by side.
+const recorderSrc = replayEnabled ? String(src).replace(/[^/]+$/, 'recorder.js') : '';
+
+// Restrict collection to the live host. Vercel preview deploys and localhost hit
+// the same instance otherwise, and their traffic would silently distort the data.
+const domains = import.meta.env.PUBLIC_UMAMI_DOMAINS ?? 'www.alexalvarez.dev';
+---
+{enabled && (
+  <script
+    is:inline
+    defer
+    src={src}
+    data-website-id={websiteId}
+    data-domains={domains}
+    data-performance="true"
+    data-do-not-track="true"
+    data-exclude-hash="true"
+  />
+)}
+
+{enabled && (
+  <script is:inline>
+    // Read-completion for articles: fires once when the end of the prose scrolls
+    // into view. A pageview only says the post was opened — this says it was read.
+    (function () {
+      var prose = document.querySelector('.prose');
+      if (!prose || !('IntersectionObserver' in window)) return;
+      var end = document.createElement('div');
+      end.setAttribute('aria-hidden', 'true');
+      // 1px tall, not 0: IntersectionObserver is unreliable with zero-area targets.
+      end.style.height = '1px';
+      prose.appendChild(end);
+      var fired = false;
+      var io = new IntersectionObserver(function (entries) {
+        if (fired || !entries.some(function (e) { return e.isIntersecting; })) return;
+        fired = true;
+        io.disconnect();
+        if (window.umami) window.umami.track('article-read', { path: location.pathname });
+      });
+      io.observe(end);
+    })();
+  </script>
+)}
+
+{replayEnabled && <ConsentBanner lang={lang} recorderSrc={recorderSrc} websiteId={websiteId} />}
