@@ -7,6 +7,8 @@ date: 2026-05-20
 read: "8 min"
 excerpt: "Hosting, database, mailing, auth... cutting out the lazy delegation and building it myself."
 order: 4
+seoTitle: "Building my own tools so I depend on no one"
+seoDesc: "Self-hosted hosting, database, auth and mailing instead of four SaaS bills. What I built, what I save each month, and where reinventing the wheel isn't worth it."
 ---
 In my life as a developer, on the personal side (I don't talk about work, ahem, NDAs and all that...), I've always leaned on third-party tools to save myself effort: hosting, the database, authentication, mailing. All those pieces we end up delegating out of laziness or convenience and that, added up, charge you an arm and a leg.
 

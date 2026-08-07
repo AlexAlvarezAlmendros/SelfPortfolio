@@ -12,7 +12,7 @@ const t = useTranslations(lang);
 const es = lang === 'es';
 const nav = [
   { label: t('nav.index'), href: localizePath('/', lang), title: es ? 'Inicio' : 'Home' },
-  { label: t('nav.work'), href: localizePath('/work/tty', lang), title: es ? 'Proyectos' : 'Work' },
+  { label: t('nav.work'), href: localizePath('/work', lang), title: es ? 'Proyectos' : 'Work' },
   { label: t('nav.log'), href: localizePath('/blog', lang), title: 'Blog & Devlogs' },
   { label: t('nav.info'), href: `${localizePath('/', lang)}#contact`, title: es ? 'Contacto' : 'Contact' },
 ];

@@ -17,4 +17,6 @@ features:
   - "Gestión de imágenes con ImgBB"
   - "Notificaciones por email automáticas"
 order: 5
+seoTitle: "Fincas Trimar — Portal inmobiliario con panel de gestión"
+seoDesc: "Portal inmobiliario completo: catálogo, filtros avanzados y panel de administración. React 18, Node.js, Turso/SQLite y Auth0. Cómo está construido por dentro."
 ---

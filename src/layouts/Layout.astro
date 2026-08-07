@@ -31,7 +31,7 @@ interface Props {
 
 const { lang, title, description, path, ogType = 'website', ogImage: ogImagePath, publishedTime, tags, jsonLd } = Astro.props;
 const rssPath = lang === 'es' ? '/rss.xml' : '/en/rss.xml';
-const site = Astro.site ?? new URL('https://alexalvarez.dev');
+const site = Astro.site ?? new URL('https://www.alexalvarez.dev');
 const canonical = new URL(localizePath(path, lang), site).href;
 const esUrl = new URL(localizePath(path, 'es'), site).href;
 const enUrl = new URL(localizePath(path, 'en'), site).href;
@@ -75,6 +75,7 @@ const ogLocaleAlt = lang === 'es' ? 'en_US' : 'es_ES';
   <meta name="twitter:title" content={title} />
   <meta name="twitter:description" content={description} />
   <meta name="twitter:image" content={ogImage} />
+  <meta name="twitter:image:alt" content={title} />
 
   {ogType === 'article' && (
     <>

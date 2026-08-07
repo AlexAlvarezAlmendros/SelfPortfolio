@@ -1,5 +1,5 @@
 ---
-import { render, type CollectionEntry } from 'astro:content';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
 import type { Lang } from '../../i18n/ui';
 import { useTranslations, localizePath } from '../../i18n/utils';
 import { formatDate } from '../../lib/date';
@@ -13,6 +13,21 @@ const t = useTranslations(lang);
 const { Content } = await render(entry);
 const d = entry.data;
 const blogHref = localizePath('/blog', lang);
+
+// The project this post is about, when the frontmatter declares one.
+const related = d.relatedProject
+  ? (await getCollection('projects', (e) => e.data.lang === lang && e.data.slug === d.relatedProject))[0]
+  : undefined;
+
+// Two more posts, continuing in reading order and wrapping around, so every
+// article links out to siblings instead of dead-ending on the list page.
+const all = (await getCollection('blog', (e) => e.data.lang === lang)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const here = all.findIndex((p) => p.data.slug === d.slug);
+const next = [all[(here + 1) % all.length], all[(here + 2) % all.length]].filter(
+  (p) => p && p.data.slug !== d.slug,
+);
 ---
 <main>
   <article>
@@ -29,6 +44,27 @@ const blogHref = localizePath('/blog', lang);
     <div class="prose">
       <Content />
     </div>
+
+    {related && (
+      <a class="related brd-hl" href={localizePath(`/work/${related.data.slug}`, lang)}>
+        <span class="related-lbl">{t('related.project')}</span>
+        <span class="related-name">{related.data.name} →</span>
+        <span class="related-tag">{related.data.tagline}</span>
+      </a>
+    )}
+
+    {next.length > 0 && (
+      <section class="next">
+        <h2 class="next-h">{t('read.next')}</h2>
+        {next.map((p) => (
+          <a class="next-a row-hl" href={localizePath(`/blog/${p.data.slug}`, lang)}>
+            <span class="next-tag">{p.data.tag}</span>
+            <span class="next-t">{p.data.title}</span>
+          </a>
+        ))}
+      </section>
+    )}
+
     <div class="foot">
       <span class="thanks">{t('thanks')}</span>
       <a class="more brd-hl" href={blogHref}>{t('more.devlogs')} →</a>
@@ -48,6 +84,16 @@ const blogHref = localizePath('/blog', lang);
   .avatar { width: 34px; height: 34px; background: #ccff00; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-weight: 700; color: #070706; font-size: 13px; }
   .aname { font-family: 'Space Mono', monospace; font-size: 12px; color: #cfcdc4; }
   .excerpt { font-family: 'Syne Variable', sans-serif; margin: 0 0 24px; font-size: 22px; font-weight: 500; color: #f2f0ea; line-height: 1.5; }
+  /* cross-link to the project the post is about */
+  .related { display: block; margin-top: 46px; padding: 20px 22px; border: 1px solid #2a2a26; text-decoration: none; color: #f2f0ea; }
+  .related-lbl { display: block; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #ccff00; margin-bottom: 8px; }
+  .related-name { display: block; font-family: 'Syne Variable', sans-serif; font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
+  .related-tag { display: block; font-family: 'Syne Variable', sans-serif; font-size: 15px; color: #a8a69d; line-height: 1.4; margin-top: 8px; }
+  .next { margin-top: 46px; padding-top: 26px; border-top: 1px solid #1d1d1a; }
+  .next-h { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: #55554f; font-weight: 400; text-transform: uppercase; margin: 0 0 6px; }
+  .next-a { display: flex; align-items: baseline; gap: 12px; padding: 14px 4px; border-bottom: 1px solid #1d1d1a; text-decoration: none; color: #f2f0ea; }
+  .next-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: #ccff00; white-space: nowrap; }
+  .next-t { font-family: 'Syne Variable', sans-serif; font-size: clamp(16px, 2vw, 21px); font-weight: 700; letter-spacing: -0.01em; line-height: 1.2; }
   .foot { margin-top: 46px; padding-top: 26px; border-top: 1px solid #1d1d1a; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; }
   .thanks { font-family: 'Space Mono', monospace; font-size: 11px; color: #55554f; }
   .more { background: none; border: 1px solid #2a2a26; color: #a8a69d; font-family: 'Space Mono', monospace; font-size: 11px; padding: 9px 15px; text-decoration: none; }

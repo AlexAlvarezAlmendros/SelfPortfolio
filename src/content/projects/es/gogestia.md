@@ -17,4 +17,6 @@ features:
   - "Formulario de contacto con validación"
   - "Blog y suscripción a newsletter"
 order: 4
+seoTitle: "Gogestia — Web para una consultora de automatización"
+seoDesc: "Web para una consultora de automatización y digitalización de procesos, construida con React 19, Vite y Tailwind. Caso real: problema, decisiones y stack."
 ---

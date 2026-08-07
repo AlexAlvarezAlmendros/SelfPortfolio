@@ -32,6 +32,7 @@ export const ui = {
       'Notas técnicas, decisiones de arquitectura y lo que aprendo mientras construyo.',
     'back.blog': 'Volver al blog',
     'back.home': 'Volver al inicio',
+    'back.work': 'Volver a proyectos',
     'thanks': '// gracias por leer',
     'more.devlogs': 'Más devlogs',
     'visit.site': 'VISITAR',
@@ -47,12 +48,23 @@ export const ui = {
     'nav.work': 'WORK',
     'nav.log': 'LOG',
     'nav.info': 'INFO',
-    'meta.home.title': 'Alex Alvarez Almendros · Programador Fullstack .NET, React e IA',
+    'meta.home.title': 'Alex Alvarez · Programador Fullstack .NET, React e IA',
     'meta.home.desc':
       'Programador Fullstack con +5 años en .NET, React, JavaScript y Astro. Desarrollo web, automatización de procesos e implementación de IA. Disponible en remoto.',
-    'meta.blog.title': 'Blog & Devlogs | Alex Alvarez Almendros',
+    'meta.blog.title': 'Blog & Devlogs — React, .NET, IA y homelab | Alex Alvarez',
     'meta.blog.desc':
-      'Notas técnicas, decisiones de arquitectura y aprendizajes sobre React, .NET, bases de datos y LLMOps.',
+      'Devlogs sin relleno: decisiones de arquitectura, errores que costaron horas y aprendizajes reales sobre React, .NET, IA y self-hosting.',
+    'work.kicker': '// PROYECTOS',
+    'work.title': 'Proyectos',
+    'work.lead':
+      'Producto real que he diseñado y construido: web, móvil, automatización e IA aplicada. Cada ficha explica el problema, las decisiones y el stack.',
+    'work.all': 'Ver todos los proyectos',
+    'meta.work.title': 'Proyectos — Desarrollo web, apps e IA | Alex Alvarez',
+    'meta.work.desc':
+      'Casos reales de desarrollo fullstack: apps con React, .NET y Node.js, automatización de procesos e IA aplicada. Código abierto y demos en vivo.',
+    'related.project': 'Proyecto relacionado',
+    'related.post': 'Léelo en el blog',
+    'read.next': 'Sigue leyendo',
   },
   en: {
     'available': 'OPEN TO WORK',
@@ -81,6 +93,7 @@ export const ui = {
       'Technical notes, architecture decisions and what I learn while building.',
     'back.blog': 'Back to blog',
     'back.home': 'Back home',
+    'back.work': 'Back to work',
     'thanks': '// thanks for reading',
     'more.devlogs': 'More devlogs',
     'visit.site': 'VISIT SITE',
@@ -96,12 +109,23 @@ export const ui = {
     'nav.work': 'WORK',
     'nav.log': 'LOG',
     'nav.info': 'INFO',
-    'meta.home.title': 'Alex Alvarez Almendros · Fullstack Developer .NET, React & AI',
+    'meta.home.title': 'Alex Alvarez · Fullstack Developer .NET, React & AI',
     'meta.home.desc':
       'Fullstack developer, 5+ years in .NET, React, JavaScript and Astro. Web development, process automation and AI implementation. Available remote.',
-    'meta.blog.title': 'Blog & Devlogs | Alex Alvarez Almendros',
+    'meta.blog.title': 'Blog & Devlogs — React, .NET, AI, homelab | Alex Alvarez',
     'meta.blog.desc':
-      'Technical notes, architecture decisions and learnings about React, .NET, databases and LLMOps.',
+      'Devlogs with no filler: architecture decisions, mistakes that cost me hours, and real lessons on React, .NET, AI and self-hosting.',
+    'work.kicker': '// WORK',
+    'work.title': 'Work',
+    'work.lead':
+      'Real product I designed and built: web, mobile, automation and applied AI. Each case study covers the problem, the decisions and the stack.',
+    'work.all': 'See all projects',
+    'meta.work.title': 'Work — Web development, apps and AI | Alex Alvarez',
+    'meta.work.desc':
+      'Real fullstack case studies: apps built with React, .NET and Node.js, process automation and applied AI. Open source and live demos.',
+    'related.project': 'Related project',
+    'related.post': 'Read the story',
+    'read.next': 'Read next',
   },
 } as const;
 

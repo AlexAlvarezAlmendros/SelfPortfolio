@@ -7,6 +7,8 @@ date: 2026-05-20
 read: "8 min"
 excerpt: "Hosting, base de datos, mailing, auth... dejar de delegar por pereza y montármelo yo."
 order: 4
+seoTitle: "Montarme mis propias herramientas para no depender de nadie"
+seoDesc: "Hosting, base de datos, auth y mailing propios en lugar de pagar cuatro SaaS. Qué me monté, cuánto me ahorro al mes y dónde no merece la pena reinventar la rueda."
 ---
 En mi vida como desarrollador, en la parte personal (del trabajo no hablo, ejem, NDAs y esas cosas...), siempre he dependido de herramientas de terceros para ahorrarme faena: el hosting, la base de datos, la autenticación, el mailing. Todas esas piezas que acabamos delegando por pereza o comodidad y que, sumadas, te cobran un ojo de la cara.
 

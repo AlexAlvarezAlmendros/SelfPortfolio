@@ -13,20 +13,17 @@ const blog = defineCollection({
     lang: z.enum(['es', 'en']),
     tag: z.string(),
     date: z.coerce.date(),
+    /** Last meaningful edit. Feeds dateModified + sitemap lastmod. Defaults to `date`. */
+    updated: z.coerce.date().optional(),
     read: z.string(),
     excerpt: z.string(),
     order: z.number(),
-    // Optional hand-written copy per social network, used by
-    // scripts/social/publish.mjs. Unset networks fall back to generated copy.
-    social: z
-      .object({
-        x: z.string().optional(),
-        linkedin: z.string().optional(),
-        threads: z.string().optional(),
-        bluesky: z.string().optional(),
-        mastodon: z.string().optional(),
-      })
-      .optional(),
+    /** SERP title (~60 chars). Overrides the on-page title in <title>/og:title only. */
+    seoTitle: z.string().optional(),
+    /** SERP description (~150 chars), written to earn the click. Falls back to `excerpt`. */
+    seoDesc: z.string().optional(),
+    /** Slug of a project this post is about — renders a cross-link. */
+    relatedProject: z.string().optional(),
   }),
 });
 
@@ -51,6 +48,12 @@ const projects = defineCollection({
     overview: z.string(),
     features: z.array(z.string()),
     order: z.number(),
+    /** SERP title (~60 chars). Overrides the on-page name in <title>/og:title only. */
+    seoTitle: z.string().optional(),
+    /** SERP description (~150 chars), written to earn the click. Falls back to `tagline`. */
+    seoDesc: z.string().optional(),
+    /** Slug of a blog post about this project — renders a cross-link. */
+    relatedPost: z.string().optional(),
   }),
 });
 

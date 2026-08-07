@@ -7,6 +7,8 @@ date: 2026-06-05
 read: "6 min"
 excerpt: "El debate que tengo conmigo mismo últimamente: pulir lo conocido o lanzarme a algo que aún no existe."
 order: 3
+seoTitle: "¿Crear algo nuevo o mejorar lo que ya existe? | Alex Alvarez"
+seoDesc: "Llevo meses con este debate: pulir un producto que ya funciona o construir algo que no existe. Cómo decido, qué me ha funcionado y qué me ha salido caro."
 ---
 Últimamente tengo este debate constante en la cabeza: ¿es mejor mejorar algo que ya existe o construir algo nuevo desde cero?
 
