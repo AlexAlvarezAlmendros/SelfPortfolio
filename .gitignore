@@ -9,5 +9,7 @@ npm-debug.log*
 # environment
 .env
 .env.production
+# social autopost credentials for local testing
+.env.local
 # macOS / editor
 .DS_Store

@@ -1,0 +1,26 @@
+{
+  "en/tty-launcher": {
+    "mastodon": {
+      "at": "2026-07-31T15:39:44.233Z",
+      "url": "https://mastodon.social/@alexalvarezdev/117015339599647832",
+      "id": "117015339599647832"
+    }
+  },
+  "es/tty-launcher": {
+    "bluesky": {
+      "at": "2026-07-31T15:39:41.333Z",
+      "url": "https://bsky.app/profile/alexalvarez.dev/post/3mrxbznnymd23",
+      "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mrxbznnymd23"
+    },
+    "linkedin": {
+      "at": "2026-07-31T19:07:18.416Z",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7489033969921867778/",
+      "id": "urn:li:share:7489033969921867778"
+    },
+    "threads": {
+      "at": "2026-07-31T19:48:40.552Z",
+      "url": "https://www.threads.com/@poiotranki/post/DbeDT4GDv_l",
+      "id": "18079465175490248"
+    }
+  }
+}
