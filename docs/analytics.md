@@ -166,6 +166,11 @@ consciente, por eso queda como aviso y no bloquea nada.
 El informe se sube a `temporary-public-storage` de Google: enlace público en los logs, se
 borra a los pocos días. Suficiente para revisar una regresión puntual.
 
+El job tarda unos **15 min** (4 URLs × 3 pasadas en un runner compartido). El repo es
+público, así que los minutos de Actions no cuestan, pero si molesta la espera lo que más
+recorta es bajar `numberOfRuns` a 2. Se mantiene en 3 porque la mediana de tres pasadas
+absorbe mucho mejor el ruido de rendimiento del runner.
+
 Esto es rendimiento **de laboratorio**. El rendimiento **real** lo da Umami vía
 `data-performance`, en **Reports → Performance**: LCP, INP y CLS de visitantes de verdad,
 con sus móviles y sus redes. Los dos se complementan, ninguno sustituye al otro.
