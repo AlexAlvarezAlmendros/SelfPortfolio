@@ -6,7 +6,7 @@ tag: "HOMELAB"
 date: 2026-03-28
 read: "6 min"
 excerpt: "From tinkering with Arduino and ESP32 to finally having a machine dedicated to being my personal server."
-order: 7
+order: 8
 seoTitle: "First steps into homelabbing: from Arduino to a real server"
 seoDesc: "From tinkering with Arduino and ESP32 to running my first 24/7 home server: the hardware I used, the self-hosted services I set up, and what I'd do differently."
 ---

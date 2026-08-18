@@ -6,7 +6,7 @@ tag: "LINUX"
 date: 2026-03-10
 read: "5 min"
 excerpt: "Me compré un ThinkPad, le metí Ubuntu y se ha convertido en mi máquina favorita para programar."
-order: 8
+order: 9
 seoTitle: "Mi cambio a Linux: un ThinkPad con Ubuntu para programar"
 seoDesc: "Dejé Windows por Ubuntu en un ThinkPad de segunda mano. Qué gané en velocidad y control, qué me costó adaptar y por qué ya no volvería atrás."
 ---

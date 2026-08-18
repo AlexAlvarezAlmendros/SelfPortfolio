@@ -6,7 +6,7 @@ tag: "AI"
 date: 2026-04-15
 read: "9 min"
 excerpt: "Memoria por procesos, curado de datos y automatizaciones diarias corriendo en una cajita de segunda mano."
-order: 6
+order: 7
 seoTitle: "OpenClaw en un ThinkCentre: un agente de IA en hardware viejo"
 seoDesc: "Monté OpenClaw en un mini PC de segunda mano: memoria por procesos, curado de datos y automatizaciones diarias corriendo en casa, sin depender de la nube."
 ---

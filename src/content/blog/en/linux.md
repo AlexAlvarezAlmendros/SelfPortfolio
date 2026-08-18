@@ -6,7 +6,7 @@ tag: "LINUX"
 date: 2026-03-10
 read: "5 min"
 excerpt: "I bought a ThinkPad, threw Ubuntu on it, and it became my favorite machine to code on."
-order: 8
+order: 9
 seoTitle: "Switching to Linux: a ThinkPad running Ubuntu for coding"
 seoDesc: "I left Windows for Ubuntu on a second-hand ThinkPad. What I gained in speed and control, what took getting used to, and why I'm not going back."
 ---

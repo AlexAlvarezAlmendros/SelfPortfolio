@@ -6,7 +6,7 @@ tag: "BLOCKCHAIN"
 date: 2026-06-18
 read: "8 min"
 excerpt: "Linking GitHub repos to Ethereum to handle bounties and high-level decisions between maintainers."
-order: 2
+order: 3
 seoTitle: "GitHub on the blockchain? Bounties and licenses on Ethereum"
 seoDesc: "Linking GitHub repos to Ethereum to pay bounties, enforce open-source licenses and give contributors portable reputation. The idea, and where it cracks."
 relatedProject: "gitchain"
