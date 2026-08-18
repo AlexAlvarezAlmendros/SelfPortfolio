@@ -11,6 +11,11 @@
       "at": "2026-08-18T13:12:48.919Z",
       "url": "https://mastodon.social/@alexalvarezdev/117116683429998433",
       "id": "117116683429998433"
+    },
+    "bluesky": {
+      "at": "2026-08-18T13:29:53.262Z",
+      "url": "https://bsky.app/profile/alexalvarez.dev/post/3mted64o5o72v",
+      "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mted64o5o72v"
     }
   },
   "es/tty-launcher": {
@@ -28,6 +33,13 @@
       "at": "2026-07-31T19:48:40.552Z",
       "url": "https://www.threads.com/@poiotranki/post/DbeDT4GDv_l",
       "id": "18079465175490248"
+    }
+  },
+  "es/vibe-coding": {
+    "bluesky": {
+      "at": "2026-08-18T13:29:54.284Z",
+      "url": "https://bsky.app/profile/alexalvarez.dev/post/3mted65ncn32y",
+      "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mted65ncn32y"
     }
   }
 }
