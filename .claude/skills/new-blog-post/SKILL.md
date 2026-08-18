@@ -111,3 +111,48 @@ General rules:
   pnpm run check         # astro check (validates content frontmatter)
   ```
 - The post is then reachable at `/blog/<slug>` (ES) and `/en/blog/<slug>` (EN).
+- `pnpm run check` wants to install `@astrojs/check` interactively the first time.
+  `pnpm run build` validates the same frontmatter without prompting.
+- Only commit the **new** post's two OG images. `pnpm run screenshots` rewrites all
+  18 of them because the site header renders a live clock, so the other 16 show up
+  as modified with no real change: `git checkout -- public/og` before staging.
+
+## 6. Social copy — write it, don't let the bot generate it
+
+Pushing a post to `main` fires `.github/workflows/social-publish.yml`, which
+cross-posts via `scripts/social/`. **Always write the copy by hand** in a `social:`
+frontmatter map. Without it the bot ships title + excerpt + link + `#dev`, which
+reads exactly like a bot.
+
+```yaml
+social:
+  linkedin: |
+    Long-form copy. Blank lines separate paragraphs.
+  bluesky: |
+    Short version.
+```
+
+Rules that are easy to get wrong:
+
+- **Never put the URL or hashtags in the copy.** `compose.mjs` appends both. Writing
+  them yourself duplicates them and eats the character budget twice.
+- **Write per network, per language.** `scripts/social/config.mjs` decides who gets
+  what: `linkedin` and `threads` are **ES only**, `mastodon` is **EN only**, `x` and
+  `bluesky` get **both**. Copy for a network the post's language never reaches is
+  dead weight.
+- **Budget = `limit − linkCost − tagCost`**, not `limit`. LinkedIn and Threads carry
+  the link out of band (cost 0); everywhere else it costs real characters, except on
+  X where a link always weighs 23. Over budget is silently truncated with `…`.
+- **Verify before pushing** — dry run composes exactly what CI will send:
+  ```bash
+  node scripts/social/publish.mjs --post=es/<slug>   # add --live only to publish
+  ```
+  Check every block for a trailing `…`; that means it got cut.
+- New `tag` values need an entry in `TAG_HASHTAGS` (`scripts/social/config.mjs`) or
+  the post only gets `#dev`. The lookup uppercases the tag, so the key must match
+  the frontmatter tag exactly.
+- `scripts/social/published.json` is the ledger and `--max-age` defaults to 14 days:
+  a post already sent is never re-sent, and switching a network on cannot dump the
+  back catalogue onto a timeline.
+- Live publishing needs the repo variable `SOCIAL_AUTOPOST=true`. When it is unset
+  every automatic run is a dry run that only prints the copy.

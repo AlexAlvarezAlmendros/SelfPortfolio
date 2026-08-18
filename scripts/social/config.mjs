@@ -16,7 +16,7 @@ export function postUrl(lang, slug) {
 /** Frontmatter `tag` -> extra hashtags appended to the composed copy. */
 export const TAG_HASHTAGS = {
   INDIE: ['indiedev', 'buildinpublic'],
-  IA: ['IA', 'AI'],
+  AI: ['IA', 'AI'],
   DEVLOG: ['devlog', 'buildinpublic'],
   LINUX: ['linux', 'selfhosted'],
   HOMELAB: ['homelab', 'selfhosted'],
