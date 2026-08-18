@@ -6,7 +6,7 @@ tag: "MINDSET"
 date: 2026-06-05
 read: "6 min"
 excerpt: "The debate I keep having with myself lately: polish the known, or jump into something that doesn't exist yet."
-order: 3
+order: 4
 seoTitle: "Build something new, or improve what already exists?"
 seoDesc: "A debate I keep having with myself: polish a product that already works, or build something that doesn't exist yet. How I decide, and what it has cost me."
 ---

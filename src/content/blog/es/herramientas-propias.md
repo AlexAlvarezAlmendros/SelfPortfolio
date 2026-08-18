@@ -6,7 +6,7 @@ tag: "INDIE"
 date: 2026-05-20
 read: "8 min"
 excerpt: "Hosting, base de datos, mailing, auth... dejar de delegar por pereza y montármelo yo."
-order: 4
+order: 5
 seoTitle: "Montarme mis propias herramientas para no depender de nadie"
 seoDesc: "Hosting, base de datos, auth y mailing propios en lugar de pagar cuatro SaaS. Qué me monté, cuánto me ahorro al mes y dónde no merece la pena reinventar la rueda."
 ---

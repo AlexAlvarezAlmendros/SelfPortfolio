@@ -6,7 +6,7 @@ tag: "INDIE"
 date: 2026-07-29
 read: "5 min"
 excerpt: "Turning the phone from a pick-from-a-list model into an ask-for-it model: that's how TTY Launcher, a terminal-style Android launcher, came about."
-order: 1
+order: 2
 seoTitle: "Phone addiction: why I built a terminal-style launcher"
 seoDesc: "Minimalist launchers stop working once your brain adapts. So I built TTY Launcher: no icons, no lists, just a prompt where you type what you actually want."
 relatedProject: "tty"

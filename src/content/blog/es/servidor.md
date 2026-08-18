@@ -6,7 +6,7 @@ tag: "HOMELAB"
 date: 2026-05-04
 read: "7 min"
 excerpt: "Monté una torre con piezas de aquí y de allá, y de repente el homelab se me fue de las manos (para bien)."
-order: 5
+order: 6
 seoTitle: "Un servidor mejor para el homelab: torre con piezas sueltas"
 seoDesc: "Cambié el mini PC por una torre montada con piezas de aquí y de allá. Qué componentes elegí, cuánto costó y cómo se me fue el homelab de las manos (para bien)."
 ---

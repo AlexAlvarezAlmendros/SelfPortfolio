@@ -6,7 +6,7 @@ tag: "INDIE"
 date: 2026-05-20
 read: "8 min"
 excerpt: "Hosting, database, mailing, auth... cutting out the lazy delegation and building it myself."
-order: 4
+order: 5
 seoTitle: "Building my own tools so I depend on no one"
 seoDesc: "Self-hosted hosting, database, auth and mailing instead of four SaaS bills. What I built, what I save each month, and where reinventing the wheel isn't worth it."
 ---

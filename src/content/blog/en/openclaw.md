@@ -6,7 +6,7 @@ tag: "AI"
 date: 2026-04-15
 read: "9 min"
 excerpt: "Per-process memory, data curation and daily automations running on a second-hand little box."
-order: 6
+order: 7
 seoTitle: "OpenClaw on a ThinkCentre: an AI agent on old hardware"
 seoDesc: "I ran OpenClaw on a second-hand mini PC: per-process memory, data curation and daily automations running at home, with nothing depending on the cloud."
 ---
