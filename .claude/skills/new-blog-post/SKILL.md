@@ -156,3 +156,16 @@ Rules that are easy to get wrong:
   back catalogue onto a timeline.
 - Live publishing needs the repo variable `SOCIAL_AUTOPOST=true`. When it is unset
   every automatic run is a dry run that only prints the copy.
+- **Publishing locally does not commit the ledger.** Only the CI workflow commits
+  `published.json`. After any local `--live` run — publishing one network by hand,
+  retrying a failure — commit that file yourself, or the next CI run republishes and
+  duplicates the post. The ledger is keyed per network *and* per language, so rolling
+  networks out one at a time is safe.
+- A network with no credentials is skipped silently, never an error. "It ran green" does
+  not mean it published: read the run summary for `skipped, missing secrets`.
+
+Credentials are split in a way that is easy to get backwards: `THREADS_APP_SECRET` and
+`LINKEDIN_CLIENT_ID`/`_SECRET` only ever live in `.env.local`, because their sole job is
+letting `scripts/social/auth.mjs` mint a token. Only the resulting `*_ACCESS_TOKEN` goes to
+`gh secret set`. Both tokens expire after 60 days; `auth.mjs threads --refresh` renews
+without a browser, LinkedIn needs the full consent round trip again.
