@@ -40,6 +40,16 @@
       "at": "2026-08-18T13:29:54.284Z",
       "url": "https://bsky.app/profile/alexalvarez.dev/post/3mted65ncn32y",
       "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mted65ncn32y"
+    },
+    "linkedin": {
+      "at": "2026-08-18T13:33:46.326Z",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7495473015619657729/",
+      "id": "urn:li:share:7495473015619657729"
+    },
+    "threads": {
+      "at": "2026-08-18T14:05:41.522Z",
+      "url": "https://www.threads.com/@poiotranki/post/DcLyXilkTR2",
+      "id": "18621081322012240"
     }
   }
 }
