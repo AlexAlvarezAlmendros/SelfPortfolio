@@ -9,6 +9,25 @@ excerpt: "AI didn't invent vibe coding, and what came after it didn't have a nam
 order: 1
 seoTitle: "The vibe coding hangover: how I work with AI agents"
 seoDesc: "Almost half of all new code is written by AI and trust in it is falling. My system for working with agents: documentation first, project skills and hooks."
+social:
+  mastodon: |
+    What we now call vibe coding existed long before AI. It just didn't have the name yet: fast, vertical projects to validate an idea, with no pretence of being maintainable.
+
+    Almost half of all new code is already written by AI, and trust in that code has dropped from 77% to 60% in a year.
+
+    Karpathy named it and declared it dead this year. I'd been doing agentic engineering for months without knowing it had a name.
+  bluesky: |
+    What we now call vibe coding existed long before AI. It just didn't have the name yet.
+
+    Karpathy named it, then declared it dead this year.
+
+    I'd been doing agentic engineering for months without knowing it had a name.
+  x: |
+    What we now call vibe coding existed long before AI. It just didn't have the name yet.
+
+    Karpathy named it, then declared it dead this year.
+
+    I'd been doing agentic engineering for months without knowing it had a name.
 ---
 If you do this for a living, I don't need to tell you that everyone is working with AI in one way or another. What's really interesting is what has happened over the last few months, because I've lived through both phases and I wasn't expecting the second one.
 

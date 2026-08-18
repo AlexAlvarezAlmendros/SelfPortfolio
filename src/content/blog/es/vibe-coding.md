@@ -9,6 +9,39 @@ excerpt: "El vibe coding no lo inventó la IA, y lo que vino después tampoco te
 order: 1
 seoTitle: "La resaca del vibe coding: cómo trabajo yo con agentes"
 seoDesc: "Casi la mitad del código nuevo lo escribe una IA y la confianza en él está cayendo. Mi sistema para trabajar con agentes: documentación, skills y hooks."
+social:
+  linkedin: |
+    Lo que hoy llamamos vibe coding existía mucho antes que la IA. Solo que entonces no se llamaba así.
+
+    Eran proyectos rápidos y verticales para validar una idea, normalmente sacados adelante por una sola persona con lo que tuviera a mano. Nadie pretendía que fueran mantenibles. El desarrollo conducido por IA se quedó con el nombre porque hace exactamente lo mismo, solo que ahora mucha más gente puede hacerlo.
+
+    Y ahí llegó la resaca. Casi la mitad del código nuevo ya lo escribe una IA, pero la confianza en ese código ha bajado del 77% al 60% en un año. Los equipos dedican dos o tres veces más tiempo a depurar lo que generó el agente que si lo hubiera escrito alguien que entendía la arquitectura.
+
+    Lo mejor de todo: el propio Karpathy, que le puso el nombre, dio el vibe coding por muerto este mismo año. Ahora habla de agentic engineering: el agente planifica, escribe, prueba y despliega, pero con supervisión humana estructurada.
+
+    Cuando lo leí me hizo gracia, porque llevaba meses haciendo exactamente eso sin tener ni idea de que tuviera nombre.
+
+    En el post cuento mi sistema entero: documentación funcional y técnica antes de escribir una línea, modelo de datos, skills de proyecto que parten cada feature en subtareas que puedo revisar, y hooks que comprueban formato, tests y antipatrones al terminar.
+
+    Hay muchas formas de usar esta herramienta y ninguna está escrita en piedra. Lo único que no cambia es que el control y el conocimiento de lo que construyes tienen que seguir siendo tuyos.
+  threads: |
+    Lo que hoy llamamos vibe coding existía mucho antes que la IA. Solo que entonces no se llamaba así: proyectos rápidos para validar una idea, sin pretensión de ser mantenibles.
+
+    Casi la mitad del código nuevo ya lo escribe una IA y la confianza en él ha bajado del 77% al 60% en un año.
+
+    Karpathy le puso el nombre y este año lo dio por muerto. Llevaba meses haciendo agentic engineering sin saber que tenía nombre.
+  bluesky: |
+    Lo que hoy llamamos vibe coding existía mucho antes que la IA. Solo que no se llamaba así.
+
+    Karpathy le puso el nombre y este año lo dio por muerto.
+
+    Llevaba meses haciendo agentic engineering sin saber que tenía nombre. Mi sistema:
+  x: |
+    Lo que hoy llamamos vibe coding existía mucho antes que la IA. Solo que no se llamaba así.
+
+    Karpathy le puso el nombre y este año lo dio por muerto.
+
+    Llevaba meses haciendo agentic engineering sin saber que tenía nombre. Mi sistema:
 ---
 Si te dedicas a esto ya no hace falta que te cuente que todo el mundo trabaja utilizando IA de una forma u otra. Lo verdaderamente interesante es lo que ha pasado estos últimos meses, porque he vivido las dos fases y la segunda no me la esperaba.
 

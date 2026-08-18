@@ -24,6 +24,17 @@ const blog = defineCollection({
     seoDesc: z.string().optional(),
     /** Slug of a project this post is about — renders a cross-link. */
     relatedProject: z.string().optional(),
+    /** Hand-written social copy per network. Overrides the generated body in
+     *  scripts/social/lib/compose.mjs; the link and hashtags are still appended. */
+    social: z
+      .object({
+        x: z.string().optional(),
+        linkedin: z.string().optional(),
+        threads: z.string().optional(),
+        bluesky: z.string().optional(),
+        mastodon: z.string().optional(),
+      })
+      .optional(),
   }),
 });
 
