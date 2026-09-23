@@ -6,7 +6,7 @@ tag: "AI"
 date: 2026-08-18
 read: "6 min"
 excerpt: "El vibe coding no lo inventó la IA, y lo que vino después tampoco tenía nombre cuando empecé a hacerlo."
-order: 1
+order: 2
 seoTitle: "La resaca del vibe coding: cómo trabajo yo con agentes"
 seoDesc: "Casi la mitad del código nuevo lo escribe una IA y la confianza en él está cayendo. Mi sistema para trabajar con agentes: documentación, skills y hooks."
 social:

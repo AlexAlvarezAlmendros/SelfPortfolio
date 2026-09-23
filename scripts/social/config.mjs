@@ -21,6 +21,7 @@ export const TAG_HASHTAGS = {
   LINUX: ['linux', 'selfhosted'],
   HOMELAB: ['homelab', 'selfhosted'],
   WEB: ['webdev'],
+  PRIVACY: ['privacidad', 'privacy'],
 };
 
 /** Hashtags added to every post, after the tag-specific ones. */

@@ -6,7 +6,7 @@ tag: "AI"
 date: 2026-08-18
 read: "6 min"
 excerpt: "AI didn't invent vibe coding, and what came after it didn't have a name either when I started doing it."
-order: 1
+order: 2
 seoTitle: "The vibe coding hangover: how I work with AI agents"
 seoDesc: "Almost half of all new code is written by AI and trust in it is falling. My system for working with agents: documentation first, project skills and hooks."
 social:
