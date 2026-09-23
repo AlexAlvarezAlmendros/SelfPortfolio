@@ -1,4 +1,16 @@
 {
+  "en/conocimiento-es-poder": {
+    "bluesky": {
+      "at": "2026-09-23T13:26:07.974Z",
+      "url": "https://bsky.app/profile/alexalvarez.dev/post/3mw6tqkgasr2n",
+      "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mw6tqkgasr2n"
+    },
+    "mastodon": {
+      "at": "2026-09-23T13:26:09.266Z",
+      "url": "https://mastodon.social/@alexalvarezdev/117320579087698352",
+      "id": "117320579087698352"
+    }
+  },
   "en/tty-launcher": {
     "mastodon": {
       "at": "2026-07-31T15:39:44.233Z",
@@ -16,6 +28,23 @@
       "at": "2026-08-18T13:29:53.262Z",
       "url": "https://bsky.app/profile/alexalvarez.dev/post/3mted64o5o72v",
       "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mted64o5o72v"
+    }
+  },
+  "es/conocimiento-es-poder": {
+    "linkedin": {
+      "at": "2026-09-23T13:25:51.904Z",
+      "url": "https://www.linkedin.com/feed/update/urn:li:share:7508516988533645312/",
+      "id": "urn:li:share:7508516988533645312"
+    },
+    "threads": {
+      "at": "2026-09-23T13:26:07.479Z",
+      "url": "https://www.threads.com/@poiotranki/post/Ddoac6pG4TQ",
+      "id": "18376894981233433"
+    },
+    "bluesky": {
+      "at": "2026-09-23T13:26:08.480Z",
+      "url": "https://bsky.app/profile/alexalvarez.dev/post/3mw6tqkvnxr2a",
+      "id": "at://did:plc:bzbeng7j3q2amu3ezhzmwn6c/app.bsky.feed.post/3mw6tqkvnxr2a"
     }
   },
   "es/tty-launcher": {
